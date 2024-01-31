@@ -64,4 +64,16 @@ namespace df {
 
 		return m_position;
 	}
+
+	//Object can update itelf
+	void Object::update()
+	{
+	}
+
+	//Handles events for objects
+	int Object::eventHandler(const Event* p_event)
+	{
+		return 0;
+	}
+
 }//End of namespace

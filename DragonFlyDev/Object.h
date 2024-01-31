@@ -4,6 +4,7 @@
 //Included resources
 #include <string>
 #include "Vector.h"
+#include "Event.h"
 
 
 using namespace std;
@@ -49,6 +50,12 @@ namespace df {
 
 		//Get position
 		Vector getPosition() const;
+
+		//Update object
+		virtual void update();
+
+		//Event handler for objects
+		virtual int eventHandler(const Event* p_event);
 
 	};//End of class
 }//End of namespace
