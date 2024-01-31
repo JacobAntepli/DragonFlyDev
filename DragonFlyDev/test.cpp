@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include <Windows.h>
 #include <math.h>
-#include <string>
 
 #include "Manager.h"
 #include "LogManager.h"
