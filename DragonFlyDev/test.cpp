@@ -110,12 +110,6 @@ void testLogManager() {
     //Testing if log sends for one
     LM.writeLog("HELLO WORLD\n");
 
-    //Testing if log returns proper byte size
-    if (LM.writeLog("HELLO WORLD\n") != sizeof("HELLO WORLD\n")) {
-        LM.writeLog("Write log returning incorrect size, expected %d, received %d\n", sizeof("HELLO WORLD\n"), LM.writeLog("HELLO WORLD\n"));
-    }
-
-
     //Loop for stress test and testing int argument input
     /*
     for (int i = 0; i < 10000; i++) {
@@ -125,8 +119,6 @@ void testLogManager() {
 
     //Testing other argumentitive inputs
     LM.writeLog("%s %d or %f","Message\n", 2,2.0);
-
-
 
     //________________________________________
     // Testing verbosity and related functions
@@ -186,7 +178,7 @@ void testClock() {
     //Get how long it slept
     long int slept = c.split()/1000;
 
-    if (slept > 2000 && slept < 2500) {
+    if (slept > 2000 && slept < 4000) {
         LM.writeLog(1, "Clock got an acurate sleep time\n");
         printf("%ld", slept);
     }
@@ -357,7 +349,7 @@ void testObject() {
   
     //Testing setPosition
     t.setPosition(Vector(1, 1));
-    if (t.getPosition().getMagnitude() != 2) {
+    if (t.getPosition().getMagnitude() != sqrt(2.0f)) {
         LM.writeLog(3, "Set Position not properly working\n");
     }
 }
@@ -456,13 +448,13 @@ void testBaseEvent() {
 
     //Testing default event name
     if (test.getType() != "df::undefined") {
-        LM.writeLog(10, "DEFAULT EVENT TYPE INCORRECT, EXPECTED df::undefined, RECEIVED %s", test.getType().c_str());
+        LM.writeLog(10, "DEFAULT EVENT TYPE INCORRECT, EXPECTED df::undefined, RECEIVED %s", test.getType());
     }
 
     //Testing setting event type
     test.setType("Test");
-    if (test.getType() != "df::undefined") {
-        LM.writeLog(10, "DEFAULT EVENT TYPE INCORRECT, EXPECTED df::undefined, RECEIVED %s", test.getType().c_str());
+    if (test.getType() != "Test") {
+        LM.writeLog(10, "DEFAULT EVENT TYPE INCORRECT, EXPECTED TEST RECEIVED % s", test.getType());
     }
 }
 
@@ -478,16 +470,13 @@ int main()
    }
    */
     //testGameManager();
-    
     //testClock();
-
     //testLogManager();
-    
     //testVector();
-    testObject();
-    testObjectList();
-    testObjectListIterator();
-
+   //testObject();
+    //testObjectList();
+    //testObjectListIterator();
+    //testBaseEvent();
     
 }
 

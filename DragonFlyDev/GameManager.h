@@ -2,6 +2,7 @@
 #define __GAME_MANAGER_H__
 
 #include "Manager.h"
+#include "WorldManager.h"
 
 namespace df {
 
@@ -37,6 +38,9 @@ namespace df {
 
 		//Number of loops done
 		int loops;
+
+		//Object list for all objects in world
+		ObjectList all_objects;
 
 
 	public:

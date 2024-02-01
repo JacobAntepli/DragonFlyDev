@@ -21,13 +21,16 @@ namespace df {
 		setStepCount(init_step_count);
 	}
 
+	//Set step count
 	void EventStep::setStepCount(int new_count)
 	{
+		m_step_count = new_count;
 	}
 
+	//Get step count
 	int EventStep::getStepCount() const
 	{
-		return 0;
+		return m_step_count;
 	}
 
 }//End of namespace

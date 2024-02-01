@@ -1,9 +1,10 @@
 
 //Included resources
+#include <Windows.h>
 #include "GameManager.h"
 #include "LogManager.h"
 #include "Clock.h"
-#include <Windows.h>
+#include "EventStep.h"
 
 namespace df{
 
@@ -34,6 +35,7 @@ namespace df{
 
 		//Start up different managers
      	LM.startUp();
+		WM.startUp();
 
 		//Set timer resolution
 		timeBeginPeriod(1);
@@ -60,6 +62,7 @@ namespace df{
 		//Shut down other classes
 		LM.writeLog(0, "Shutting down Log Manager\n");
 		LM.shutDown();
+		WM.shutDown();
 
 
 		//If game loop is not shut down, do so
@@ -117,7 +120,18 @@ namespace df{
 			//Start timer
 			clock.delta();
 
+			//Get all objects currently in the world 
+			all_objects = WM.getAllObjects();
+			ObjectListIterator it(&all_objects);
+
 			//Do game stuff
+			//Send all objects step event
+			EventStep step(4);
+			while (!it.isDone()) {
+
+				it.currentObject()->eventHandler(&step);
+				it.next();
+			}
 
 			loop_time = clock.split()/1000;
 			intended_sleep_time = FRAME_TIME_DEFAULT - loop_time;//Calculate sleep time

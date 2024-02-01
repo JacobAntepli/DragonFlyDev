@@ -4,9 +4,9 @@
 //Included resources
 #include "Event.h"
 
-const std::string STEP_EVENT = "df::step";
-namespace df {
 
+namespace df {
+	const std::string STEP_EVENT = "df::step";
 	class EventStep : public Event {
 
 	private:

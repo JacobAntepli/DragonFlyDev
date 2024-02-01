@@ -54,6 +54,12 @@
     <ClCompile Include="EventStep.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Saucer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Manager.h">
@@ -90,6 +96,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EventStep.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Saucer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

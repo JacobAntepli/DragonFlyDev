@@ -146,10 +146,12 @@
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="EventStep.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectList.cpp" />
     <ClCompile Include="ObjectListIterator.cpp" />
+    <ClCompile Include="Saucer.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="Manager.cpp" />
@@ -167,6 +169,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectList.h" />
     <ClInclude Include="ObjectListIterator.h" />
+    <ClInclude Include="Saucer.h" />
     <ClInclude Include="utility.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="WorldManager.h" />

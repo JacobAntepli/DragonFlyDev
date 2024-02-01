@@ -46,7 +46,7 @@ namespace df {
 		if (!m_p_list->isEmpty() && !isDone()) {
 
 			//Debug logs
-			LM.writeLog(10, "Retrievering Object with id: %d", m_p_list->m_p_obj[m_index]->getId());
+			LM.writeLog(10, "Retrievering Object with id: %d\n", m_p_list->m_p_obj[m_index]->getId());
 
 			//Return object at index
 			return m_p_list->m_p_obj[m_index];
