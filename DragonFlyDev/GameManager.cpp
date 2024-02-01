@@ -142,7 +142,8 @@ namespace df{
 
         	Sleep(intended_sleep_time);//Sleep 
 
-			printf("Intended sleep time: %d\n", intended_sleep_time);
+			//Commented out for cleaness, you can uncomment to check frame rate
+			//printf("Frame: %d\n", intended_sleep_time);
 
 			//Exit after 100 loops for testing
 			if (loops == 100) {

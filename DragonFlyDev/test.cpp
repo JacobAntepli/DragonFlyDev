@@ -513,23 +513,30 @@ void testEventHandler() {
 int main()
 {
 
-    //testGameManager(); //GAME MANAGER MUST BE TESTED SEPERATLY
-    //testEventHandler(); //EVENT HANDELER TEST MUST BE DONE SEPERATLY   
+    
 
     //Start Logmanager for required tests
     LM.startUp();
-  
-    //testSFML();
-    /*
-   if(testBaseManager() == 0){
+
+
+    //testGameManager(); //GAME MANAGER MUST BE TESTED SEPERATLY
+    //testEventHandler(); //EVENT HANDELER TEST MUST BE DONE SEPERATLY   
+
+
+      /*
+     if(testBaseManager() == 0){
        printf("ALL TESTS FOR BASE MANAGER PASSED\n");
-   }
-   else {
+      }
+      else {
        printf("SOMETHING WENT WRONG WITH THE BASE MANAGER\n");
-   }
-   */
+     }
+      
+
+  
+     testSFML();
+  
    
-    /*
+    
      testClock();
      testLogManager();
      testVector();
