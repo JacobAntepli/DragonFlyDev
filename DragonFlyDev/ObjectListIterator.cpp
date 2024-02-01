@@ -39,25 +39,17 @@ namespace df {
 		return false;
 	}
 
-	//Return current object, null if empty or done
+	//Return current object
 	Object* ObjectListIterator::currentObject() const
 	{
 		//Check if empty or done
 		if (!m_p_list->isEmpty() && !isDone()) {
-			
+
 			//Debug logs
-			LM.writeLog(0, "Retrievering Object with id: %d", m_p_list->m_p_obj[m_index]->getId());
+			LM.writeLog(10, "Retrievering Object with id: %d", m_p_list->m_p_obj[m_index]->getId());
 
 			//Return object at index
 			return m_p_list->m_p_obj[m_index];
 		}
-		
-		LM.writeLog(0, "Could not retrieve Object with id: %d", m_p_list->m_p_obj[m_index]->getId());
-		return NULL;
 	}
-
-	
-	
-
-
 }//End of namespace

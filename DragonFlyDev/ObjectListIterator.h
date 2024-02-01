@@ -10,7 +10,6 @@ namespace df {
 
 	//Using Object list 
 	class ObjectList;
-
 	class ObjectListIterator {
 	private:
 
@@ -20,6 +19,7 @@ namespace df {
 		const ObjectList* m_p_list;
 
 	public:
+
 		//Constructer takes in an object list
 		ObjectListIterator(const ObjectList* p_l);
 

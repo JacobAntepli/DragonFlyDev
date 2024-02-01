@@ -19,6 +19,7 @@ namespace df {
 	//Return 0 on success, -1 on failure
 	int ObjectList::insert(Object* p_o)
 	{
+		
 		//Check if list is full
 		if (!isFull()) {
 			m_p_obj[m_count] = p_o;
@@ -42,7 +43,7 @@ namespace df {
 
 				if (m_p_obj[i] == p_o) {
 					LM.writeLog(1, "Object %d successfull found for removal\n", m_p_obj[i]->getId());
-					m_p_obj[i] = NULL;
+					m_p_obj[i] = m_p_obj[i-1];
 					m_count--;
 				}
 			}

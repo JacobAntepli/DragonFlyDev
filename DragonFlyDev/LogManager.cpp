@@ -17,7 +17,7 @@ namespace df {
 		//Initialize variebles
 		m_p_f = NULL;
 		m_do_flush = false;
-		verbosity = 0; 
+		verbosity = 1; 
 	}
 
 	//Deconstructer defintion

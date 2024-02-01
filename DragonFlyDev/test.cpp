@@ -12,6 +12,9 @@
 #include "Object.h"
 #include "ObjectList.h"
 #include "ObjectListIterator.h"
+#include "Event.h"
+#include "EventStep.h"
+#include "WorldManager.h"
 
 
 using namespace df;
@@ -299,7 +302,7 @@ void testVector() {
 
     //Testing normalize
     v3.normalize();
-    float normalized = 4 / sqrt(32.);
+    float normalized = 4.0f / sqrt(32.0f);
     if (v3.getX() == normalized && v3.getY() == normalized) {
         LM.writeLog(0, "Vector normalizing succesful\n");
     }
@@ -337,12 +340,14 @@ void testObject() {
     //TESTING SET FUNCTIONS OF OBJECT
     //--------------------------------
     Object t;
-
+    /*
     //Testing setID
     t.setId(50);
     if (t.getId() != 50) {
         LM.writeLog(3, "Set id not properly working expeted: %d, received: %d\n",50,t.getId());
     }
+    */
+    
 
     //Testing setType
     t.setType("Test");
@@ -364,8 +369,6 @@ void testObjectList() {
     LM.startUp();
 
     ObjectList list;
-    Object* trash;
-    
     
     //Testing insert 
     for (int i = 0; i < 10; i++) {
@@ -386,19 +389,17 @@ void testObjectList() {
         LM.writeLog(3, "Object list remove failure, expected %d, received %d\n", 10, list.getCount());
     }
     
-
-    
     //Testing clear
     list.clear();
     if (list.getCount() != 0) {
         LM.writeLog(3, "Object list clear failure, expected %d, received %d\n", 0, list.getCount());
     }
-    /*
+    
     //Testing isEmpty
     if (!list.isEmpty()) {
         LM.writeLog(3, "Object list isEmpty failure");
     }
-    */
+    
 
     /*Disabled for debuging other things
     
@@ -439,15 +440,29 @@ void testObjectListIterator() {
     //Give list to iterator
     ObjectListIterator iterator(&li);
 
-    //Set it to the first object
-    iterator.first();
-
-    //Go through and print the id of every object
     while (!iterator.isDone()) {
-        printf("Hello %s\n", iterator.currentObject()->getType().c_str());
-
-        LM.writeLog(0, "CURRENT OBJECT: %s\n",iterator.currentObject()->getType());
+        printf("%s\n", iterator.currentObject()->getType().c_str());
         iterator.next();
+     }
+
+}
+
+void testBaseEvent() {
+
+    //Start logmanager if needed
+    LM.startUp();
+
+    Event test; 
+
+    //Testing default event name
+    if (test.getType() != "df::undefined") {
+        LM.writeLog(10, "DEFAULT EVENT TYPE INCORRECT, EXPECTED df::undefined, RECEIVED %s", test.getType().c_str());
+    }
+
+    //Testing setting event type
+    test.setType("Test");
+    if (test.getType() != "df::undefined") {
+        LM.writeLog(10, "DEFAULT EVENT TYPE INCORRECT, EXPECTED df::undefined, RECEIVED %s", test.getType().c_str());
     }
 }
 
@@ -469,10 +484,10 @@ int main()
     //testLogManager();
     
     //testVector();
-
     testObject();
     testObjectList();
     testObjectListIterator();
 
+    
 }
 

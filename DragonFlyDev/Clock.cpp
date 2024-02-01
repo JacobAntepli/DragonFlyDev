@@ -55,8 +55,4 @@ namespace df {
 			+ (currentT.wMilliseconds * 1000);
 	}
 
-
-
-
-
 }//End of name space

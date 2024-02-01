@@ -5,6 +5,13 @@
 
 namespace df {
 
+    //Constructer defintion
+    WorldManager::WorldManager() {
+
+        //Set type
+        setType("World Manager");
+    }
+
     //Gets the only instance of world manager.
     WorldManager& df::WorldManager::getInstance()
     {
@@ -32,7 +39,7 @@ namespace df {
             return 0;
         }
         else {
-            LM.writeLog(10, "World Manager FAILED TO START UP");
+            LM.writeLog(10, "World Manager FAILED TO START UP\n");
             return -1;
         }
     }
@@ -40,6 +47,7 @@ namespace df {
     //Shutdown up world and destroy all objects
     void WorldManager::shutDown()
     {
+        LM.writeLog(0, "Shutting down world manager\n");
         //Copy list for iteration
         ObjectList shutList = m_updates;
         ObjectListIterator it(&shutList);
@@ -70,21 +78,15 @@ namespace df {
     ObjectList WorldManager::getAllObjects() const
     {
         LM.writeLog(0, "Retreiving all objects\n");
-        //If the object list is not empty, return it
-        if (!m_updates.isEmpty()) {
-            return m_updates;
-        }
+        return m_updates;
     }
 
     //Get objects of a certain type
     ObjectList WorldManager::getObjectOfType(string type) const
     {
         LM.writeLog(1, "Retrieving list of type %s\n", type.c_str());
-        //Copy list for iteration
-        ObjectList all = m_updates;
-        //Returning list
         ObjectList filtered;
-        ObjectListIterator it(&all);
+        ObjectListIterator it(&m_updates);
 
         while (!it.isDone()) {
             if (it.currentObject()->getType() == type) {

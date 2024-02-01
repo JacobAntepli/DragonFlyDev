@@ -131,7 +131,6 @@ namespace df{
 				shutDown();
 			}
 		}
-
 		LM.writeLog(0, "Exiting game loop\n");
 	}
 

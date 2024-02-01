@@ -29,7 +29,7 @@ namespace df {
 		
 		//Objects to be deleted
 		ObjectList m_deletion;
-		
+
 	public:
 
 		//Get single instance of the world manager

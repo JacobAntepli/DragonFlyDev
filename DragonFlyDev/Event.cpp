@@ -33,10 +33,6 @@ namespace df {
 	//Get the tpe of the event
 	string Event::getType() const
 	{
-		//Check if null then return
-		if (!m_event_type.empty()) {
-			return m_event_type;
-		}
+		return m_event_type;
 	}
-
 }//End of namespace

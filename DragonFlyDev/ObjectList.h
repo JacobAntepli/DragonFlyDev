@@ -9,9 +9,6 @@ namespace df {
 
 	//Max number of objects
 	const int MAX_OBJECTS = 2000;
-
-
-
 	//Using iterator
 	class ObjectListIterator;
 
