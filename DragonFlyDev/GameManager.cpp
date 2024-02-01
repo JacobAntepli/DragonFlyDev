@@ -37,11 +37,11 @@ namespace df{
      	LM.startUp();
 		WM.startUp();
 
-		//Set timer resolution
-		timeBeginPeriod(1);
-		
 		//Base class start up
 		Manager::startUp();
+
+		//Set timer resolution
+		timeBeginPeriod(1);
 
 		//Ensure everything started
 		if (Manager::isStarted() && game_over == false) {
@@ -78,6 +78,8 @@ namespace df{
 		// Clear time resolution
 		timeEndPeriod(1);
 
+		
+
 		LM.writeLog(1, "Shut down Game Manager\n");
 	}
 
@@ -110,6 +112,7 @@ namespace df{
 		LM.writeLog(0, "Starting game loop\n");
 
 		while (!getGameOver()){
+			
 
 			//Reset loop time
 			loop_time = 0;
@@ -119,33 +122,36 @@ namespace df{
 
 			//Start timer
 			clock.delta();
-
+			loop_time = clock.split() / 1000;
+			
 			//Get all objects currently in the world 
 			all_objects = WM.getAllObjects();
 			ObjectListIterator it(&all_objects);
 
+			
 			//Do game stuff
 			//Send all objects step event
 			EventStep step(4);
-			while (!it.isDone()) {
 
+			while (!it.isDone()) {
 				it.currentObject()->eventHandler(&step);
 				it.next();
 			}
 
-			loop_time = clock.split()/1000;
-			intended_sleep_time = FRAME_TIME_DEFAULT - loop_time;//Calculate sleep time
-			clock.delta();
-			Sleep(intended_sleep_time);//Sleep 
+			intended_sleep_time = frame_time - loop_time;//Calculate sleep time
 
-			//printf("Intended sleep time: %d\n", intended_sleep_time);
+        	Sleep(intended_sleep_time);//Sleep 
+
+			printf("Intended sleep time: %d\n", intended_sleep_time);
 
 			//Exit after 100 loops for testing
 			if (loops == 100) {
 				shutDown();
 			}
+			
 		}
 		LM.writeLog(0, "Exiting game loop\n");
+		
 	}
 
 

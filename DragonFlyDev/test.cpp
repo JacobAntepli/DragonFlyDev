@@ -15,6 +15,7 @@
 #include "Event.h"
 #include "EventStep.h"
 #include "WorldManager.h"
+#include "Saucer.h"
 
 
 using namespace df;
@@ -87,10 +88,6 @@ int testSFML() {
 //Test function for the log manager
 void testLogManager() {
 
-
-    //Start up if needed 
-    LM.startUp();
-
    //__________________
    // Testing start up 
    //------------------
@@ -159,10 +156,6 @@ void testLogManager() {
 
 //Test function for the clock class
 void testClock() {
-
-    //Start up log manager if needed
-    LM.startUp();
-
     //Set timer resolution
     timeBeginPeriod(1);
 
@@ -176,15 +169,15 @@ void testClock() {
     Sleep(2000);
 
     //Get how long it slept
-    long int slept = c.split()/1000;
+    long int slept = (c.split()/1000);
 
-    if (slept > 2000 && slept < 4000) {
+    if (slept >= 2000 && slept <= 3000) {
         LM.writeLog(1, "Clock got an acurate sleep time\n");
-        printf("%ld", slept);
+        printf("%ld\n", slept);
     }
     else {
-        LM.writeLog(3, "Clock did not get an acurate sleep time\n");
-        printf("%ld",slept);
+        LM.writeLog(3, "Clock did not get an acurate sleep time, RECEIVED %ld\n",slept);
+        printf("%ld\n",slept);
     }
 
     //Clear time resolution
@@ -194,8 +187,6 @@ void testClock() {
 
 //Test functions for the game manager
 void testGameManager() {
-
-
     GM.startUp();
     GM.run();
 }
@@ -356,9 +347,6 @@ void testObject() {
 
 //Test Object Lists
 void testObjectList() {
-    
-    //Start up log manager if needed
-    LM.startUp();
 
     ObjectList list;
     
@@ -411,10 +399,6 @@ void testObjectList() {
 //Test Object List iterators
 void testObjectListIterator() {
 
-   
-    //Start up log manager if needed
-    LM.startUp();
-
     //Test list
     ObjectList li;
 
@@ -441,25 +425,100 @@ void testObjectListIterator() {
 
 void testBaseEvent() {
 
-    //Start logmanager if needed
-    LM.startUp();
-
     Event test; 
 
     //Testing default event name
     if (test.getType() != "df::undefined") {
-        LM.writeLog(10, "DEFAULT EVENT TYPE INCORRECT, EXPECTED df::undefined, RECEIVED %s", test.getType());
+        LM.writeLog(10, "DEFAULT EVENT TYPE INCORRECT, EXPECTED df::undefined, RECEIVED %s\n", test.getType());
     }
 
     //Testing setting event type
     test.setType("Test");
     if (test.getType() != "Test") {
-        LM.writeLog(10, "DEFAULT EVENT TYPE INCORRECT, EXPECTED TEST RECEIVED % s", test.getType());
+        LM.writeLog(10, "DEFAULT EVENT TYPE INCORRECT, EXPECTED TEST RECEIVED % s\n", test.getType());
     }
+}
+
+void testStepEvent() {
+
+    //Start up if needed
+    EventStep step;
+
+    //Test Type definition
+    if (step.getType() != STEP_EVENT) {
+        LM.writeLog(10, "DEFAULT STEP EVENT TYPE INCORRECT, EXPECTED df::step, RECEIVED %s\n", step.getType());
+    }
+
+    //Test default step count
+    if (step.getStepCount() != 0) {
+        LM.writeLog(10, "DEFAULT STEP COUNT INCORRECT, EXPECTED 0, RECEIVED %s\n", step.getStepCount());
+    }
+
+    //Test set step count
+    step.setStepCount(3);
+    if (step.getStepCount() != 3) {
+        LM.writeLog(10, "DEFAULT STEP COUNT INCORRECT, EXPECTED 3, RECEIVED %s\n", step.getStepCount());
+    }
+}
+
+//Testing world manager
+void testWorldManager() {
+
+    //Testing start up 
+    WM.startUp();
+
+    if (!WM.isStarted()) {
+        LM.writeLog(10, "WORLD MANAGER DIDN'T STARTUP CORRECTLY\n");
+    }
+
+    //Testing adding in objects
+    Object *type1 = new Object();//Objects auto insert
+    Object *type2 = new Object();//Objects auto insert
+    type2->setType("Type2");
+
+    if (WM.getAllObjects().getCount() != 2) {
+        LM.writeLog(10, "ADDING OBJECTS TO WORLD FAILED EXPECTED: 2, RECEIVED: %d\n", WM.getAllObjects().getCount());
+    }
+
+    //Testing getting objects of a certain type
+    ObjectList filtered = WM.getObjectOfType("Type2");
+    if (!filtered.contains(type2)) {
+        LM.writeLog(10, "FAILED TO GET A PARTICULAR TYPE OF OBJECT FROM WORLD\n");
+    }
+
+    //Testing marking for deletion, updating, and removing objects
+    WM.markForDelete(type1);
+    WM.update();
+    if (WM.getAllObjects().getCount() != 1) {
+        LM.writeLog(10, "FAILED TO DELETE OBJECT FROM WORLD MANAGER\n");
+    }
+
+    //Testing shutdown
+    WM.shutDown();
+}
+
+//Tests event handler and game loop
+void testEventHandler() {
+
+    //Start up gamemanager
+    GM.startUp();
+
+    //Make new object to send event to 
+    new Saucer;
+
+    //Run
+    GM.run();
 }
 
 int main()
 {
+
+    //testGameManager(); //GAME MANAGER MUST BE TESTED SEPERATLY
+    //testEventHandler(); //EVENT HANDELER TEST MUST BE DONE SEPERATLY   
+
+    //Start Logmanager for required tests
+    LM.startUp();
+  
     //testSFML();
     /*
    if(testBaseManager() == 0){
@@ -469,14 +528,24 @@ int main()
        printf("SOMETHING WENT WRONG WITH THE BASE MANAGER\n");
    }
    */
-    //testGameManager();
-    //testClock();
-    //testLogManager();
-    //testVector();
-   //testObject();
-    //testObjectList();
-    //testObjectListIterator();
-    //testBaseEvent();
-    
+   
+    /*
+     testClock();
+     testLogManager();
+     testVector();
+     testObject();
+     testObjectList();
+     testObjectListIterator();
+     testBaseEvent();
+     testStepEvent();
+     testWorldManager();
+     */
+
+
+     //Shutdown logmanager if needed
+     if (LM.isStarted()) {
+         LM.shutDown();
+     }
+
 }
 

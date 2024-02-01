@@ -24,7 +24,7 @@ namespace df {
     //Return 0 on success, -1 on failure
     int WorldManager::startUp()
     {
-        LM.writeLog(1, "Starting World Manager");
+        LM.writeLog(1, "Starting World Manager\n");
         //Base manager start up
         Manager::startUp();
 
@@ -35,7 +35,7 @@ namespace df {
         //Ensure all need variables are correct
         if (Manager::isStarted() && m_updates.isEmpty() && m_deletion.isEmpty()) {
 
-            LM.writeLog(1, "World Manager started succesfully");
+            LM.writeLog(1, "World Manager started succesfully\n");
             return 0;
         }
         else {
@@ -53,8 +53,8 @@ namespace df {
         ObjectListIterator it(&shutList);
        
         //Delete every object
-        while (!it.isDone()) {
-            delete it.currentObject();
+        while (!it.isDone() && it.currentObject() != NULL) {
+            delete(it.currentObject());
             it.next();
         }
         Manager::shutDown();
@@ -64,6 +64,7 @@ namespace df {
     //Return 0 on success, -1 on failure
     int WorldManager::insertObject(Object* p_o)
     {
+        
         return m_updates.insert(p_o);
     }
 
@@ -92,6 +93,7 @@ namespace df {
             if (it.currentObject()->getType() == type) {
                 filtered.insert(it.currentObject());
             }
+            it.next();
         }
 
         return filtered;
@@ -109,7 +111,7 @@ namespace df {
         //Delete items in list
         while (!it.isDone()) {
 
-            delete it.currentObject();
+            delete(it.currentObject());
             it.next();
         }
 

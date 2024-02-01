@@ -1,18 +1,20 @@
 
+
+
 //Included resources
-#include "Clock.h"
+#include <Windows.h>
 #include <time.h>
 #include <stdio.h>
-#include <Windows.h>
+#include "Clock.h"
 #include "LogManager.h"
+
 namespace df {
 
 	//Constructer defintion
 	Clock::Clock() {
+		LM.writeLog("Clock constructer complete\n");
 		//Set previous time called to the current time;
 		m_previous_t = getCurTime();
-
-		LM.writeLog("Clock constructer complete\n");
 		
 	}
 
@@ -21,7 +23,7 @@ namespace df {
 	long int Clock::delta() {
 
 		//Get time since last call without changing previous time
-		long int returnTime = getCurTime() - m_previous_t;
+	    long int returnTime = getCurTime() - m_previous_t;
 		//Change previous time
 		m_previous_t = getCurTime();
 
@@ -37,7 +39,7 @@ namespace df {
 		long int splitTime = getCurTime() - m_previous_t;
 
 		return splitTime;
-
+	
 	}
 
 	//Get current time

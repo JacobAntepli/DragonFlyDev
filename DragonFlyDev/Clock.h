@@ -1,7 +1,5 @@
 #ifndef __CLOCK_H__
 #define __CLOCK_H__
-
-
 namespace df {
 
 	class Clock {
@@ -10,8 +8,6 @@ namespace df {
 
 		//Holds the time in windows in microseconds
 		long int m_previous_t;
-
-
 
 	public:
 		
@@ -26,12 +22,8 @@ namespace df {
 		//Does not reset previous time
 		long int split();
 
-		//Gets the current time
+		//Gets the current time in microseconds
 		long int getCurTime();
-
-		
-
-
 
 	};//End of Class
 }//End of name space

@@ -23,9 +23,9 @@ namespace df {
 	//Deconstructer defintion
 	LogManager::~LogManager() {
 
-		//Close file if it's still open
+		//Close file if its still open
 		if (m_p_f != NULL) {
-			shutDown();
+			LM.shutDown();
 		}
 	}
 
@@ -48,7 +48,7 @@ namespace df {
 			LM.writeLog("LOG MANAGER STARTED\n");
 		}
 		
-		return 0;
+		//return 0;
 	}
 
 	//Shutdown LogManager
@@ -57,6 +57,7 @@ namespace df {
 		//Call base class shutdown 
 		Manager::Manager::shutDown();
 
+		
 		//Close file 
 		fclose(m_p_f);
 	}
@@ -83,6 +84,7 @@ namespace df {
 
 			//Clean stack
 			va_end(args);
+
 			if (m_do_flush) {
 				fflush(m_p_f);
 			}
@@ -99,9 +101,27 @@ namespace df {
 
 		//Checking verbosity
 		if (log_level >= this->verbosity) {
+
+			//Temporary utility variable (remember to make that a singleton)
+			Utility UT;
+
+			//Print timestamp
+			fprintf(m_p_f, "%s\n", UT.getTimeString());
+			//Print initial message to file
+			fprintf(m_p_f, "Message: ");
+
+
+			//Initialize list
 			va_list args;
 			va_start(args, fmt);
-			writeLog(fmt,args);
+			vfprintf(m_p_f, fmt, args);
+
+			//Clean stack
+			va_end(args);
+
+			if (m_do_flush) {
+				fflush(m_p_f);
+			}
 		}
 	}
 
@@ -130,7 +150,6 @@ namespace df {
 
 		 //Set new verbosity
 		 verbosity = new_v;
-
 	 }
 
 }

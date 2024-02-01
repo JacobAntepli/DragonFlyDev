@@ -43,7 +43,7 @@ namespace df {
 
 				if (m_p_obj[i] == p_o) {
 					LM.writeLog(1, "Object %d successfull found for removal\n", m_p_obj[i]->getId());
-					m_p_obj[i] = m_p_obj[i-1];
+					m_p_obj[i] = NULL;
 					m_count--;
 				}
 			}
