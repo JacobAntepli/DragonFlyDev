@@ -51,6 +51,9 @@ namespace df {
 		//Return true if list is full
 		bool isFull() const;
 
+		//Checks to see if object is in list
+		bool contains(Object* p_o) const;
+
 	};//End of class
 }//End of namespace
 

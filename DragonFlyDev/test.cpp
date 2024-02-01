@@ -16,6 +16,7 @@
 
 using namespace df;
 using namespace std;
+
 //Test function for the base manager class
 int testBaseManager() {
 
@@ -83,6 +84,8 @@ int testSFML() {
 //Test function for the log manager
 void testLogManager() {
 
+
+    //Start up if needed 
     LM.startUp();
 
    //__________________
@@ -447,8 +450,6 @@ void testObjectListIterator() {
         iterator.next();
     }
 }
-
-
 
 int main()
 {

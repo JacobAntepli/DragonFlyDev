@@ -41,8 +41,8 @@ namespace df {
 			for (int i = 0; i < m_count; i++) {
 
 				if (m_p_obj[i] == p_o) {
-					LM.writeLog(1, "Object %d successfull found for deletetion\n", m_p_obj[i]->getId());
-					m_p_obj[i] = m_p_obj[i-1];
+					LM.writeLog(1, "Object %d successfull found for removal\n", m_p_obj[i]->getId());
+					m_p_obj[i] = NULL;
 					m_count--;
 				}
 			}
@@ -69,7 +69,6 @@ namespace df {
 	//Return true if list is empty
 	bool ObjectList::isEmpty() const
 	{
-		//Return if m_count == 0
 		return m_count == 0;
 	}
 
@@ -78,4 +77,19 @@ namespace df {
 	{
 		return m_count >= MAX_OBJECTS;
 	}
+
+	//Checks to see if object is in list
+	bool ObjectList::contains(Object* p_o) const
+	{
+		if (!isEmpty()) {
+			for (int i = 0; i < m_count; i++) {
+				if (m_p_obj[i] == p_o) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 }//End of namespace

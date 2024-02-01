@@ -35,6 +35,7 @@ namespace df {
 		//Return current object, null if empty or done
 		Object* currentObject() const;
 
+
 	};//End of class
 }//End of namespace
 

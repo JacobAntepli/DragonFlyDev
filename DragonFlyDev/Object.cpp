@@ -1,6 +1,7 @@
 
 //Included resources
 #include "Object.h"
+#include "WorldManager.h"
 
 using namespace std;
 namespace df {
@@ -21,12 +22,15 @@ namespace df {
 		m_position = Vector(0, 0);
 
 		//Add object to gameworld
+		WM.insertObject(this);
 	}
 
 	//Destroys object 
-	//Removes object from gameworld
+	//Removes object from gam eworld
 	Object::~Object() {
-		
+
+		//Remove from game world
+		WM.removeObject(this);
 	}
 
 	//Sets object unique id
