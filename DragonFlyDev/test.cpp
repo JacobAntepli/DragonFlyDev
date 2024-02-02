@@ -1,6 +1,6 @@
 
 //Included resources
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp> 
 #include <Windows.h>
 #include <math.h>
 
@@ -513,8 +513,6 @@ void testEventHandler() {
 int main()
 {
 
-    
-
     //Start Logmanager for required tests
     LM.startUp();
 
@@ -530,13 +528,9 @@ int main()
       else {
        printf("SOMETHING WENT WRONG WITH THE BASE MANAGER\n");
      }
-      
 
-  
      testSFML();
   
-   
-    
      testClock();
      testLogManager();
      testVector();
@@ -553,6 +547,5 @@ int main()
      if (LM.isStarted()) {
          LM.shutDown();
      }
-
 }
 

@@ -3,6 +3,9 @@ Username: Jaantepli
 
 Assignment: Dragonfly Egg
 
+IMPORTANT NOTE:
+I set it up so that my project does need the SFML 2.6 directory to run, there is a small test for it you can do in the test.cpp file.
+
 How to run tests:
 
 In the test.cpp file inside of the main function are several tests that have been commented out. Each function tests every method a class contains and print to the log file (Found in Debug/dragonfly.log) if anything were to go wrong. Notable exception of this being in the baseManager class as it was written prior to the log manager. 
