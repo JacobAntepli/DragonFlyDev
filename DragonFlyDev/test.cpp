@@ -1,21 +1,29 @@
 
-//Included resources
+//Included system resources
 #include <SFML/Graphics.hpp> 
 #include <Windows.h>
 #include <math.h>
 
+//Included managers
 #include "Manager.h"
 #include "LogManager.h"
-#include "Clock.h"
 #include "GameManager.h"
-#include "Vector.h"
+#include "WorldManager.h"
+
+//Event includes
+#include "Event.h"
+#include "EventStep.h"
+
+//Object included resources
 #include "Object.h"
 #include "ObjectList.h"
 #include "ObjectListIterator.h"
-#include "Event.h"
-#include "EventStep.h"
-#include "WorldManager.h"
+
+//Other included resources
+#include "Clock.h"
+#include "Vector.h"
 #include "Saucer.h"
+
 
 
 using namespace df;
@@ -173,7 +181,7 @@ void testClock() {
 
     if (slept >= 2000 && slept <= 3000) {
         LM.writeLog(1, "Clock got an acurate sleep time\n");
-        printf("%ld\n", slept);
+        printf("Sleep Time: %ld\n", slept);
     }
     else {
         LM.writeLog(3, "Clock did not get an acurate sleep time, RECEIVED %ld\n",slept);
@@ -510,6 +518,55 @@ void testEventHandler() {
     GM.run();
 }
 
+//Tests fonts and text in SFML
+void testSFMLText() {
+    //Load Font
+    sf::Font font;
+    if (font.loadFromFile("Fonts/df-AnonymousPro.ttf") == false) {
+        LM.writeLog(10, "COULD NOT LOAD FONT PROPERLY");
+        return;
+    }
+
+    //Test text display
+    sf::Text text;
+    text.setFont(font);
+    text.setString(" Hello, world!");
+    text.setCharacterSize(32);
+    text.setFillColor(sf::Color::Green);
+    text.setStyle(sf::Text::Bold);
+    text.setPosition(96, 134);
+
+    //Create window
+    sf::RenderWindow window(sf::VideoMode(400, 300), "SFML - Hello , world !");
+ 
+    if (!window.isOpen()) {
+        LM.writeLog(10, "COULD RENDER WINDOW PROPERLY");
+        return;
+    }
+
+    //Turn off mouse cursor for window
+    window.setMouseCursorVisible(false);
+
+    //Sync refresh rate
+    window.setVerticalSyncEnabled(true);
+
+    //Repeat until window is closed 
+    while (1) {
+        //Draw and cleaar
+        window.clear();
+        window.draw(text);
+        window.display();
+
+        //See if window has been closed
+        sf::Event e;
+        while(window.pollEvent(e)){
+            if (e.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
+    }
+}
+
 int main()
 {
 
@@ -517,9 +574,9 @@ int main()
     LM.startUp();
 
 
-    //testGameManager(); //GAME MANAGER MUST BE TESTED SEPERATLY
-    //testEventHandler(); //EVENT HANDELER TEST MUST BE DONE SEPERATLY   
-
+    //testGameManager(); //GAME MANAGER SHOULD BE TESTED SEPERATLY
+    //testEventHandler(); //EVENT HANDELER TEST SHOULD BE DONE SEPERATLY   
+    //testSFML();
 
       /*
      if(testBaseManager() == 0){
@@ -528,9 +585,8 @@ int main()
       else {
        printf("SOMETHING WENT WRONG WITH THE BASE MANAGER\n");
      }
-
-     testSFML();
-  
+     */
+    /*
      testClock();
      testLogManager();
      testVector();
@@ -541,6 +597,12 @@ int main()
      testStepEvent();
      testWorldManager();
      */
+     
+
+    //testSFMLText();
+
+
+     
 
 
      //Shutdown logmanager if needed

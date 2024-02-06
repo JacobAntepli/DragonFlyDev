@@ -2,6 +2,7 @@
 #define __GAME_MANAGER_H__
 
 #include "Manager.h"
+#include "Event.h"
 #include "WorldManager.h"
 
 namespace df {
@@ -67,6 +68,9 @@ namespace df {
 
 		//Run game loop
 		void run();
+
+		//Sends events to all game objects in m_update
+		void onEvent(const Event *p_event);
 
 	};//End of class
 }//End of namespace 

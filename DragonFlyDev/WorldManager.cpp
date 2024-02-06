@@ -89,11 +89,10 @@ namespace df {
         ObjectList filtered;
         ObjectListIterator it(&m_updates);
 
-        while (!it.isDone()) {
+        for (it.first(); !it.isDone(); it.next()) {
             if (it.currentObject()->getType() == type) {
                 filtered.insert(it.currentObject());
             }
-            it.next();
         }
 
         return filtered;
@@ -109,14 +108,12 @@ namespace df {
         ObjectListIterator it(&del);
 
         //Delete items in list
-        while (!it.isDone()) {
-
+        for (it.first(); !it.isDone(); it.next()){
             delete(it.currentObject());
-            it.next();
         }
 
         //Clear list
-        del.clear();
+        m_deletion.clear();
     }
 
     //Mark an object for deletion

@@ -20,6 +20,7 @@ namespace df{
 		loop_time = 0;
 		intended_sleep_time = 0;
 		loops = 0;
+		
 	}
 
 	//Get the only instance of the game manager
@@ -126,18 +127,13 @@ namespace df{
 			
 			//Get all objects currently in the world 
 			all_objects = WM.getAllObjects();
-			ObjectListIterator it(&all_objects);
-
 			
 			//Do game stuff
 			//Send all objects step event
-			EventStep step(4);
+			EventStep step(1);
+			onEvent(&step);
 
-			while (!it.isDone()) {
-				it.currentObject()->eventHandler(&step);
-				it.next();
-			}
-
+			
 			intended_sleep_time = frame_time - loop_time;//Calculate sleep time
 
         	Sleep(intended_sleep_time);//Sleep 
@@ -152,7 +148,15 @@ namespace df{
 			
 		}
 		LM.writeLog(0, "Exiting game loop\n");
-		
+	}
+
+	//Sends events to all game objects in m_update
+	void GameManager::onEvent(const Event *p_event) {
+
+		ObjectListIterator it(&all_objects);
+		for(it.first(); !it.isDone(); it.next()){
+			it.currentObject()->eventHandler(p_event);
+		}
 	}
 
 
