@@ -57,6 +57,9 @@ namespace df {
 		//Event handler for objects
 		virtual int eventHandler(const Event* p_event);
 
+		//Base draw function
+		virtual int draw();
+
 	};//End of class
 }//End of namespace
 

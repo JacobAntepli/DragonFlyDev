@@ -80,4 +80,10 @@ namespace df {
 		return 0;
 	}
 
+	//Base draw function
+	int Object::draw()
+	{
+		return 0;
+	}
+
 }//End of namespace

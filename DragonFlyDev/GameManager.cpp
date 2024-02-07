@@ -5,6 +5,7 @@
 #include "LogManager.h"
 #include "Clock.h"
 #include "EventStep.h"
+#include "DisplayManager.h"
 
 namespace df{
 
@@ -37,6 +38,7 @@ namespace df{
 		//Start up different managers
      	LM.startUp();
 		WM.startUp();
+		DM.startUp();
 
 		//Base class start up
 		Manager::startUp();
@@ -64,6 +66,7 @@ namespace df{
 		LM.writeLog(0, "Shutting down Log Manager\n");
 		LM.shutDown();
 		WM.shutDown();
+		DM.shutDown();
 
 
 		//If game loop is not shut down, do so
@@ -113,7 +116,6 @@ namespace df{
 		LM.writeLog(0, "Starting game loop\n");
 
 		while (!getGameOver()){
-			
 
 			//Reset loop time
 			loop_time = 0;
@@ -132,7 +134,6 @@ namespace df{
 			//Send all objects step event
 			EventStep step(1);
 			onEvent(&step);
-
 			
 			intended_sleep_time = frame_time - loop_time;//Calculate sleep time
 
@@ -158,8 +159,4 @@ namespace df{
 			it.currentObject()->eventHandler(p_event);
 		}
 	}
-
-
-
-
 }//End of name space
