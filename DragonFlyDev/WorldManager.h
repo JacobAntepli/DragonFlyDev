@@ -1,7 +1,6 @@
 #ifndef __WORLD_MANAGER_H__
 #define __WORLD_MANAGER_H__
 
-
 #include "Manager.h"
 #include "ObjectList.h"
 
@@ -63,6 +62,9 @@ namespace df {
 		//Mark an object for deletion
 		//Return 0 on success, -1 on failure
 		int markForDelete(Object* p_o);
+
+		//Tell all objects to draw themselves
+		void draw();
 
 	};//End of class
 }//End of name space

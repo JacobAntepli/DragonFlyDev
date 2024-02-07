@@ -1,5 +1,7 @@
-#ifndef __DISPLY_MANAGER_H__
-#define __DISPLY_MANAGER_H__
+
+
+#ifndef __DISPLAY_MANAGER_H__
+#define __DISPLAY_MANAGER_H__
 
 //Included resources
 #include <SFML/Graphics.hpp>
@@ -9,6 +11,13 @@
 
 using namespace std;
 namespace df {
+
+	//Enum for drawing strings
+	enum Justification {
+		LEFT_JUSTIFIED,
+		CENTER_JUSTIFIED,
+		RIGHT_JUSTIFIED
+	};
 
 	//Compute char height in pixels based on window
 	float charHeight();
@@ -66,6 +75,9 @@ namespace df {
 		//Vertical ASCII space in window
 		int m_window_vertical_chars;
 
+		//Window background color
+		sf::Color m_window_background_color;
+
 	public:
 		//Get the one an only instance of the DisplayManager
 		static DisplayManager& getInstance();
@@ -99,7 +111,14 @@ namespace df {
 
 		//Return pointer to window
 		sf::RenderWindow* getWindow() const;
+
+		//Draw strings
+		//Return 0 on success, -1 on failure
+		int drawString(Vector pos, string str, Justification just, Color color) const;
+
+		//Change background of window
+		bool setBackgroundColor(Color color);
 		
 	};//End of class
 }//End of namespace
-#endif __DISPLY_MANAGER_H__
+#endif

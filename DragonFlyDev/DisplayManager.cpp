@@ -8,16 +8,13 @@ namespace df {
 
 	//Constructer definition
 	DisplayManager::DisplayManager() {
-
-		
-
 		//Initialize Variables
-
 		m_p_window = NULL;
 		m_window_horizontal_pixels = WINDOW_HORIZONTAL_PIXELS_DEFAULT;
 		m_window_vertical_pixels = WINDOW_VERTICAL_PIXELS_DEFAULT;
 		m_window_horizontal_chars = WINDOW_HORIZONTAL_CHARS_DEFAULT;
 		m_window_vertical_chars = WINDOW_VERTICAL_CHARS_DEFAULT;
+		m_window_background_color = WINDOW_BACKGROUND_COLOR_DEFAULT;
 	}
 
 	//Get the one an only instance of the DisplayManager
@@ -45,6 +42,9 @@ namespace df {
 		//Sync refresh rate
 		m_p_window->setVerticalSyncEnabled(true);
 
+		//Set font
+		m_font.loadFromFile(FONT_FILE_DEFAULT);
+
 
 		if (m_p_window != NULL) {
 			//Base class start up
@@ -52,6 +52,9 @@ namespace df {
 
 			LM.writeLog(1, "Display manager started successfully\n");
 			return 0;
+		}
+		else {
+			return -1;
 		}
 	}
 
@@ -87,7 +90,7 @@ namespace df {
 		m_p_window->draw(rect);
 
 		//Create text to draw
-		static sf::Text text("",m_font);
+		 sf::Text text("",m_font);
 		text.setString(ch);
 		text.setStyle(sf::Text::Bold);
 
@@ -129,6 +132,11 @@ namespace df {
 			text.setFillColor(sf::Color::White);
 			break;
 		}//End of switch
+
+		text.setPosition(pixel_pos.getX(), pixel_pos.getY());
+		m_p_window->draw(text);
+
+		return 0;
 	}
 
 	//Return horizontal max in characters
@@ -167,8 +175,8 @@ namespace df {
 		//Display 
 		m_p_window->display();
 
-		//Clear window 
-		m_p_window->clear();
+		//Clear window and adjust background color
+		m_p_window->clear(m_window_background_color);
 
 		LM.writeLog(-1, "Successfully swapped buffer\n");
 
@@ -182,8 +190,91 @@ namespace df {
 		if (m_p_window != NULL) {
 			return m_p_window;
 		}
+		
 	}
 
+	//Draws strings
+	//Return 0 on success, -1 on failure 
+	int DisplayManager::drawString(Vector pos, string str, Justification just, Color color) const
+	{
+		//Check if window is open
+		if (m_p_window == NULL) {
+			return -1;
+		}
+
+		//Getting starting position
+		Vector start_pos = pos;
+		switch (just) {
+
+		case CENTER_JUSTIFIED:
+			start_pos.setX(pos.getX() - str.size() / 2);
+			break;
+		case RIGHT_JUSTIFIED:
+			start_pos.setX(pos.getX() - str.size());
+			break;
+		case LEFT_JUSTIFIED:
+			break;
+		default:
+			break;
+		}//End of switch
+
+		//Draw string char by char
+		for (int i = 0; i < str.size(); i++) {
+			Vector temp_pos(start_pos.getX() + i, start_pos.getY());
+			drawCh(temp_pos, str[i], color);
+		}
+
+		return 0;
+	}
+
+	//Change background of window
+	bool DisplayManager::setBackgroundColor(Color color)
+	{
+		//Check window is open 
+		if (m_p_window == NULL) {
+			m_window_background_color = WINDOW_BACKGROUND_COLOR_DEFAULT;
+			return false;
+		}
+
+		//Set SFML color based on dragonfly color
+		switch (color) {
+		case BLACK:
+			m_window_background_color = (sf::Color::Black);
+			break;
+		case RED:
+			m_window_background_color = (sf::Color::Red);
+			break;
+		case GREEN:
+			m_window_background_color = (sf::Color::Green);
+			break;
+		case YELLOW:
+			m_window_background_color = (sf::Color::Yellow);
+			break;
+		case BLUE:
+			m_window_background_color = (sf::Color::Blue);
+			break;
+		case MAGENTA:
+			m_window_background_color = (sf::Color::Magenta);
+			break;
+		case CYAN:
+			m_window_background_color = (sf::Color::Cyan);
+			break;
+		case WHITE:
+			m_window_background_color = (sf::Color::White);
+			break;
+		default:
+			m_window_background_color = WINDOW_BACKGROUND_COLOR_DEFAULT;
+			break;
+		}//End of switch
+
+		return true;
+	}
+	
+	
+
+	//_____________________________
+	//Non DisplayManager functions
+	//-----------------------------
 	//Compute char height in pixels based on window
 	float charHeight()
 	{
@@ -210,4 +301,5 @@ namespace df {
 		pixels.setXY(pixels.getX() / charWidth(), pixels.getY() / charHeight());
 		return pixels;
 	}
+	
 }//End of namespace

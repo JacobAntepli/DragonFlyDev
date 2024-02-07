@@ -133,4 +133,19 @@ namespace df {
         return -1;
     }
 
+    //Tell all objects to draw 
+    void WorldManager::draw()
+    {
+        //Make iterator with updates object list
+        ObjectListIterator it(&m_updates);
+
+        for (int i = 0; i < MAX_ALTITUDE; i++) {
+            //Call draw method for all objects
+            for (it.first(); !it.isDone(); it.next()) {
+                if(it.currentObject()->getAltitude() == i)
+                it.currentObject()->draw();
+            }
+        }
+    }
+
 }//End of namespace

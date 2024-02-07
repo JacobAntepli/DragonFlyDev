@@ -1,11 +1,13 @@
 
 //Included resources
-#include <Windows.h>
 #include "GameManager.h"
 #include "LogManager.h"
 #include "Clock.h"
 #include "EventStep.h"
 #include "DisplayManager.h"
+#include <Windows.h>
+
+
 
 namespace df{
 
@@ -134,6 +136,15 @@ namespace df{
 			//Send all objects step event
 			EventStep step(1);
 			onEvent(&step);
+
+			//Update game world
+			WM.update();
+
+			//Draw all objects
+			WM.draw();
+
+			//Swap buffer
+			DM.swapBuffers();
 			
 			intended_sleep_time = frame_time - loop_time;//Calculate sleep time
 

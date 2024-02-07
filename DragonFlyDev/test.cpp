@@ -1,4 +1,5 @@
 
+
 //Included system resources
 #include <SFML/Graphics.hpp> 
 #include <Windows.h>
@@ -9,6 +10,7 @@
 #include "LogManager.h"
 #include "GameManager.h"
 #include "WorldManager.h"
+#include "DisplayManager.h"
 
 //Event includes
 #include "Event.h"
@@ -24,10 +26,9 @@
 #include "Vector.h"
 #include "Saucer.h"
 
-
-
-using namespace df;
 using namespace std;
+using namespace df;
+
 
 //Test function for the base manager class
 int testBaseManager() {
@@ -174,7 +175,7 @@ void testClock() {
     c.delta();
 
     //Test sleeping for 2 seconds
-    Sleep(2000);
+    //Sleep(2000);
 
     //Get how long it slept
     long int slept = (c.split()/1000);
@@ -567,6 +568,29 @@ void testSFMLText() {
     }
 }
 
+
+
+void testDisplayManager() {
+
+    //Testing drawing character, start up, and shutdown
+    if (DM.startUp() != 0) {
+        LM.writeLog(10, "DISPLAY START UP TEST FAILURE\n");
+    }
+    
+    
+    DM.drawCh(Vector(10, 5), '*', WHITE);
+    DM.setBackgroundColor(BLUE);
+    DM.swapBuffers();
+    
+    
+    
+
+    Sleep(10000);
+
+    DM.shutDown();
+}
+
+
 int main()
 {
 
@@ -597,10 +621,9 @@ int main()
      testStepEvent();
      testWorldManager();
      */
-     
 
     //testSFMLText();
-
+    testDisplayManager();
 
      
 

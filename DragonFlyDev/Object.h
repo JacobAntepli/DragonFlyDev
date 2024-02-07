@@ -6,11 +6,15 @@
 #include "Vector.h"
 #include "Event.h"
 
-
 using namespace std;
 namespace df {
 
+	//Maximum number of drawing layers known as altitudes
+	const int MAX_ALTITUDE = 4;
+
 	class Object {
+
+		
 
 	private:
 
@@ -22,6 +26,9 @@ namespace df {
 
 		//Position in game world
 		Vector m_position;
+
+		//Drawing altitude
+		int m_altitude;
 
 	public:
 
@@ -59,6 +66,12 @@ namespace df {
 
 		//Base draw function
 		virtual int draw();
+
+		//Set altitude of object, range of [0,MAX_ALTITUDE]
+		int setAltitude(int new_altitude);
+
+		//Gets the altitude of an object
+		int getAltitude() const;
 
 	};//End of class
 }//End of namespace
