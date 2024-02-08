@@ -3,6 +3,9 @@
 
 //Included resourses 
 #include "Object.h"
+#include "EventStep.h"
+#include "EventKeyboard.h"
+#include "EventMouse.h"
 
 class Saucer : public df::Object {
 
@@ -21,6 +24,12 @@ public:
 
 	//Draw something
 	int draw();
+
+	//Print pressed keys
+	void printKey(const df::EventKeyboard* p_e);
+
+	//Print pressed mouse buttons
+	void printMSE(const df::EventMouse* p_e);
 
 
 

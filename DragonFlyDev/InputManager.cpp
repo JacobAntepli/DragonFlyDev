@@ -58,64 +58,6 @@ namespace df {
 		Manager::shutDown();
 	}
 
-	
-
-	//Get input keyboard and mouse and pass events to objects 
-    void InputManager::getInput() const
-    {
-        //The event
-        sf::Event e;
-
-        //Get events from window while it's open
-        while (DM.getWindow()->pollEvent(e)) {
-            //Check type of event
-            //KEYBOARD
-            if (e.type == sf::Event::KeyPressed) {
-                //Create event
-                EventKeyboard keyEvent;
-                //Set action
-                keyEvent.setKeyboardAction(KEY_PRESSED);
-                //Set key
-                keyEvent.setKey(SFMLToDFKey(e.key.code));
-                //Send event to objects
-                WM.onEvent(&keyEvent);
-            }
-            if (e.type == sf::Event::KeyReleased) {
-                //Create event
-                EventKeyboard keyEvent;
-                //Set action
-                keyEvent.setKeyboardAction(KEY_RELEASE);
-                //Set key
-                keyEvent.setKey(SFMLToDFKey(e.key.code));
-                //Send event to objects
-                WM.onEvent(&keyEvent);
-            }
-            //MOUSE
-            if (e.type == sf::Event::MouseButtonPressed) {
-                //Create event
-                EventMouse mouseEvent;
-                //Set action
-                mouseEvent.setMouseAction(CLICKED);
-                //Set button
-                mouseEvent.setMouseButton(SFMLToDFMouse(e.mouseButton.button));
-                //Set position of mouse 
-                mouseEvent.setMousePosition(Vector(e.mouseButton.x, e.mouseButton.y));
-                //Send event to objects
-                WM.onEvent(&mouseEvent);
-            }
-            if (e.type == sf::Event::MouseMoved) {
-                //Create event
-                EventMouse mouseEvent;
-                //Set action
-                mouseEvent.setMouseAction(MOVED);
-                //Set position of mouse 
-                mouseEvent.setMousePosition(Vector(e.mouseButton.x, e.mouseButton.y));
-                //Send event to objects
-                WM.onEvent(&mouseEvent);
-            }
-        }
-    }
-
     //Translate SFML key events to dragonfly mouse events
     static Mouse::Button SFMLToDFMouse(sf::Mouse::Button e_button)
     {
@@ -345,4 +287,63 @@ namespace df {
             return Keyboard::Key::UNDEFINED_KEY;
         }
     }
+	
+
+	//Get input keyboard and mouse and pass events to objects 
+    void InputManager::getInput() const
+    {
+        //The event
+        sf::Event e;
+
+        //Get events from window while it's open
+        while (DM.getWindow()->pollEvent(e)) {
+            //Check type of event
+            //KEYBOARD
+            if (e.type == sf::Event::KeyPressed) {
+                //Create event
+                EventKeyboard keyEvent;
+                //Set action
+                keyEvent.setKeyboardAction(KEY_PRESSED);
+                //Set key
+                keyEvent.setKey(SFMLToDFKey(e.key.code));
+                //Send event to objects
+                WM.onEvent(&keyEvent);
+            }
+            if (e.type == sf::Event::KeyReleased) {
+                //Create event
+                EventKeyboard keyEvent;
+                //Set action
+                keyEvent.setKeyboardAction(KEY_RELEASE);
+                //Set key
+                keyEvent.setKey(SFMLToDFKey(e.key.code));
+                //Send event to objects
+                WM.onEvent(&keyEvent);
+            }
+            //MOUSE
+            if (e.type == sf::Event::MouseButtonPressed) {
+                //Create event
+                EventMouse mouseEvent;
+                //Set action
+                mouseEvent.setMouseAction(CLICKED);
+                //Set button
+                mouseEvent.setMouseButton(SFMLToDFMouse(e.mouseButton.button));
+                //Set position of mouse 
+                mouseEvent.setMousePosition(Vector(e.mouseButton.x, e.mouseButton.y));
+                //Send event to objects
+                WM.onEvent(&mouseEvent);
+            }
+            if (e.type == sf::Event::MouseMoved) {
+                //Create event
+                EventMouse mouseEvent;
+                //Set action
+                mouseEvent.setMouseAction(MOVED);
+                //Set position of mouse 
+                mouseEvent.setMousePosition(Vector(e.mouseButton.x, e.mouseButton.y));
+                //Send event to objects
+                WM.onEvent(&mouseEvent);
+            }
+        }
+    }
+
+ 
 }//End of namespace

@@ -11,6 +11,7 @@
 #include "GameManager.h"
 #include "WorldManager.h"
 #include "DisplayManager.h"
+#include "InputManager.h"
 
 //Event includes
 #include "Event.h"
@@ -625,6 +626,21 @@ void testDisplayManager() {
     WM.shutDown();
 }
 
+//Test input manager by making mini game loop 
+void testInputManager() {
+
+    DM.startUp();
+    IM.startUp();
+
+    new Saucer();
+
+    bool done = false;
+    //Test saucers are told to print key, if escape is pressed finish
+    while (!done) {
+        IM.getInput();
+    }
+}
+
 
 int main()
 {
@@ -635,7 +651,8 @@ int main()
 
     //testGameManager(); //GAME MANAGER SHOULD BE TESTED SEPERATLY
     //testEventHandler(); //EVENT HANDELER TEST SHOULD BE DONE SEPERATLY   
-    //testDisplayManager(); DISPLAY MANAGER TESTING SHOULD BE DONE SEPERATLY 
+    //testDisplayManager(); //DISPLAY MANAGER TESTING SHOULD BE DONE SEPERATLY 
+    testInputManager(); //INPUT MANAGER TESTING SHOULD BE DONE SEPRATLY
     //testSFML();
 
       /*
@@ -659,6 +676,7 @@ int main()
      */
 
     //testSFMLText();
+    
    
 
      

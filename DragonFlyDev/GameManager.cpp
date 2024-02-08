@@ -138,6 +138,9 @@ namespace df{
 			EventStep step(1);
 			WM.onEvent(&step);
 
+			//Get all inputs
+			IM.getInput();
+
 			//Update game world
 			WM.update();
 
