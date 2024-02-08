@@ -582,12 +582,48 @@ void testDisplayManager() {
     DM.setBackgroundColor(BLUE);
     DM.swapBuffers();
     
-    
+    Sleep(2000);
+    //Test to see if background changes
+    DM.swapBuffers();
+    Sleep(2000);
+
+    //Testing writing strings and their justifications
+    DM.drawString(Vector(50, 5), "HELLO WORLD\n", LEFT_JUSTIFIED, WHITE);
+    DM.swapBuffers();
+    Sleep(2000);
+
+    DM.drawString(Vector(50, 5), "HELLO WORLD\n", RIGHT_JUSTIFIED, WHITE);
+    DM.swapBuffers();
+    Sleep(2000);
+
+    DM.drawString(Vector(50, 5), "HELLO WORLD\n", CENTER_JUSTIFIED, WHITE);
+    DM.swapBuffers();
+    Sleep(2000);
+
     
 
-    Sleep(10000);
+    //Testing Object draw function
+    WM.startUp();
+    Saucer *bottom  = new Saucer;
+    bottom->setType("LONG STRINNGGGGG");
+    bottom->setAltitude(0);
+    bottom->setPosition(Vector(50, 5));
+    WM.draw();
+    DM.swapBuffers();
+    Sleep(2000);
+
+    //Testing altitude by putting object on top of previous object
+    Saucer* top = new Saucer;
+    top->setType("SHORT STRING");
+    top->setPosition(Vector(50, 5));
+    top->setAltitude(2);
+    WM.draw();
+    DM.swapBuffers();
+    Sleep(2000);
+
 
     DM.shutDown();
+    WM.shutDown();
 }
 
 
@@ -600,6 +636,7 @@ int main()
 
     //testGameManager(); //GAME MANAGER SHOULD BE TESTED SEPERATLY
     //testEventHandler(); //EVENT HANDELER TEST SHOULD BE DONE SEPERATLY   
+    //testDisplayManager(); DISPLAY MANAGER TESTING SHOULD BE DONE SEPERATLY 
     //testSFML();
 
       /*
@@ -623,7 +660,7 @@ int main()
      */
 
     //testSFMLText();
-    testDisplayManager();
+   
 
      
 

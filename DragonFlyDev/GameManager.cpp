@@ -5,6 +5,7 @@
 #include "Clock.h"
 #include "EventStep.h"
 #include "DisplayManager.h"
+#include "InputManager.h"
 #include <Windows.h>
 
 
@@ -41,6 +42,8 @@ namespace df{
      	LM.startUp();
 		WM.startUp();
 		DM.startUp();
+		IM.startUp();
+		
 
 		//Base class start up
 		Manager::startUp();
@@ -65,10 +68,10 @@ namespace df{
 	void GameManager::shutDown() {
 
 		//Shut down other classes
-		LM.writeLog(0, "Shutting down Log Manager\n");
-		LM.shutDown();
 		WM.shutDown();
+		IM.shutDown();
 		DM.shutDown();
+		LM.shutDown();
 
 
 		//If game loop is not shut down, do so
@@ -83,8 +86,6 @@ namespace df{
 
 		// Clear time resolution
 		timeEndPeriod(1);
-
-		
 
 		LM.writeLog(1, "Shut down Game Manager\n");
 	}

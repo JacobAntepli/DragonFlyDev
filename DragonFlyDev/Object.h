@@ -13,9 +13,6 @@ namespace df {
 	const int MAX_ALTITUDE = 4;
 
 	class Object {
-
-		
-
 	private:
 
 		//Unique identifier

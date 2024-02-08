@@ -19,6 +19,9 @@ public:
 	//Handels events for saucer
 	int eventHandler(const df::Event* p_e) override;
 
+	//Draw something
+	int draw();
+
 
 
 };//End of class

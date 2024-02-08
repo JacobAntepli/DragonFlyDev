@@ -146,9 +146,12 @@
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="DisplayManager.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="EventMouse.cpp" />
     <ClCompile Include="EventStep.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="EventKeyboard.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectList.cpp" />
     <ClCompile Include="ObjectListIterator.cpp" />
@@ -165,8 +168,11 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="DisplayManager.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="EventMouse.h" />
     <ClInclude Include="EventStep.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="EventKeyboard.h" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Object.h" />

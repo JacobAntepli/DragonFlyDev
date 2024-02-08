@@ -41,10 +41,12 @@ namespace df {
 
 		//Sync refresh rate
 		m_p_window->setVerticalSyncEnabled(true);
-
-		//Set font
-		m_font.loadFromFile(FONT_FILE_DEFAULT);
-
+		
+		
+		//Set font and ensure it loaded
+		if (!m_font.loadFromFile(FONT_FILE_DEFAULT)) {
+			LM.writeLog(10, "FAILED TO PROPERLY LOAD DEFAULT FONT\n");
+		}
 
 		if (m_p_window != NULL) {
 			//Base class start up
@@ -54,6 +56,7 @@ namespace df {
 			return 0;
 		}
 		else {
+			LM.writeLog(10, "DISPLAY MANAGER FAILED TO OPEN WINDOW\n");
 			return -1;
 		}
 	}
@@ -84,7 +87,7 @@ namespace df {
 		//Draw background rectangle
 		static sf::RectangleShape rect;
 		rect.setSize(sf::Vector2f(charWidth(), charHeight()));
-		rect.setFillColor(WINDOW_BACKGROUND_COLOR_DEFAULT);
+		rect.setFillColor(m_window_background_color);
 		rect.setPosition(pixel_pos.getX() - charWidth() / 10,
 						pixel_pos.getY() + charHeight() / 5);
 		m_p_window->draw(rect);
@@ -269,7 +272,6 @@ namespace df {
 
 		return true;
 	}
-	
 	
 
 	//_____________________________
