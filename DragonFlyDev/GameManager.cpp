@@ -136,7 +136,7 @@ namespace df{
 			//Do game stuff
 			//Send all objects step event
 			EventStep step(1);
-			onEvent(&step);
+			WM.onEvent(&step);
 
 			//Update game world
 			WM.update();
@@ -161,14 +161,5 @@ namespace df{
 			
 		}
 		LM.writeLog(0, "Exiting game loop\n");
-	}
-
-	//Sends events to all game objects in m_update
-	void GameManager::onEvent(const Event *p_event) {
-
-		ObjectListIterator it(&all_objects);
-		for(it.first(); !it.isDone(); it.next()){
-			it.currentObject()->eventHandler(p_event);
-		}
 	}
 }//End of name space

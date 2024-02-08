@@ -4,7 +4,6 @@
 //Included resourses
 #include <string>
 
-
 using namespace std;
 namespace df {
 

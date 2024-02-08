@@ -66,6 +66,9 @@ namespace df {
 		//Tell all objects to draw themselves
 		void draw();
 
+		//Sends events to all game objects in m_update
+		void onEvent(const Event* p_event);
+
 	};//End of class
 }//End of name space
 #endif // !__WORLD_MANAGER_H__

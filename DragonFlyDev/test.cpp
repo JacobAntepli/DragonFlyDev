@@ -568,8 +568,7 @@ void testSFMLText() {
     }
 }
 
-
-
+//Tests display manager functions
 void testDisplayManager() {
 
     //Testing drawing character, start up, and shutdown

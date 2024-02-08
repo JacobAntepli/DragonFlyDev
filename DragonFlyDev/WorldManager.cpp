@@ -148,4 +148,13 @@ namespace df {
         }
     }
 
+    //Sends events to all game objects in m_update
+    void WorldManager::onEvent(const Event* p_event) {
+
+        ObjectListIterator it(&m_updates);
+        for (it.first(); !it.isDone(); it.next()) {
+            it.currentObject()->eventHandler(p_event);
+        }
+    }
+
 }//End of namespace

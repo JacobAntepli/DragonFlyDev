@@ -69,9 +69,6 @@ namespace df {
 		//Run game loop
 		void run();
 
-		//Sends events to all game objects in m_update
-		void onEvent(const Event *p_event);
-
 	};//End of class
 }//End of namespace 
 
