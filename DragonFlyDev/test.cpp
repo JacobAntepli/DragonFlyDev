@@ -26,6 +26,7 @@
 #include "Clock.h"
 #include "Vector.h"
 #include "Saucer.h"
+#include "TestObject.h"
 
 using namespace std;
 using namespace df;
@@ -514,7 +515,7 @@ void testEventHandler() {
     GM.startUp();
 
     //Make new object to send event to 
-    new Saucer;
+    new TestObject;
 
     //Run
     GM.run();
@@ -604,7 +605,7 @@ void testDisplayManager() {
 
     //Testing Object draw function
     WM.startUp();
-    Saucer *bottom  = new Saucer;
+    TestObject*bottom  = new TestObject;
     bottom->setType("LONG STRINNGGGGG");
     bottom->setAltitude(0);
     bottom->setPosition(Vector(50, 5));
@@ -613,7 +614,7 @@ void testDisplayManager() {
     Sleep(2000);
 
     //Testing altitude by putting object on top of previous object
-    Saucer* top = new Saucer;
+    TestObject* top = new TestObject;
     top->setType("SHORT STRING");
     top->setPosition(Vector(50, 5));
     top->setAltitude(2);
@@ -632,14 +633,39 @@ void testInputManager() {
     DM.startUp();
     IM.startUp();
 
-    new Saucer();
+    new TestObject();
 
     bool done = false;
-    //Test saucers are told to print key, if escape is pressed finish
+    //Test object are told to print key pressed 
     while (!done) {
         IM.getInput();
     }
 }
+
+//Test GameManager loop with collisions and velocity
+void testCollisions() {
+
+    GM.startUp();
+    LM.setVerbosity(0);
+
+    //Make new saucer and make them head towards each other
+    //When out of bounds saucers print to console 
+    //Pressing escape stops the game 
+    new Saucer(Vector(0,DM.getVertical()/2),Vector(.25,0));
+
+    new Saucer(Vector(DM.getHorizontal(), DM.getVertical() / 2), Vector(-.25, 0));
+    
+    Saucer* soft = new Saucer(Vector(DM.getHorizontal() / 2, DM.getVertical()), Vector(0, -.05));
+    soft->setSolidness(df::SOFT);
+
+
+    Saucer* spectral = new Saucer(Vector(DM.getHorizontal()/2,0), Vector(0, .05));
+    spectral->setSolidness(df::SPECTRAL);
+
+    GM.run();
+}
+
+
 
 
 int main()
@@ -649,39 +675,52 @@ int main()
     LM.startUp();
 
 
-    //testGameManager(); //GAME MANAGER SHOULD BE TESTED SEPERATLY
-    //testEventHandler(); //EVENT HANDELER TEST SHOULD BE DONE SEPERATLY   
-    //testDisplayManager(); //DISPLAY MANAGER TESTING SHOULD BE DONE SEPERATLY 
-    testInputManager(); //INPUT MANAGER TESTING SHOULD BE DONE SEPRATLY
-    //testSFML();
-
-      /*
-     if(testBaseManager() == 0){
-       printf("ALL TESTS FOR BASE MANAGER PASSED\n");
-      }
-      else {
-       printf("SOMETHING WENT WRONG WITH THE BASE MANAGER\n");
-     }
-     */
+    //____________________
+    //Manager Tests
+    //--------------------
+   
     /*
-     testClock();
-     testLogManager();
-     testVector();
-     testObject();
-     testObjectList();
-     testObjectListIterator();
-     testBaseEvent();
-     testStepEvent();
-     testWorldManager();
-     */
+    if (testBaseManager() == 0) {
+        printf("ALL TESTS FOR BASE MANAGER PASSED\n");
+    }
+    else {
+        printf("SOMETHING WENT WRONG WITH THE BASE MANAGER\n");
+    }
+    */
+    //testLogManager();
+    //testWorldManager();
+    //testGameManager(); //GAME MANAGER SHOULD BE TESTED SEPERATLY
+    //testDisplayManager(); //DISPLAY MANAGER TESTING SHOULD BE DONE SEPERATLY 
+    //testInputManager(); //INPUT MANAGER TESTING SHOULD BE DONE SEPRATLY
+    
+    
 
+    //____________________
+    //Event Tests
+    //--------------------
+   
+    //testCollisions(); //COLLISIONS SHOULD BE TESETED SEPERATLY
+    //testEventHandler(); //EVENT HANDELER TEST SHOULD BE DONE SEPERATLY 
+    //testBaseEvent();
+    //testStepEvent();
+
+    //_______________________
+    //Object and Vector Tests
+    //-----------------------
+   
+    //testObject();
+    //testObjectList();
+    //testObjectListIterator();
+    //testVector();
+
+    //_______________________
+    //Utilty and SFML Tests
+    //-----------------------
+   
+    //testClock();
+    //testSFML();
     //testSFMLText();
     
-   
-
-     
-
-
      //Shutdown logmanager if needed
      if (LM.isStarted()) {
          LM.shutDown();

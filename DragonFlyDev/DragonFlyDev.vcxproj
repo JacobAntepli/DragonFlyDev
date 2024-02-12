@@ -146,7 +146,9 @@
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="DisplayManager.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="EventCollision.cpp" />
     <ClCompile Include="EventMouse.cpp" />
+    <ClCompile Include="EventOut.cpp" />
     <ClCompile Include="EventStep.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -159,6 +161,7 @@
     <ClCompile Include="test.cpp" />
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="Manager.cpp" />
+    <ClCompile Include="TestObject.cpp" />
     <ClCompile Include="utility.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="WorldManager.cpp" />
@@ -168,7 +171,9 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="DisplayManager.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="EventCollision.h" />
     <ClInclude Include="EventMouse.h" />
+    <ClInclude Include="EventOut.h" />
     <ClInclude Include="EventStep.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="InputManager.h" />
@@ -179,6 +184,7 @@
     <ClInclude Include="ObjectList.h" />
     <ClInclude Include="ObjectListIterator.h" />
     <ClInclude Include="Saucer.h" />
+    <ClInclude Include="TestObject.h" />
     <ClInclude Include="utility.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="WorldManager.h" />

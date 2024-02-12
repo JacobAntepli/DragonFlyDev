@@ -9,6 +9,13 @@
 using namespace std;
 namespace df {
 
+	//Solidity of an object
+	enum Solidness {
+		HARD,
+		SOFT,
+		SPECTRAL,
+	};
+
 	//Maximum number of drawing layers known as altitudes
 	const int MAX_ALTITUDE = 4;
 
@@ -26,6 +33,15 @@ namespace df {
 
 		//Drawing altitude
 		int m_altitude;
+
+		//Vector directtion
+		Vector m_direction;
+
+		//Object speed
+		float m_speed;
+
+		//Object solidity
+		Solidness m_solidness;
 
 	public:
 
@@ -69,6 +85,38 @@ namespace df {
 
 		//Gets the altitude of an object
 		int getAltitude() const;
+
+		//Set speed of object
+		void setSpeed(float speed);
+
+		//Get speed of object
+		float getSpeed() const;
+
+		//Set direction of object
+		void setDirection(Vector new_direction);
+
+		//Get direction of object
+		Vector getDirection() const;
+
+		//Set velocity of object 
+		void setVelocity(Vector new_velocity);
+
+		//Get velocity of object
+		Vector getVelocity() const;
+
+		//Predict objects position based on speed and direction
+		//Return predicted position 
+		Vector predictPosition();
+
+		//Check if object is hard or soft
+		bool isSolid() const;
+
+		//Set object solidity
+		//Return 0 on success, -1 on failure
+		int setSolidness(Solidness new_solid);
+
+		//Get object solidness
+		Solidness getSolidness() const;
 
 	};//End of class
 }//End of namespace

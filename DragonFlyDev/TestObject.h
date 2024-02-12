@@ -1,5 +1,5 @@
-#ifndef __SAUCER_H__
-#define __SAUCER_H__
+#ifndef __TEST_OBJECT_H__
+#define __TEST_OBJECT_H__
 
 //Included resourses 
 #include "Object.h"
@@ -8,20 +8,17 @@
 #include "EventMouse.h"
 #include "EventCollision.h"
 
-class Saucer : public df::Object {
+class TestObject : public df::Object {
 
 private:
 
 public:
-	
-	//Default constructer
-	Saucer();
 
-	//Specified constructer
-	Saucer(df::Vector spawn_pos, df::Vector velocity);
+	//Constructer
+	TestObject();
 
 	//Deconstructer
-	~Saucer();
+	~TestObject();
 
 	//Handels events for saucer
 	int eventHandler(const df::Event* p_e) override;
@@ -41,5 +38,10 @@ public:
 
 
 };//End of class
-#endif // !__SAUCER_H__
 
+
+
+
+
+
+#endif

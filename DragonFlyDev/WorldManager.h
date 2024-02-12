@@ -69,6 +69,15 @@ namespace df {
 		//Sends events to all game objects in m_update
 		void onEvent(const Event* p_event);
 
+		//Return list of what object a given object has collided with
+		//Collisions only with solid object but does not consider if object is solid or not 
+		ObjectList getCollisions(const Object* p_o, Vector where) const;
+
+		//Move Object
+		//If collision with solid send event
+		//Only move if there isn't 
+		int moveObject(Object* p_o, Vector where);
+
 	};//End of class
 }//End of name space
 #endif // !__WORLD_MANAGER_H__

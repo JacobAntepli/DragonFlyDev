@@ -25,6 +25,15 @@ namespace df {
 		//Default altitude is MAX_ALTITUDE/2
 		m_altitude = MAX_ALTITUDE / 2;
 
+		//Default direction
+		m_direction = Vector(0, 0);
+
+		//Default speed
+		m_speed = 0; 
+
+		//Default solidness
+		m_solidness = HARD;
+
 		//Add object to gameworld
 		WM.insertObject(this);
 	}
@@ -109,6 +118,86 @@ namespace df {
 	int Object::getAltitude() const
 	{
 		return m_altitude;
+	}
+
+	//Set speed of object
+	void Object::setSpeed(float speed)
+	{
+		m_speed = speed;
+	}
+
+	//Get speed of object
+	float Object::getSpeed() const
+	{
+		return m_speed;
+	}
+
+	//Set direction of object
+	void Object::setDirection(Vector new_direction)
+	{
+		m_direction = new_direction;
+	}
+
+	//Get direction of object
+	Vector Object::getDirection() const
+	{
+		return m_direction;
+	}
+
+	//Get velocity of object
+	void Object::setVelocity(Vector new_velocity)
+	{
+		//Set new speed from magnitude of velocity
+		m_speed = new_velocity.getMagnitude();
+
+		//Set new direction from normalized velocit
+		new_velocity.normalize();
+		m_direction = new_velocity;
+
+	}
+
+	//Get velocity of object
+	Vector Object::getVelocity() const
+	{
+		Vector velocity = m_direction;
+		velocity.scale(m_speed);
+
+		return velocity;
+	}
+
+	//Predict objects position based on speed and direction
+	//Return predicted position 
+	Vector Object::predictPosition()
+	{
+		//New position is current position plus current velocity
+		Vector predictedPosition = m_position + getVelocity();
+
+		return predictedPosition;
+	}
+
+	//Check if object is hard or soft
+	bool Object::isSolid() const
+	{
+		//Return false if spectral 
+		if(m_solidness == SPECTRAL){
+			return false;
+		}
+
+		return true;
+	}
+
+	//Set object solidity
+	//Return 0 on success, -1 on failure
+	int Object::setSolidness(Solidness new_solid)
+	{
+		m_solidness = new_solid;
+		return m_solidness;
+	}
+
+	//Get object solidness
+	Solidness Object::getSolidness() const
+	{
+		return m_solidness;
 	}
 
 }//End of namespace

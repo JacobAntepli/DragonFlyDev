@@ -158,9 +158,11 @@ namespace df{
 			//printf("Frame: %d\n", intended_sleep_time);
 
 			//Exit after 100 loops for testing
+			/*
 			if (loops == 100) {
 				shutDown();
 			}
+			*/
 			
 		}
 		LM.writeLog(0, "Exiting game loop\n");
