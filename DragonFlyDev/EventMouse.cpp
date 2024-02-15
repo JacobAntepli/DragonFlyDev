@@ -8,6 +8,8 @@ namespace df {
 	EventMouse::EventMouse()
 	{
 		//Set type
+		m_mouse_action = UNDEFINED_MOUSE_ACTION;
+		m_mouse_button = Mouse::UNDEFINED_KEY;
 		setType(MSE_EVENT);
 	}
 
