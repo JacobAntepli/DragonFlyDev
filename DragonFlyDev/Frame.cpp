@@ -53,6 +53,12 @@ namespace df {
 		m_frame_str = new_frame_str;
 	}
 
+	//Get frame characters
+	string Frame::getString() const
+	{
+		return m_frame_str;
+	}
+
 	//Draw self, centered at vector 
 	//Return 0 on success, -1 on failure
 	int Frame::draw(Vector position, Color color, char transparency) const

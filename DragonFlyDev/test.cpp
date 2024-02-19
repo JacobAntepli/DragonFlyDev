@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp> 
 #include <Windows.h>
 #include <math.h>
+#include <iostream>
 
 //Included managers
 #include "Manager.h"
@@ -12,6 +13,7 @@
 #include "WorldManager.h"
 #include "DisplayManager.h"
 #include "InputManager.h"
+#include "ResourceManager.h"
 
 //Event includes
 #include "Event.h"
@@ -26,14 +28,17 @@
 #include "Clock.h"
 #include "Vector.h"
 #include "Saucer.h"
+#include "Frame.h"
+#include "Sprite.h"
 #include "TestObject.h"
+#include "Animation.h"
+
 
 using namespace std;
 using namespace df;
 
-
 //Test function for the base manager class
-int testBaseManager() {
+void testBaseManager() {
 
     Manager managerTest = Manager::Manager();
 
@@ -42,34 +47,21 @@ int testBaseManager() {
     printf("Running tests for Manager:\n");
 
     //Testing if manager started up correctly
-    if (managerTest.isStarted()) {
-        printf("[startUp]: SUCCESS\n");
-    }
-    else {
+    if (!managerTest.isStarted()) {
         printf("[startUp]: FAILURE\n");
-        return -1;
     }
 
     //Testing to see if manager is right type
-    if (managerTest.getType()._Equal("Manager")) {
-        printf("[getType]: SUCCESS\n");
-    }
-    else {
+    if (!managerTest.getType()._Equal("Manager")) {
         printf("[getType]: FAILURE\n");
-        return -1;
     }
+   
 
     //Testing to see if manager shutsdown correctly
     managerTest.~Manager();
-    if (!managerTest.isStarted()) {
-        printf("[shutDown]: SUCCESS\n");
+    if (managerTest.isStarted()) {
+        printf("[shutDown]: FAILYRE\n");
     }
-    else {
-        printf("[shutDown]: FAILURE\n");
-        return -1;
-    }
-
-    return 0;
 }
 
 //Test function for SFML library set up 
@@ -645,13 +637,16 @@ void testInputManager() {
 //Test GameManager loop with collisions and velocity
 void testCollisions() {
 
+    
     GM.startUp();
     LM.setVerbosity(0);
 
+    RM.loadSprite("Sprites/saucer-spr.txt", "Saucer Sprite");
+
     //Make new saucer and make them head towards each other
-    //When out of bounds saucers print to console 
+    //When out of bounds saucers print to console, you can change to see hard collisions by uncommenting labeled code in printCollision in saucer.cpp
     //Pressing escape stops the game 
-    new Saucer(Vector(0,DM.getVertical()/2),Vector(.25,0));
+    new Saucer(Vector(0,DM.getVertical()/2),Vector(.25,0));//Saucer is hard by default
 
     new Saucer(Vector(DM.getHorizontal(), DM.getVertical() / 2), Vector(-.25, 0));
     
@@ -665,6 +660,280 @@ void testCollisions() {
     GM.run();
 }
 
+//Test frames
+void testFrames() {
+
+    //_____________________________
+    // Test defaults and getters
+    //-----------------------------
+
+    Frame testFrame;
+
+    if (testFrame.getHeight() != 0) {
+        LM.writeLog(10, "Frames: Height default failed, expected %d, received %d\n",0, testFrame.getHeight());
+    }
+
+    if (testFrame.getWidth() != 0) {
+        LM.writeLog(10, "Frames: Width default failed, expected %d, received %d\n",0, testFrame.getWidth());
+    }
+
+    if (testFrame.getString() != "") {
+        LM.writeLog(10, "Frames: Frame string default failed, expected %s, received %s\n","",testFrame.getString());
+    }
+
+   //______________________
+   // Test setting values
+   //----------------------
+
+    testFrame.setHeight(3);
+    testFrame.setWidth(7);
+    testFrame.setString("TRUMBUS\PRUMBUS\CRUMBUS");
+
+    if (testFrame.getHeight() != 3) {
+        LM.writeLog(10, "Frames: Height default failed, expected %d, received %d\n", 3, testFrame.getHeight());
+    }
+
+    if (testFrame.getWidth() != 7) {
+        LM.writeLog(10, "Frames: Width default failed, expected %d, received %d\n", 7, testFrame.getWidth());
+    }
+
+    if (testFrame.getString() != "TRUMBUS") {
+        LM.writeLog(10, "Frames: Frame string default failed, expected %s, received %s\n", "TRUMBUS", testFrame.getString().c_str());
+    }
+
+    
+
+   //______________________
+   // Test drawing frames
+   //----------------------
+
+    //Start up display
+    if (!DM.isStarted()) {
+        DM.startUp();
+    }
+
+    //No transparency
+    testFrame.draw(Vector(50, 5), MAGENTA, 0);
+
+    //With transparency 
+    testFrame.draw(Vector(50, 10), BLUE, 'T');
+
+    //Swap
+    DM.swapBuffers();
+
+    //Sleep to be able to see
+    Sleep(5000);
+
+
+    //Edit frames to be out of bounds to see
+    testFrame.setHeight(2);
+    testFrame.setWidth(5);
+
+    //No transparency
+    testFrame.draw(Vector(50, 5), MAGENTA, 0);
+
+    //With transparency 
+    testFrame.draw(Vector(50, 10), BLUE, 'T');
+
+    //Swap
+    DM.swapBuffers();
+
+    //Sleep to be able to see
+    Sleep(5000);
+
+    //If needed shut down display manager
+    if (DM.isStarted()) {
+        DM.shutDown();
+    }
+}
+
+//Test sprites
+void testSprites(){
+    
+    //_____________________________
+    // Test defaults and getters
+    //-----------------------------
+
+    Sprite testSprite(3);
+
+    if (testSprite.getHeight() != 0) {
+        LM.writeLog(10, "Sprite: Height default failed, expected %d, received %d\n", 0, testSprite.getHeight());
+    }
+
+    if (testSprite.getWidth() != 0) {
+        LM.writeLog(10, "Sprite: Width default failed, expected %d, received %d\n", 0, testSprite.getWidth());
+    }
+
+    if (testSprite.getMaxFrameCount() != 3) {
+        LM.writeLog(10, "Sprite: Max Frame Count default failed, expected %d, received %d\n", 3, testSprite.getMaxFrameCount());
+    }
+
+    if (testSprite.getFrameCount() != 0) {
+        LM.writeLog(10, "Sprite: Frame Count default failed, expected %d, received %d\n", 0, testSprite.getFrameCount());
+    }
+
+    if (testSprite.getColor() != COLOR_DEFAULT) {
+        LM.writeLog(10, "Sprite: Color default failed, expected %s, received %s\n", COLOR_DEFAULT, testSprite.getColor());
+    }
+
+    if (testSprite.getSlowdown() != 0) {
+        LM.writeLog(10, "Sprite: Slowdown default failed, expected %d, received %d\n", 0, testSprite.getSlowdown());
+    }
+
+    if (testSprite.getLabel() != "DEFAULT SPRITE LABEL") {
+        LM.writeLog(10, "Sprite: Label default failed, expected %s, received %s\n", "DEFAULT SPRITE LABEL", testSprite.getLabel());
+    }
+
+    if (testSprite.getTransparency() != 0) {
+        LM.writeLog(10, "Sprite: Transparency default failed, expected %d, received %d\n", 0, testSprite.getTransparency());
+    }
+
+    //_______________________________
+    // Test Frame input and drawing
+    //-------------------------------
+
+    //Start up display
+    if (!DM.isStarted()) {
+        DM.startUp();
+    }
+
+    testSprite.setHeight(3);
+    testSprite.setWidth(7);
+    testSprite.setLabel("TEST SPRTIE #1");
+
+
+    Frame f1;
+    f1.setHeight(3);
+    f1.setWidth(7);
+    f1.setString("TRUMBUS\PRUMBUS\CRUMBUS");
+
+    Frame f2;
+    f2.setHeight(3);
+    f2.setWidth(7);
+    f2.setString("TULMBUS\PLUMBUS\CLUMBUS");
+
+    Frame f3;
+    f3.setHeight(3);
+    f3.setWidth(7);
+    f3.setString("PULMBUS\nMLUMBUS\nKLUMBUS");
+
+    Frame f4;
+    f4.setHeight(3);
+    f4.setWidth(7);
+    f4.setString("PULMBUR\MLUMBUR\KLUMBUR");
+
+    testSprite.setColor(GREEN);
+
+    testSprite.addFrame(f1);
+    testSprite.addFrame(f2);
+    testSprite.addFrame(f3);
+    testSprite.addFrame(f4);;//should error, trying to add more frames then max 
+
+    //Draw each frame with a pause of 3 seconds inbetween each 
+    testSprite.draw(0,Vector(50,5));
+    DM.swapBuffers();
+    Sleep(3000);
+    
+    testSprite.draw(1, Vector(30, 5));
+    DM.swapBuffers();
+    Sleep(3000);
+
+    testSprite.draw(2, Vector(10, 5));
+    DM.swapBuffers();
+    Sleep(3000);
+
+
+    //If needed shut down display manager
+    if (DM.isStarted()) {
+        DM.shutDown();
+    }
+
+}
+
+//Test resource manager
+void testResourceManager() {
+
+    //Start up display
+    if (!DM.isStarted()) {
+        DM.startUp();
+    }
+
+    RM.startUp();
+
+
+    //Test loadling in sprites 
+    RM.loadSprite("Sprites/saucer-spr.txt","Saucer Sprite");
+    RM.loadSprite("Sprites/doesn't exist", "doesn't exist");//This should error as this file doesn't exist
+
+    //Test getting and displaying sprite from resource manager
+    Sprite saucerSprite = *RM.getSprite("Saucer Sprite");
+
+    //Draw all frames
+    for(int i = 0; i<saucerSprite.getFrameCount(); i++){
+        saucerSprite.draw(i, Vector(50, 5));
+        DM.swapBuffers();
+        Sleep(3000);
+    }
+
+    //Test unloading sprite 
+    RM.unloadSprite("Saucer Sprite");
+    if (RM.getSprite("Saucer Sprite") != NULL) {
+        LM.writeLog(10, "RESOURCE MANAGER ERROR: FAILED TO UNLOAD SPRITE\n");
+    }
+
+    RM.shutDown();
+
+    //If needed shut down display manager
+    if (DM.isStarted()) {
+        DM.shutDown();
+    }
+}
+
+void testAnimation() {
+
+    //Start up display
+    if (!DM.isStarted()) {
+        DM.startUp();
+    }
+
+    RM.startUp();
+
+    //Load in sprite 
+    RM.loadSprite("Sprites/saucer-spr.txt", "Saucer Sprite");
+
+    Saucer* saucer = new Saucer();
+
+
+    saucer->setPosition(Vector(50,5));
+   
+    //Should change index every 4 seconds 
+    while (1) {
+        saucer->draw();
+        DM.swapBuffers();;
+        Sleep(1000);
+    }
+
+    RM.shutDown();
+
+    //If needed shut down display manager
+    if (DM.isStarted()) {
+        DM.shutDown();
+    }
+}
+
+//Test gamemanager with animations and object support along with inputs 
+void testGameManager2C() {
+    GM.startUp();
+
+    //Load in sprite 
+    RM.loadSprite("Sprites/saucer-spr.txt", "Saucer Sprite");
+
+    //Create saucers
+    new Saucer(Vector(0, DM.getVertical() / 2), Vector(.25, 0));
+    new Saucer(Vector(DM.getHorizontal(), DM.getVertical() / 2), Vector(-.25, 0));
+
+    GM.run();
+}
 
 
 
@@ -678,27 +947,21 @@ int main()
     //____________________
     //Manager Tests
     //--------------------
-   
-    /*
-    if (testBaseManager() == 0) {
-        printf("ALL TESTS FOR BASE MANAGER PASSED\n");
-    }
-    else {
-        printf("SOMETHING WENT WRONG WITH THE BASE MANAGER\n");
-    }
-    */
+    //testBaseManager();
     //testLogManager();
     //testWorldManager();
     //testGameManager(); //GAME MANAGER SHOULD BE TESTED SEPERATLY
     //testDisplayManager(); //DISPLAY MANAGER TESTING SHOULD BE DONE SEPERATLY 
-    //testInputManager(); //INPUT MANAGER TESTING SHOULD BE DONE SEPRATLY
+    //testInputManager(); //INPUT MANAGER TESTING SHOULD BE DONE SEPERATLY
+    //testResourceManager();RESOURCE MANAGER TESTING SHOULD BE DONE SEPERATLY
+    //testGameManager2C();
+
     
     
 
     //____________________
     //Event Tests
     //--------------------
-   
     //testCollisions(); //COLLISIONS SHOULD BE TESETED SEPERATLY
     //testEventHandler(); //EVENT HANDELER TEST SHOULD BE DONE SEPERATLY 
     //testBaseEvent();
@@ -707,19 +970,30 @@ int main()
     //_______________________
     //Object and Vector Tests
     //-----------------------
-   
     //testObject();
     //testObjectList();
     //testObjectListIterator();
     //testVector();
+    
+
+
+    //_______________________
+    //Frame and Sprite Tests
+    //-----------------------
+    // ALL TESTS BELOW SHOULD BE RUN ALONE AS THEY CREATE DISTINCT VISUALS
+    //testFrames();
+    //testSprites();
+    //testAnimation();
 
     //_______________________
     //Utilty and SFML Tests
     //-----------------------
-   
     //testClock();
     //testSFML();
     //testSFMLText();
+
+    
+    
     
      //Shutdown logmanager if needed
      if (LM.isStarted()) {

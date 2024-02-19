@@ -328,7 +328,7 @@ namespace df {
                 //Set button
                 mouseEvent.setMouseButton(SFMLToDFMouse(e.mouseButton.button));
                 //Set position of mouse 
-                mouseEvent.setMousePosition(Vector(e.mouseButton.x, e.mouseButton.y));
+                mouseEvent.setMousePosition(Vector(static_cast<float>(e.mouseButton.x), e.mouseButton.y));
                 //Send event to objects
                 WM.onEvent(&mouseEvent);
             }

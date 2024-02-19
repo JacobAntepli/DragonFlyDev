@@ -5,6 +5,8 @@
 #include <string>
 #include "Vector.h"
 #include "Event.h"
+#include "Animation.h"
+#include "Box.h"
 
 using namespace std;
 namespace df {
@@ -42,6 +44,12 @@ namespace df {
 
 		//Object solidity
 		Solidness m_solidness;
+
+		//Animation associated with object
+		Animation m_animation;
+
+		//Bounding box for object
+		Box m_box;
 
 	public:
 
@@ -117,6 +125,26 @@ namespace df {
 
 		//Get object solidness
 		Solidness getSolidness() const;
+
+		//Set sprite for animation
+		//Return 0 on success, -1 on failure
+		int setSprite(std::string sprite_label);
+
+		//Set animation for new object
+		//Set bounding box 
+		void setAnimation(Animation new_animation);
+
+		//Get animation for this object 
+		Animation getAnimation() const;
+
+		/*Test method for animation acces*/
+		//void setSlowdownCount(int new_slow);
+
+		// Set Object's bounding box.
+		void setBox(Box new_box);
+
+		// Get Object's bounding box.
+		Box getBox() const;
 
 	};//End of class
 }//End of namespace

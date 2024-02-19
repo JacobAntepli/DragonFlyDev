@@ -2,6 +2,8 @@
 //Included resources
 #include "DisplayManager.h"
 #include "LogManager.h"
+#include "utility.h"
+
 
 
 namespace df {
@@ -82,7 +84,15 @@ namespace df {
 			return -1;
 		}
 
-		Vector pixel_pos = spacesToPixels(world_pos);
+		//Reffered Utillity object
+		Utility ut; 
+		
+		//Conver
+		Vector view_pos = ut.worldToView(world_pos);
+
+		
+
+		Vector pixel_pos = spacesToPixels(view_pos);
 
 		//Draw background rectangle
 		static sf::RectangleShape rect;

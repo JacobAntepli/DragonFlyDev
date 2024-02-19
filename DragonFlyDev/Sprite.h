@@ -68,6 +68,9 @@ namespace df {
 		//Return empty frrame if out of range
 		Frame getFrame(int frame_number) const;
 
+		//Get max frames
+		int getMaxFrameCount() const;
+
 		//Get next sprite frame
 		//Return  0 on success, -1 on failure
 		void setLabel(string new_label);

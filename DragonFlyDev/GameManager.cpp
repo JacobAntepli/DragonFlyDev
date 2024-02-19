@@ -6,6 +6,7 @@
 #include "EventStep.h"
 #include "DisplayManager.h"
 #include "InputManager.h"
+#include "ResourceManager.h"
 #include <Windows.h>
 
 
@@ -40,16 +41,21 @@ namespace df{
 
 		//Start up different managers
      	LM.startUp();
+		RM.startUp();
 		WM.startUp();
 		DM.startUp();
 		IM.startUp();
-		
 
 		//Base class start up
 		Manager::startUp();
 
 		//Set timer resolution
 		timeBeginPeriod(1);
+
+		
+		//Set up default view 
+		WM.setBoundary(Box(Vector(0,0), static_cast<float>(DM.getHorizontal()), static_cast<float>(DM.getVertical())));
+		WM.setView(Box(Vector(0,0), static_cast<float>(DM.getHorizontal()), static_cast<float>(DM.getVertical())));
 
 		//Ensure everything started
 		if (Manager::isStarted() && game_over == false) {
@@ -69,6 +75,7 @@ namespace df{
 
 		//Shut down other classes
 		WM.shutDown();
+		RM.shutDown();
 		IM.shutDown();
 		DM.shutDown();
 		LM.shutDown();

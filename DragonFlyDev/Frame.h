@@ -43,6 +43,9 @@ namespace df {
 		//Set frame characters (stored as strings)
 		void setString(string new_frame_str);
 
+		//Get frame characters
+		string getString() const;
+
 		//Draw self, centered at vector 
 		//Return 0 on success, -1 on failure
 		int draw(Vector position, Color color, char transparency) const;

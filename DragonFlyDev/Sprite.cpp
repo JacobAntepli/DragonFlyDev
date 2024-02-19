@@ -1,7 +1,7 @@
 
 //Included resources
 #include "Sprite.h"
-
+#include "LogManager.h"
 namespace df {
 
 	Sprite::Sprite(int max_frames)
@@ -64,7 +64,8 @@ namespace df {
 	int Sprite::addFrame(Frame new_frame)
 	{
 		//Check if sprite is full 
-		if (m_frame_count == m_max_frame_count) {
+		if (m_frame_count >= m_max_frame_count) {
+			LM.writeLog(5,"SPRITE ERROR: ATTEMMTPED TO ADD FRAME TO FULL SPRITE WITH LABEL %s\n",m_label.c_str());
 			return -1;
 		}
 		//Add new frame and incriment count
@@ -83,6 +84,11 @@ namespace df {
 		}
 
 		return m_frame[frame_number];
+	}
+
+	int Sprite::getMaxFrameCount() const
+	{
+		return m_max_frame_count;
 	}
 
 	void Sprite::setLabel(string new_label)
@@ -120,7 +126,6 @@ namespace df {
 	{
 		//Check if number is within range
 		if (frame_number < 0 || frame_number >= m_frame_count) {
-		
 			return -1;
 		}
 

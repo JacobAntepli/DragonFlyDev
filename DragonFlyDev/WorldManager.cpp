@@ -14,6 +14,11 @@ namespace df {
 
         //Set type
         setType("World Manager");
+
+        //Initialize variables
+        m_boundry = Box(Vector(0, 0), 0, 0);
+        m_view = m_boundry;
+        p_view_following = NULL;
     }
 
     //Gets the only instance of world manager.
@@ -36,6 +41,7 @@ namespace df {
         m_updates.clear();
         m_deletion.clear();
 
+      
         //Ensure all need variables are correct
         if (Manager::isStarted() && m_updates.isEmpty() && m_deletion.isEmpty()) {
 
@@ -154,14 +160,20 @@ namespace df {
     //Tell all objects to draw 
     void WorldManager::draw()
     {
+        Utility ut; 
+
         //Make iterator with updates object list
         ObjectListIterator it(&m_updates);
 
         for (int i = 0; i < MAX_ALTITUDE; i++) {
             //Call draw method for all objects
             for (it.first(); !it.isDone(); it.next()) {
-                if(it.currentObject()->getAltitude() == i)
-                it.currentObject()->draw();
+                //Bounding box for object 
+                Box temp_box = ut.getWorldBox(it.currentObject())
+                    ;
+                if (ut.boxIntersectsBox(temp_box,m_view) && it.currentObject()->getAltitude() == i) {
+                    it.currentObject()->draw();
+                }
             }
         }
     }
@@ -184,11 +196,15 @@ namespace df {
         //Iterator for current objects in world 
         ObjectListIterator it(&m_updates);
         ObjectList collidedObjects;
-        for (it.first(); !it.isDone(); it.next()) {
-            //Filter that it doesn't check itself and that object is solid
-            if (it.currentObject() != p_o && it.currentObject()->isSolid()  
-                && ut.positionsIntersect(p_o->getPosition(), it.currentObject()->getPosition())){
 
+        //World position bounding box for object at where
+        Box objectBox = ut.getWorldBox(p_o, where);
+        for (it.first(); !it.isDone(); it.next()) {
+
+            Box b_temp = ut.getWorldBox(it.currentObject());
+
+            //Filter that it doesn't check itself and that object is solid and then finally check if boxes intersect
+            if (it.currentObject() != p_o && it.currentObject()->isSolid() && ut.boxIntersectsBox(objectBox,b_temp)){
                 //If all conditions met put in list
                 collidedObjects.insert(it.currentObject());
                 LM.writeLog(0, "Object collision at location (%d,%d) with objects with id %d and %d\n",
@@ -243,17 +259,114 @@ namespace df {
             }//End of if(!collided.isEmpty())
         }//End of if(p_o->isSolid())
 
+        //Utility object for uses
+        Utility ut;
+
+        //Get original placement
+        Box orig_box = ut.getWorldBox(p_o);
+
         //Move object 
         p_o->setPosition(where);
 
-        //Check if object is out of window bounds
-        if (p_o->getPosition().getX() > DM.getHorizontal() || p_o->getPosition().getY() > DM.getVertical()) {
-
-            LM.writeLog(0, "Object with id %d was sent an out of bounds evet\n", p_o->getId());
-            EventOut eo;
-            p_o->eventHandler(&eo);
+        //Move view if needed
+        if (p_view_following = p_o) {
+            setViewPosition(p_o->getPosition());
         }
 
+        //Get new placement 
+        Box new_box = ut.getWorldBox(p_o);
+
+        //Check if object is out of window bounds by checking it''s bounding box
+        if (ut.boxIntersectsBox(orig_box,m_boundry) && !ut.boxIntersectsBox(new_box,m_boundry)) {
+
+           
+            EventOut eo;
+            p_o->eventHandler(&eo);
+            
+            LM.writeLog(-1, "Object with id %d was sent an out of bounds evet\n", p_o->getId());
+        }
+
+        return 0;
+    }
+
+    void WorldManager::setBoundary(Box new_boundary)
+    {
+        m_boundry = new_boundary;
+    }
+
+    Box WorldManager::getBoundary() const
+    {
+        return m_boundry;
+    }
+
+    void WorldManager::setView(Box new_view)
+    {
+        m_view = new_view;
+    }
+
+    Box WorldManager::getView() const
+    {
+        return m_view;
+    }
+
+    void WorldManager::setViewPosition(Vector view_pos)
+    {
+        //Ensure horizontal is not out of bounds
+        int x = view_pos.getX() - m_view.getHorizontal() / 2;
+        
+        if (x + m_view.getHorizontal() > m_boundry.getHorizontal()) {
+            x = m_boundry.getHorizontal() - m_view.getHorizontal();
+        }
+
+        if (x < 0) {
+            x = 0; 
+        }
+
+        //Ensure vertical is not out of bounds
+        int y = view_pos.getY() - m_view.getVertical() / 2;
+
+        if (y + m_view.getVertical() > m_boundry.getVertical()) {
+            y = m_boundry.getVertical() - m_view.getVertical();
+        }
+
+        if (y < 0) {
+            y = 0;
+        }
+
+        //Set view 
+        Vector new_corner(x, y);
+        m_view.setCorner(new_corner);
+    }
+
+    int WorldManager::setViewFollowing(Object* p_new_view_following)
+    {
+
+        //Null turns off following
+        if (p_new_view_following == NULL) {
+            p_view_following = NULL;
+            return 0; 
+        }
+
+        //Ensure that object exists
+        bool exists = false;
+
+        //Make iterator with updates object list
+        ObjectListIterator it(&m_updates);
+        for (it.first(); !it.isDone(); it.next()) {
+            if (it.currentObject() == p_new_view_following) {
+                exists = true;
+            }
+        }
+
+        //Not found
+        if (!exists) {
+            return -1;
+        }
+
+        //Object exists, return 
+        p_view_following = p_new_view_following;
+        setViewPosition(p_view_following->getPosition());
+        
         return 0;
     }
 

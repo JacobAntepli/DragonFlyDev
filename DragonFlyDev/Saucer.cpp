@@ -5,7 +5,6 @@
 #include "GameManager.h"
 
 
-
 //Default construcer defintion
 Saucer::Saucer()
 {
@@ -20,11 +19,20 @@ Saucer::Saucer()
 
     //Set solidness
     setSolidness(df::SPECTRAL);
+
+    //Setting sprite
+    setSprite("Saucer Sprite");
+
+    //Set altitude
+    setAltitude(0);
 }
 
 //Specified constructer
 Saucer::Saucer(df::Vector spawn_pos, df::Vector velocity)
 {
+    //Setting sprite
+    setSprite("Saucer Sprite");
+
     //Set type
     setType("Saucer");
 
@@ -33,6 +41,9 @@ Saucer::Saucer(df::Vector spawn_pos, df::Vector velocity)
 
     //Set velocity
     setVelocity(velocity);
+
+    //Set altitude
+    setAltitude(0);
 }
 
 //Deconstrucer defintion
@@ -67,17 +78,6 @@ int Saucer::eventHandler(const df::Event* p_e)
 	return 0;
 }
 
-//Object draws itself
-//0 on success
-int Saucer::draw(){
-	if (DM.getWindow() != NULL) {
-		DM.drawString(Object::getPosition(), "SAUCER", df::CENTER_JUSTIFIED, df::WHITE);
-		return 0;
-	}
-	else {
-		return -1;
-	}
-}
 
 //Print out pressed and released keys
 void Saucer::printKey(const df::EventKeyboard* p_e)
@@ -126,6 +126,11 @@ void Saucer::printCollision(const df::EventCollision* p_e)
     }
 
 }
+
+
+
+
+
 
 
 

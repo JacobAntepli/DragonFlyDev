@@ -7,7 +7,8 @@
 
 namespace df {
 
-#define GM df::GameManager::getInstance()
+	//Two letter acronym
+	#define GM df::GameManager::getInstance()
 
 	//Default fps in milliseconds
 	const int FRAME_TIME_DEFAULT = 33; 

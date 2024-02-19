@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "WorldManager.h"
 #include "LogManager.h"
+#include "ResourceManager.h"
 
 using namespace std;
 namespace df {
@@ -96,7 +97,8 @@ namespace df {
 	//Base draw function
 	int Object::draw()
 	{
-		return 0;
+		Vector pos = getPosition();
+		return m_animation.draw(pos);
 	}
 
 	//Set altitude of object, range of [0,MAX_ALTITUDE]
@@ -198,6 +200,50 @@ namespace df {
 	Solidness Object::getSolidness() const
 	{
 		return m_solidness;
+	}
+
+	int Object::setSprite(string sprite_label)
+	{
+		//Get sprite from resource manager
+		Sprite* p_sprite = RM.getSprite(sprite_label);
+
+		//Ensure sprite exists 
+		if (p_sprite == NULL) {
+			return -1;
+		}
+
+
+		m_animation.setSprite(p_sprite);
+		//Set bounding box around sprite
+		setBox(m_animation.getBox());
+		return 0;
+	}
+
+	void Object::setAnimation(Animation new_animation)
+	{
+		m_animation = new_animation;
+	}
+
+	Animation Object::getAnimation() const
+	{
+		return m_animation;
+	}
+
+	/*test method for animation access 
+	void Object::setSlowdownCount(int new_slow)
+	{
+		m_animation.setSlowdownCount(new_slow);
+	}
+	*/
+
+	void Object::setBox(Box new_box)
+	{
+		m_box = new_box;
+	}
+
+	Box Object::getBox() const
+	{
+		return m_box;
 	}
 
 }//End of namespace
