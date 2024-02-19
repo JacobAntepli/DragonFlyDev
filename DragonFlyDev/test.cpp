@@ -922,7 +922,7 @@ void testAnimation() {
 }
 
 //Test gamemanager with animations and object support along with inputs 
-void testGameManager2C() {
+void testGMAnimationAndBoxes() {
     GM.startUp();
 
     //Load in sprite 
@@ -931,6 +931,38 @@ void testGameManager2C() {
     //Create saucers
     new Saucer(Vector(0, DM.getVertical() / 2), Vector(.25, 0));
     new Saucer(Vector(DM.getHorizontal(), DM.getVertical() / 2), Vector(-.25, 0));
+
+    GM.run();
+}
+
+void testAudio(){
+
+    GM.startUp();
+
+    //Load in sprite 
+    RM.loadSprite("Sprites/saucer-spr.txt", "Saucer Sprite");
+    RM.loadMusic("Audio/Music/test_music_1.wav", "song1");
+    RM.loadMusic("Audio/Music/test_music_2.wav", "song2");
+    RM.loadMusic("NA", "Country music");
+
+    //Left clicking plays sound effect
+    RM.loadSound("Audio/Sounds/fire.wav","fire sound");
+    RM.loadSound("Does not exist ", "sound");//Should error
+
+    //Make new saucer and make them head towards each other
+    //When out of bounds saucers print to console, you can change to see hard collisions by uncommenting labeled code in printCollision in saucer.cpp
+    //Pressing escape stops the game 
+    new Saucer(Vector(0, DM.getVertical() / 2), Vector(.25, 0));//Saucer is hard by default
+
+    new Saucer(Vector(DM.getHorizontal(), DM.getVertical() / 2), Vector(-.25, 0));
+
+    Saucer* soft = new Saucer(Vector(DM.getHorizontal() / 2, DM.getVertical()), Vector(0, -.05));
+    soft->setSolidness(df::SOFT);
+
+
+    Saucer* spectral = new Saucer(Vector(DM.getHorizontal() / 2, 0), Vector(0, .05));
+    spectral->setSolidness(df::SPECTRAL);
+
 
     GM.run();
 }
@@ -954,7 +986,7 @@ int main()
     //testDisplayManager(); //DISPLAY MANAGER TESTING SHOULD BE DONE SEPERATLY 
     //testInputManager(); //INPUT MANAGER TESTING SHOULD BE DONE SEPERATLY
     //testResourceManager();RESOURCE MANAGER TESTING SHOULD BE DONE SEPERATLY
-    //testGameManager2C();
+    //testGMAnimationAndBoxes();
 
     
     
@@ -993,6 +1025,10 @@ int main()
     //testSFMLText();
 
     
+    //_______________________
+    //Audio Tests
+    //-----------------------
+    testAudio();
     
     
      //Shutdown logmanager if needed

@@ -12,7 +12,7 @@ namespace df {
 		//Set type to default
 		m_event_type = UNDEFINED_EVENT;
 
-		LM.writeLog(0, "NEW EVENT MADE\n");
+		LM.writeLog(-5, "NEW EVENT MADE\n");
 	}
 
 	//Deconstructer definition

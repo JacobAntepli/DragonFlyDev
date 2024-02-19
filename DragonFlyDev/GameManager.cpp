@@ -65,7 +65,7 @@ namespace df{
 		}
 		else {
 
-			LM.writeLog(2, "Game manager did no start up correctly\n");
+			LM.writeLog(10, "Game manager did no start up correctly\n");
 			return -1;
 		}
 	}

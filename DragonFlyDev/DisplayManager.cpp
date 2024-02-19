@@ -90,17 +90,17 @@ namespace df {
 		//Conver
 		Vector view_pos = ut.worldToView(world_pos);
 
-		
-
 		Vector pixel_pos = spacesToPixels(view_pos);
 
 		//Draw background rectangle
+		/*
 		static sf::RectangleShape rect;
 		rect.setSize(sf::Vector2f(charWidth(), charHeight()));
 		rect.setFillColor(m_window_background_color);
 		rect.setPosition(pixel_pos.getX() - charWidth() / 10,
 						pixel_pos.getY() + charHeight() / 5);
 		m_p_window->draw(rect);
+		*/
 
 		//Create text to draw
 		 sf::Text text("",m_font);

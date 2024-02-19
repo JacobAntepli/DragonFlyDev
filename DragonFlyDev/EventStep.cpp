@@ -10,7 +10,7 @@ namespace df {
 	{
 		//Initialize variables
 		m_step_count = 0;
-		LM.writeLog(0, "Created Step Event\n");
+		LM.writeLog(-2, "Created Step Event\n");
 		setType(STEP_EVENT);
 		
 	}
@@ -18,7 +18,7 @@ namespace df {
 	//Non default constructer
 	EventStep::EventStep(int init_step_count)
 	{
-		LM.writeLog(0, "Created Step Event\n");
+		LM.writeLog(-2, "Created Step Event\n");
 		setType(STEP_EVENT);
 		setStepCount(init_step_count);
 	}

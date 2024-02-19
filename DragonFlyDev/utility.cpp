@@ -64,7 +64,12 @@ namespace df {
 
 	bool Utility::boxIntersectHorizontal(Box A, Box B)
 	{
-		if (B.getCorner().getX() <= A.getCorner().getX() && A.getCorner().getX() <= B.getHorizontal()) {
+		float Ax1 = A.getCorner().getX();
+		float Bx1 = B.getCorner().getX();
+
+		float Ax2 = Ax1 + A.getHorizontal();
+		float Bx2 = Bx1 + B.getHorizontal();
+		if ((Bx1 <= Ax1) && (Ax1 <= Bx2)) {
 			return true;
 		}
 		return false;
@@ -72,7 +77,13 @@ namespace df {
 
 	bool Utility::boxIntersectVertical(Box A, Box B)
 	{
-		if (B.getCorner().getY() <= A.getCorner().getY() && A.getCorner().getY() <= B.getVertical()) {
+		float Ay1 = A.getCorner().getY();
+		float By1 = B.getCorner().getY();
+
+		float Ay2 = Ay1 + A.getVertical();
+		float By2 = By1 + B.getVertical();
+
+		if ((By1 <= Ay1) && (Ay1 <= By2)) {
 			return true;
 		}
 		return false;

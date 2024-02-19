@@ -88,7 +88,7 @@ namespace df {
     //Return all objects in current list
     ObjectList WorldManager::getAllObjects() const
     {
-        LM.writeLog(0, "Retreiving all objects\n");
+        LM.writeLog(-5, "Retreiving all objects\n");
         return m_updates;
     }
 
@@ -112,7 +112,7 @@ namespace df {
     //Delete all objects marked for deletion
     void WorldManager::update()
     {
-        LM.writeLog(0, "Updating game world\n");
+        LM.writeLog(-2, "Updating game world\n");
 
         //Move and check for collisions
         ObjectListIterator moveIt(&m_updates);
@@ -207,7 +207,7 @@ namespace df {
             if (it.currentObject() != p_o && it.currentObject()->isSolid() && ut.boxIntersectsBox(objectBox,b_temp)){
                 //If all conditions met put in list
                 collidedObjects.insert(it.currentObject());
-                LM.writeLog(0, "Object collision at location (%d,%d) with objects with id %d and %d\n",
+                LM.writeLog(-3, "Object collision at location (%d,%d) with objects with id %d and %d\n",
                     where.getX(), where.getY(), p_o->getId(), it.currentObject()->getId());
             }
         }

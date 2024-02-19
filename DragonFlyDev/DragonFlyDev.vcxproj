@@ -157,11 +157,13 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="EventKeyboard.cpp" />
+    <ClCompile Include="Music.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectList.cpp" />
     <ClCompile Include="ObjectListIterator.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Saucer.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="LogManager.cpp" />
@@ -188,11 +190,13 @@
     <ClInclude Include="EventKeyboard.h" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="Manager.h" />
+    <ClInclude Include="Music.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectList.h" />
     <ClInclude Include="ObjectListIterator.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Saucer.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TestObject.h" />
     <ClInclude Include="utility.h" />

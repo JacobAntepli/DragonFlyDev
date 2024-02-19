@@ -4,7 +4,8 @@
 #include "WorldManager.h"
 #include "LogManager.h"
 #include "ResourceManager.h"
-
+#include "DisplayManager.h"
+#include "utility.h"
 using namespace std;
 namespace df {
 
@@ -97,8 +98,16 @@ namespace df {
 	//Base draw function
 	int Object::draw()
 	{
+		Utility ut;
 		Vector pos = getPosition();
-		return m_animation.draw(pos);
+		int ret = m_animation.draw(pos);
+		//Draw bounding box
+		DM.drawCh(Vector(pos.getX()+m_box.getCorner().getX(), pos.getY() + m_box.getCorner().getY()), '+', YELLOW);
+		DM.drawCh(Vector(pos.getX()-m_box.getCorner().getX(), pos.getY() + m_box.getCorner().getY()), '+', YELLOW);
+		DM.drawCh(Vector(pos.getX() + m_box.getCorner().getX(), pos.getY() - m_box.getCorner().getY()), '+', YELLOW);
+		DM.drawCh(Vector(pos.getX() - m_box.getCorner().getX(), pos.getY() - m_box.getCorner().getY()), '+', YELLOW);
+		
+		return ret;
 	}
 
 	//Set altitude of object, range of [0,MAX_ALTITUDE]

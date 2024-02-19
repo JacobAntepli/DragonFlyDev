@@ -11,6 +11,11 @@ namespace df {
 	ResourceManager::ResourceManager() {
 		//Set type
 		setType("ResourceManager");
+
+		//Initalize variables
+		m_sprite_count = 0;
+		m_sound_count = 0;
+		m_music_count = 0;
 	}
 
 	ResourceManager& ResourceManager::getInstance()
@@ -25,8 +30,7 @@ namespace df {
 		//Base class start up
 		Manager::startUp();
 
-		//Initalize variables
-		m_sprite_count = 0;
+		
 
 		LM.writeLog(0, "Resource Manager successfully started");
 		return 0;
@@ -147,7 +151,7 @@ namespace df {
 				delete m_p_sprite[i];
 				
 				//Once found adjust the sprites array
-				for (int j = i; i < m_sprite_count - 2; j++) {
+				for (int j = i; i < m_sprite_count - 1; j++) {
 					m_p_sprite[j] = m_p_sprite[j + i];
 				}
 				//Decrement
@@ -186,9 +190,6 @@ namespace df {
 		//string that holds the information from line
 		string line;
 
-		//Discard cr
-		//discardCR(line);
-
 		//Get the line from the file
 		getline(*p_file,line);
 		//Check if its good (e.g not "")
@@ -196,6 +197,10 @@ namespace df {
 			LM.writeLog(5, "Error getting line\n");
 			return "";
 		}
+
+		//Discard cr
+		discardCR(line);
+
 		return line;
 	}
 
@@ -210,20 +215,19 @@ namespace df {
 
 		//Check for beginning
 		string s;
-		getline(*p_file,s);
-		discardCR(s);
+		s = getLine(p_file);
+	
 		if (s != beginning) {
 			LM.writeLog(5, "Error reading data beginning with delimiter %s\n", delimiter.c_str());
 			return data;
 		}
 
-		getline(*p_file, s);
+		s = getLine(p_file);
 		//Read data until ending
 		while (s != ending && !s.empty()) {
 			//Push back to add to data and get new line
 			data.push_back(s);
-			getline(*p_file, s);
-			discardCR(s);
+			s = getLine(p_file);
 		}
 
 		//Ending not found
@@ -359,5 +363,121 @@ namespace df {
 		else {
 			return UNEFINED_COLOR;
 		}
+	}
+
+	int ResourceManager::loadSound(string filename, string label)
+	{
+		//Ensure there is room
+		if (m_sound_count >= MAX_SOUNDS) {
+			LM.writeLog(3, "Attempted to add additional sound but resource manager was full\n");
+			return -1;
+		}
+
+		//Ensure file exists
+		if (m_sound[m_sound_count].loadSound(filename) == -1) {
+			LM.writeLog(3, "Failed to find sound with file name %s\n", filename.c_str());
+			return -1;
+		}
+
+		//Set label and incriment 
+		m_sound[m_sound_count].setLabel(label);
+		m_sound_count++;
+
+		return 0;
+	}
+
+	int ResourceManager::unloadSound(string label)
+	{
+		//Loop through every sound 
+		for (int i = 0; i < m_sound_count; i++) {
+			//Check label
+			if (m_sound[i].getLabel() == label) {
+				LM.writeLog(0, "Successfully unloaded sound with label %s\n", label);
+				//Scoot over other sounds
+				for (int j = i; i < m_sound_count - 1; j++) {
+					m_sound[j] = m_sound[j + i];
+				}
+				//Decriment count
+				m_sound_count--;
+				return 0;
+			}
+
+		}
+		return -1;
+	}
+
+	Sound* ResourceManager::getSound(string label)
+	{
+		//Loop through every sound 
+		for (int i = 0; i < m_sound_count; i++) {
+			//Check label
+			if (m_sound[i].getLabel() == label) {
+				return &m_sound[i];
+			}
+		}
+
+		//Couldnt find sound
+		return NULL;
+	}
+
+	int ResourceManager::loadMusic(string filename, string label)
+	{
+		//No empty labels allowed
+		if (label == "") {
+			LM.writeLog(3, "Error: Attempted to add music with empty label\n");
+			return -1;
+		}
+
+		//Ensure there is room
+		if (m_music_count >= MAX_MUSICS) {
+			LM.writeLog(3, "Attempted to add additional music but resource manager was full\n");
+			return -1;
+		}
+
+		//Ensure file exists
+		if (m_music[m_music_count].loadMusic(filename) == -1) {
+			LM.writeLog(3, "Failed to find music with file name %s\n", filename.c_str());
+			return -1;
+		}
+
+		//Set label and incriment 
+		m_music[m_music_count].setLabel(label);
+		m_music_count++;
+
+		return 0;
+	}
+
+	int ResourceManager::unloadMusic(string label)
+	{
+		// Loop through every music 
+		for (int i = 0; i < m_music_count; i++) {
+			// Check label
+			if (m_music[i].getLabel() == label) {
+
+				LM.writeLog(0, "Successfully unloaded music with label %s\n", label);
+
+				//Set label to be empty
+				m_music[i].setLabel("");
+
+				// Decrement count
+				m_music_count--;
+				return 0;
+			}
+		}
+		return -1;
+	}
+
+	Music* ResourceManager::getMusic(string label)
+	{
+		// Loop through every music
+		for (int i = 0; i < m_music_count; i++) {
+			// Check label
+			if (m_music[i].getLabel() == label) {
+				return &m_music[i];
+			}
+		}
+
+		// Couldn't find music
+		return NULL;
 	}
 }//End of namespace 

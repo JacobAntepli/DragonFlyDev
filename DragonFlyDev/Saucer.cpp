@@ -3,7 +3,7 @@
 #include "DisplayManager.h"
 #include "Saucer.h"
 #include "GameManager.h"
-
+#include "ResourceManager.h"
 
 //Default construcer defintion
 Saucer::Saucer()
@@ -84,9 +84,36 @@ void Saucer::printKey(const df::EventKeyboard* p_e)
 {
         switch (p_e->getKey()) {
         case df::Keyboard::ESCAPE:
-            GM.setGameOver(true);
+            if(p_e->getKeyboardAction() == df::KEY_RELEASE){
+                GM.setGameOver(true);
+            }
             break;
-        
+
+        case df::Keyboard::F:
+            if (p_e->getKeyboardAction() == df::KEY_PRESSED) {
+                RM.getSound("fire sound")->play();
+            }
+            break;
+
+        case df::Keyboard::M:
+
+            if (p_e->getKeyboardAction() == df::KEY_PRESSED)
+            {
+                RM.getMusic("song2")->pause();
+                RM.getMusic("song1")->play();
+            }
+
+            break;
+
+        case df::Keyboard::N:
+
+            if (p_e->getKeyboardAction() == df::KEY_PRESSED)
+            {
+                RM.getMusic("song1")->pause();
+                RM.getMusic("song2")->play();
+            }
+
+            break;
         }
 }
 

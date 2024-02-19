@@ -35,11 +35,6 @@ public:
 	//Print colliding objects 
 	void printCollision(const df::EventCollision* p_e);
 
-	
-
-
-
-
 };//End of class
 #endif // !__SAUCER_H__
 

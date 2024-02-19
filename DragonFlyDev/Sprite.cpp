@@ -131,6 +131,7 @@ namespace df {
 
 		//Call the frames draw function
 		m_frame[frame_number].draw(pos, m_color, m_transparency);
+
 		return 0;
 	}
 }//End of namespace df

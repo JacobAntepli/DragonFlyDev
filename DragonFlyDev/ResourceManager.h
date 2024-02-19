@@ -6,12 +6,20 @@
 #include <vector>
 #include "Manager.h"
 #include "Sprite.h"
+#include "Sound.h"
+#include "Music.h"
 
 using namespace std;
 namespace df {
 
 	//Maximum number of unique sprites
 	const int MAX_SPRITES = 500;
+
+	//Maximum number of unique music
+	const int MAX_MUSICS = 50;
+
+	//Maximum number of unique sounds
+	const int MAX_SOUNDS = 50;
 
 	//Two letter acronym
 	#define RM df::ResourceManager::getInstance()
@@ -44,6 +52,19 @@ namespace df {
 
 		//Count of loaded sprites
 		int m_sprite_count;
+
+		// Array of sound buffers.
+		Sound m_sound[MAX_SOUNDS];
+
+		// Count of number of loaded sounds.
+		int m_sound_count;
+
+		// Array of music buffers.
+		Music m_music[MAX_MUSICS];
+
+		// Count of number of loaded musics.
+		int m_music_count;
+
 	public:
 
 		//Get the one and only instance of the resource manager
@@ -99,6 +120,30 @@ namespace df {
 
 		//Translates a string into a df color
 		Color stringToColor(string color);
+
+		// Load Sound from file.
+		// Return 0 if ok, else -1.
+		int loadSound(string filename, string label);
+
+		// Remove Sound with indicated label.
+		// Return 0 if ok, else -1.
+		int unloadSound(string label);
+
+		// Find Sound with indicated label.
+		// Return pointer to it if found, else NULL.
+		Sound* getSound(string label);
+
+		// Associate file with Music.
+		// Return 0 if ok, else -1.
+		int loadMusic(string filename, string label);
+
+		// Remove label for Music with indicated label.
+		// Return 0 if ok, else -1.
+		int unloadMusic(string label);
+
+		// Find Music with indicated label.
+		// Return pointer to it if found, else NULL.
+		Music* getMusic(string label);
 
 
 	};//End of class
