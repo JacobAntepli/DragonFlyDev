@@ -935,7 +935,50 @@ void testGMAnimationAndBoxes() {
     GM.run();
 }
 
+
+void testView() {
+
+    GM.startUp();
+
+    //Load in sprite 
+    RM.loadSprite("Sprites/saucer-spr.txt", "Saucer Sprite");
+
+    //Create saucers
+    new Saucer(Vector(0, DM.getVertical() / 2), Vector(.25, 0));
+    new Saucer(Vector(DM.getHorizontal(), DM.getVertical() / 2), Vector(-.25, 0));
+
+    Saucer* soft = new Saucer(Vector(DM.getHorizontal() / 2, DM.getVertical()), Vector(0, -.05));
+    soft->setSolidness(df::SOFT);
+
+
+    Saucer* spectral = new Saucer(Vector(DM.getHorizontal() / 2, 0), Vector(0, .05));
+    spectral->setSolidness(df::SPECTRAL);
+
+    //World boundry
+    Vector corner(0, 0);
+    Box wb(corner, 80, 50);
+    WM.setBoundary(wb);
+
+    //View
+    Box view(corner, 80, 24);
+    WM.setView(view);
+
+    //Follow saucer coming in from the top 
+    WM.setViewFollowing(spectral);
+
+    GM.run();
+}
+
+
 void testAudio(){
+
+    /*Instructions
+    * 
+    * Button commands
+    * F plays a firing sound
+    * M starts up song1 and pauses song 2
+    * N starts up song2 and pauses song1
+    */
 
     GM.startUp();
 
@@ -969,6 +1012,7 @@ void testAudio(){
 
 
 
+
 int main()
 {
 
@@ -986,7 +1030,8 @@ int main()
     //testDisplayManager(); //DISPLAY MANAGER TESTING SHOULD BE DONE SEPERATLY 
     //testInputManager(); //INPUT MANAGER TESTING SHOULD BE DONE SEPERATLY
     //testResourceManager();RESOURCE MANAGER TESTING SHOULD BE DONE SEPERATLY
-    //testGMAnimationAndBoxes();
+    //testGMAnimationAndBoxes(); // RUN SEPERATLY
+    //testView(); //RUN SEPERATLY
 
     
     
@@ -1028,7 +1073,7 @@ int main()
     //_______________________
     //Audio Tests
     //-----------------------
-    testAudio();
+    //testAudio(); //RUN SEPERATLY 
     
     
      //Shutdown logmanager if needed
