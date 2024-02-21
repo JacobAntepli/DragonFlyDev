@@ -4,6 +4,8 @@
 #include "Saucer.h"
 #include "GameManager.h"
 #include "ResourceManager.h"
+#include "EventView.h"
+#include "WorldManager.h"
 
 //Default construcer defintion
 Saucer::Saucer()
@@ -112,6 +114,15 @@ void Saucer::printKey(const df::EventKeyboard* p_e)
                 RM.getMusic("song1")->pause();
                 RM.getMusic("song2")->play();
             }
+
+            break;
+
+        case df::Keyboard::P:
+            if (p_e->getKeyboardAction() == df::KEY_PRESSED) {
+                df::EventView ev("Points", 1, true);
+                WM.onEvent(&ev);
+            }
+           
 
             break;
         }

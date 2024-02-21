@@ -6,6 +6,7 @@
 #include "utility.h"
 #include "EventCollision.h"
 #include "EventOut.h"
+#include "ViewObject.h"
 
 namespace df {
 
@@ -165,13 +166,13 @@ namespace df {
         //Make iterator with updates object list
         ObjectListIterator it(&m_updates);
 
-        for (int i = 0; i < MAX_ALTITUDE; i++) {
+        for (int i = 0; i < MAX_ALTITUDE+1; i++) {
             //Call draw method for all objects
-            for (it.first(); !it.isDone(); it.next()) {
+            for (it.first(); !it.isDone(); it.next()) {   
                 //Bounding box for object 
-                Box temp_box = ut.getWorldBox(it.currentObject())
-                    ;
-                if (ut.boxIntersectsBox(temp_box,m_view) && it.currentObject()->getAltitude() == i) {
+                Box temp_box = ut.getWorldBox(it.currentObject());
+
+                if ((ut.boxIntersectsBox(temp_box, m_view) || dynamic_cast <ViewObject*>(it.currentObject())) && (it.currentObject()->getAltitude() == i)) {
                     it.currentObject()->draw();
                 }
             }
@@ -179,7 +180,7 @@ namespace df {
     }
 
     //Sends events to all game objects in m_update
-    void WorldManager::onEvent(const Event* p_event) {
+    void WorldManager::onEvent(const Event* p_event){
 
         ObjectListIterator it(&m_updates);
         for (it.first(); !it.isDone(); it.next()) {

@@ -23,6 +23,7 @@
 #include "Object.h"
 #include "ObjectList.h"
 #include "ObjectListIterator.h"
+#include "ViewObject.h"
 
 //Other included resources
 #include "Clock.h"
@@ -635,9 +636,7 @@ void testInputManager() {
 }
 
 //Test GameManager loop with collisions and velocity
-void testCollisions() {
-
-    
+void testCollisions() {  
     GM.startUp();
     LM.setVerbosity(0);
 
@@ -936,12 +935,25 @@ void testGMAnimationAndBoxes() {
 }
 
 
-void testView() {
+void testViewAndViewObjects() {
+    
+    /*Instructions: 
+    * 
+    * Press P to increase points by 1 for each saucer (so 4)
+    *
+    */
 
     GM.startUp();
 
     //Load in sprite 
     RM.loadSprite("Sprites/saucer-spr.txt", "Saucer Sprite");
+
+    // Used for points.
+    df::ViewObject* p_vo = new df::ViewObject;
+    p_vo->setViewString("Points");
+    p_vo->setValue(0);
+    p_vo->setLocation(TOP_RIGHT);
+    p_vo->setColor(YELLOW);
 
     //Create saucers
     new Saucer(Vector(0, DM.getVertical() / 2), Vector(.25, 0));
@@ -1031,7 +1043,7 @@ int main()
     //testInputManager(); //INPUT MANAGER TESTING SHOULD BE DONE SEPERATLY
     //testResourceManager();RESOURCE MANAGER TESTING SHOULD BE DONE SEPERATLY
     //testGMAnimationAndBoxes(); // RUN SEPERATLY
-    //testView(); //RUN SEPERATLY
+    
 
     
     
@@ -1051,6 +1063,7 @@ int main()
     //testObjectList();
     //testObjectListIterator();
     //testVector();
+    //testViewAndViewObjects(); //RUN SEPERATLY
     
 
 

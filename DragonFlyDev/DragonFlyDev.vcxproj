@@ -152,6 +152,7 @@
     <ClCompile Include="EventMouse.cpp" />
     <ClCompile Include="EventOut.cpp" />
     <ClCompile Include="EventStep.cpp" />
+    <ClCompile Include="EventView.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="TestObject.cpp" />
     <ClCompile Include="utility.cpp" />
     <ClCompile Include="Vector.cpp" />
+    <ClCompile Include="ViewObject.cpp" />
     <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +186,7 @@
     <ClInclude Include="EventMouse.h" />
     <ClInclude Include="EventOut.h" />
     <ClInclude Include="EventStep.h" />
+    <ClInclude Include="EventView.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="InputManager.h" />
@@ -201,6 +204,7 @@
     <ClInclude Include="TestObject.h" />
     <ClInclude Include="utility.h" />
     <ClInclude Include="Vector.h" />
+    <ClInclude Include="ViewObject.h" />
     <ClInclude Include="WorldManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

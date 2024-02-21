@@ -5,8 +5,9 @@
 #include "Vector.h"
 #include "Box.h"
 #include "Object.h"
+#include <sstream>
 
-
+using std::stringstream;
 namespace df {
 	class Utility {
 
@@ -34,10 +35,11 @@ namespace df {
 		//Convert world position to view position
 		Vector worldToView(Vector world_pos);
 
+		//Convert view position to world position
+		Vector viewToWorld(Vector view_pos);
 
-
-
-
+		//Convert int ot a string 
+		std::string toString(int i);
 	};
 }//END OF NAME SPACE
 #endif // !__UTILITY_H__

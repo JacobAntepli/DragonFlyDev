@@ -107,6 +107,7 @@ namespace df {
 
 		return box;
 	}
+
 	Vector Utility::worldToView(Vector world_pos)
 	{
 		//Get view information
@@ -118,5 +119,27 @@ namespace df {
 		Vector view_pos(world_pos.getX() - view_x, world_pos.getY() - view_y);
 
 		return view_pos;
+	}
+
+	Vector Utility::viewToWorld(Vector view_pos)
+	{
+		//Get view information
+		Vector view_origin = WM.getView().getCorner();
+		int view_x = view_origin.getX();
+		int view_y = view_origin.getY();
+
+		//Create new view pos
+		Vector world_pos(view_pos.getX() + view_x, view_pos.getY() + view_y);
+
+		return world_pos;
+	}
+
+	std::string Utility::toString(int i)
+	{
+		//Create string stream
+		std::stringstream ss;
+		//Add num to stream
+		ss << i;
+		return ss.str();
 	}
 }
