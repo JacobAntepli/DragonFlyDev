@@ -1041,7 +1041,7 @@ int main()
     //testGameManager(); //GAME MANAGER SHOULD BE TESTED SEPERATLY
     //testDisplayManager(); //DISPLAY MANAGER TESTING SHOULD BE DONE SEPERATLY 
     //testInputManager(); //INPUT MANAGER TESTING SHOULD BE DONE SEPERATLY
-    //testResourceManager();RESOURCE MANAGER TESTING SHOULD BE DONE SEPERATLY
+    //testResourceManager();//RESOURCE MANAGER TESTING SHOULD BE DONE SEPERATLY
     //testGMAnimationAndBoxes(); // RUN SEPERATLY
     
 
@@ -1086,7 +1086,7 @@ int main()
     //_______________________
     //Audio Tests
     //-----------------------
-    //testAudio(); //RUN SEPERATLY 
+    testAudio(); //RUN SEPERATLY 
     
     
      //Shutdown logmanager if needed
