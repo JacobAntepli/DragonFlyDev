@@ -16,8 +16,9 @@ private:
 	//Keyboard events
 	void kbd(const df::EventKeyboard* p_keyboard_event);
 
-	//Move function
-	void move(Vector pos);
+
+	//Move player in specficed direction
+	void move(Vector direction);
 
 	//Filter collision
 	void filterCollisions();
@@ -26,10 +27,10 @@ private:
 	Sprite* baseSprites[25];
 
 	//Current sprite index 
-	int currentIndex; 
+	int current_index; 
 
 	//Counter for sprites
-	int spriteCounter;
+	int sprite_counter;
 
 	//Movement variables and functions
 	int move_slowdown; //Limiting rate of movement 
@@ -39,21 +40,17 @@ private:
 
 public:
 
+	//Constructer 
 	Player();
+
+	//Player destructer 
 	~Player();
 
-	//Move player in specficed direction
-	void move(Vector direction);
+	//Add sprite to array
+	int addSprites();
 
 	//Handles events for player
 	int eventHandler(const df::Event* p_e) override;
-
-
-
-
-
-
-
 
 };//End of class
 #endif // !__PLAYER_H__

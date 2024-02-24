@@ -5,6 +5,7 @@
 #include "EventCollision.h"
 #include "WorldManager.h"
 #include "EventStep.h"
+#include "ResourceManager.h"
 
 
 using namespace df;
@@ -12,17 +13,19 @@ using namespace df;
 Player::Player()
 {
 	//Starting sprite index
-	currentIndex = 0; 
+	current_index = 0; 
 
 	//Counter sprite
-	spriteCounter = 0; 
+	sprite_counter = 0; 
 	
 	//Move slowdown 
 	move_slowdown = 2;
 	move_countdown = 0;
 
+	//addSprites();
+
 	//Set initial sprite
-	setSprite(baseSprites[currentIndex]->getLabel());
+	setSprite(RM.getSprite("P1")->getLabel());
 
 	//Set type
 	setType("Player");
@@ -35,12 +38,23 @@ Player::~Player()
 {
 }
 
+int Player::addSprites()
+{
+	baseSprites[sprite_counter] = RM.getSprite("p1");
+	sprite_counter++;
+	return 0;
+}
+
+
+
 void Player::move(Vector direction)
 {
 	//Only move if allowed 
+	/*
 	if (move_countdown > 0) {
 		return;
 	}
+	*/
 	move_countdown = move_slowdown;
 
 	//Get new position
@@ -80,13 +94,13 @@ void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 
 	case df::Keyboard::W:// Move up
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
-			move(Vector(0, 1));
+			move(Vector(0, -1));
 		}
 		break;
 
 	case df::Keyboard::S:// Move down
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
-			move(Vector(0, -1));
+			move(Vector(0, 1));
 		}
 		break;
 

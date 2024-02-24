@@ -8,6 +8,10 @@
 void loadResources(void) {
 
 	//TODO load in all sprite files
+	//for (int i = 1; i <= 25; i++) {
+		RM.loadSprite("Sprites/Player Sprites/P1.txt", "P1");
+	//}
+
 }
 
 
