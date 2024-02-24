@@ -23,14 +23,19 @@ private:
 	void filterCollisions();
 
 	//An array of sprites for basefont 
-	Sprite* baseSprites[26];
+	Sprite* baseSprites[25];
 
 	//Current sprite index 
-	int spriteIndex; 
+	int currentIndex; 
+
+	//Counter for sprites
+	int spriteCounter;
 
 	//Movement variables and functions
 	int move_slowdown; //Limiting rate of movement 
 	int move_countdown;
+
+
 
 public:
 
@@ -38,7 +43,7 @@ public:
 	~Player();
 
 	//Move player in specficed direction
-	void move();
+	void move(Vector direction);
 
 	//Handles events for player
 	int eventHandler(const df::Event* p_e) override;

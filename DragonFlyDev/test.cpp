@@ -1029,7 +1029,7 @@ int main()
 {
 
     //Start Logmanager for required tests
-    LM.startUp();
+    //LM.startUp();
 
 
     //____________________
@@ -1086,7 +1086,7 @@ int main()
     //_______________________
     //Audio Tests
     //-----------------------
-    testAudio(); //RUN SEPERATLY 
+    //testAudio(); //RUN SEPERATLY 
     
     
      //Shutdown logmanager if needed
