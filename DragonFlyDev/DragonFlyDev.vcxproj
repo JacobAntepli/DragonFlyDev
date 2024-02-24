@@ -166,6 +166,7 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Saucer.cpp" />
     <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Soup.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="LogManager.cpp" />
