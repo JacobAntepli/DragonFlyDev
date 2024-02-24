@@ -86,7 +86,7 @@ int Player::eventHandler(const df::Event* p_e)
 
 int Player::getIndex()
 {
-	return spriteIndex;
+	return current_index;
 }
 
 void Player::kbd(const df::EventKeyboard* p_keyboard_event)
@@ -126,14 +126,14 @@ void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 
 	case df::Keyboard::RIGHTARROW://Incriment up
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
-			
+			adjustIndex(+1);
 		}
 		break;
 
 
 	case df::Keyboard::LEFTARROW://Incriment down
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
-
+			adjustIndex(-1);
 		}
 		break;
 
@@ -150,10 +150,11 @@ void Player::adjustIndex(int modifier)
 	current_index += modifier;
 
 	//Check to see if it's the last letter needed 
-	if (current_index == MAX_INDEX) {
+	if (current_index >= MAX_INDEX || current_index < 0) {
 		//Increase  point count
 
 		current_index = 0; 
+		setSprite(baseSprites[current_index]->getLabel());
 	}
 	else {
 		setSprite(baseSprites[current_index]->getLabel());

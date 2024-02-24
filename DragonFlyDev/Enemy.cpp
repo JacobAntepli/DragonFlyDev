@@ -1,12 +1,9 @@
 #include "Enemy.h"
 #include "EventOut.h"
 #include "WorldManager.h"
-#include "EventCollision.h"
+
 
 using namespace df;
-
-
-
 Enemy::Enemy()
 {
 	setType("Enemy");
