@@ -40,6 +40,11 @@ int Player::eventHandler(const df::Event* p_e)
 	return 0;
 }
 
+int Player::getIndex()
+{
+	return spriteIndex;
+}
+
 void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 {
 	switch (p_keyboard_event->getKey()) {
