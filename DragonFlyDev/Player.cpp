@@ -15,17 +15,15 @@ Player::Player()
 	//Starting sprite index
 	current_index = 0; 
 
-	//Counter sprite
-	sprite_counter = 0; 
 	
 	//Move slowdown 
 	move_slowdown = 2;
 	move_countdown = 0;
 
-	//addSprites();
+	addSprites();
 
 	//Set initial sprite
-	setSprite(RM.getSprite("P1")->getLabel());
+	setSprite(baseSprites[current_index]->getLabel());
 
 	//Set type
 	setType("Player");
@@ -40,8 +38,14 @@ Player::~Player()
 
 int Player::addSprites()
 {
-	baseSprites[sprite_counter] = RM.getSprite("p1");
-	sprite_counter++;
+	
+	char combined[10];
+
+	for (int i = 0; i < 7; i++) {
+		sprintf_s(combined,sizeof(combined), "P%d", i+1);
+		//printf("%s", combined);
+		baseSprites[i] = RM.getSprite(combined);
+	}
 	return 0;
 }
 
@@ -61,8 +65,8 @@ void Player::move(Vector direction)
 	df::Vector new_pos(getPosition() + direction);
 
 	//Ensure player stays in bounds 
-	if ((new_pos.getY() > 3 && new_pos.getY() < WM.getBoundary().getVertical() - 1)
-		&&(new_pos.getX() > 3 && new_pos.getX() < WM.getBoundary().getHorizontal() -1)){
+	if ((new_pos.getY() > 0 && new_pos.getY() < WM.getBoundary().getVertical() - 1)
+		&&(new_pos.getX() > 0 && new_pos.getX() < WM.getBoundary().getHorizontal() -1)){
 
 		WM.moveObject(this, new_pos);
 	}		
@@ -99,13 +103,13 @@ void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 		break;
 
 	case df::Keyboard::S:// Move down
-		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
+		if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
 			move(Vector(0, 1));
 		}
 		break;
 
 	case df::Keyboard::D://Move right
-		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
+		if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
 			move(Vector(1, 0));
 		}
 		break;
@@ -113,6 +117,13 @@ void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 	case df::Keyboard::A://Move left
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
 			move(Vector(-1, 0));
+		}
+		break;
+
+	case df::Keyboard::RIGHTARROW://Move left
+		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
+			current_index++;
+			setSprite(baseSprites[current_index]->getLabel());
 		}
 		break;
 	}

@@ -29,9 +29,6 @@ private:
 	//Current sprite index 
 	int current_index; 
 
-	//Counter for sprites
-	int sprite_counter;
-
 	//Movement variables and functions
 	int move_slowdown; //Limiting rate of movement 
 	int move_countdown;

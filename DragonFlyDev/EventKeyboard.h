@@ -13,7 +13,8 @@ namespace df {
 	enum EventKeyboardAction {
 		UNDEFINED_KEYBOARD_ACTION = -1,
 		KEY_PRESSED,
-		KEY_RELEASE
+		KEY_RELEASE,
+		KEY_DOWN
 	};
 
 	//Keys recognized by dragonfly
