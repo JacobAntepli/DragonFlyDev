@@ -1,0 +1,15 @@
+<HEADER>
+frames 1
+width 9
+height 2
+color magenta
+slowdown -1
+</HEADER>
+<BODY>
+A B C D E
+F        
+end
+</BODY>
+<FOOTER>
+version 1
+</FOOTER>
