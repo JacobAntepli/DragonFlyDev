@@ -6,6 +6,7 @@
 #include "Sprite.h"
 #include "EventKeyboard.h"
 #include "Vector.h"
+#include "EventCollision.h"
 
 
 using namespace df;
@@ -23,7 +24,7 @@ private:
 	void move(Vector direction);
 
 	//Filter collision
-	void filterCollisions();
+	void filterCollisions(const EventCollision* p_c);
 
 	//Change index
 	void adjustIndex(int modifier);
