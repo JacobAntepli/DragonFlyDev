@@ -49,5 +49,7 @@ public:
 	//Handles events for player
 	int eventHandler(const df::Event* p_e) override;
 
+	int getIndex();
+
 };//End of class
 #endif // !__PLAYER_H__
