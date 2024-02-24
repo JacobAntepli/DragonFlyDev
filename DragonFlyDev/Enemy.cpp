@@ -1,23 +1,31 @@
 #include "Enemy.h"
 #include "EventOut.h"
 #include "WorldManager.h"
-
+#include "ResourceManager.h"
 
 using namespace df;
+
 Enemy::Enemy()
 {
 	setType("Enemy");
 
+	//Set hardness 
+	setSolidness(df::SOFT);
+
 	//eventually change this to make the range close to the index of the player sprite
 	spriteIndex = (int)rand() % 3;
+
+	//Add sprites to array
+	addSprites();
 
 	//Set initial sprite
 	setSprite(baseSprites[spriteIndex]->getLabel());
 
-	//set position
-
 	//set velocity
+	setVelocity(df::Vector(-.25, 0));
 
+	//set position
+	moveToStart();
 }
 
 Enemy::~Enemy()
@@ -29,7 +37,7 @@ int Enemy::eventHandler(const df::Event* p_e)
 {
 	//checks letter left screen?
 	if (p_e->getType() == df::OUT_EVENT) {
-		WM.markForDelete(this);
+		//WM.markForDelete(this);
 		return 1;
 	}
 	//checks saucer collided with something?
@@ -49,4 +57,44 @@ void Enemy::filterCollision(const df::EventCollision* p_c)
 	if ((p_c->getObject1()->getType() == "Player") &&
 		(p_c->getObject2()->getType() == "Player"))
 		WM.markForDelete(this);
+}
+
+void Enemy::moveToStart()
+{
+	//Temporary vector
+	df::Vector temp_pos;
+
+	//Get world size 
+	float world_horiz = WM.getBoundary().getHorizontal();
+	float world_vert = WM.getBoundary().getVertical();
+
+	// x is off right side of window
+	temp_pos.setX(world_horiz + rand() % (int)world_horiz + 3.0f);
+
+	// y is in vertical range
+	temp_pos.setY(rand() % (int)(world_vert - 4) + 4.0f);
+
+	
+	// If collision, move right slightly until empty space.
+	df::ObjectList collision_list = WM.getCollisions(this, temp_pos);
+	while (!collision_list.isEmpty()) {
+		temp_pos.setX(temp_pos.getX() + 1);
+		collision_list = WM.getCollisions(this, temp_pos);
+	}
+	
+
+	//Move object 
+	WM.moveObject(this, temp_pos);
+
+}
+
+int Enemy::addSprites()
+{
+	char combined[10];
+	for (int i = 0; i < 4; i++) {
+		sprintf_s(combined, sizeof(combined), "E%d", i + 1);
+		//printf("%s", combined);
+		baseSprites[i] = RM.getSprite(combined);
+	}
+	return 0;
 }

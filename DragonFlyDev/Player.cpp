@@ -37,7 +37,6 @@ Player::~Player()
 
 int Player::addSprites()
 {
-	
 	char combined[10];
 
 	for (int i = 0; i < 7; i++) {
@@ -79,6 +78,9 @@ int Player::eventHandler(const df::Event* p_e)
 			dynamic_cast <const df::EventKeyboard*> (p_e);
 		kbd(p_keyboard_event);
 		return 1;
+	}
+	if (p_e->getType() == df::COLLISION_EVENT) {
+
 	}
 
 	return 0;
