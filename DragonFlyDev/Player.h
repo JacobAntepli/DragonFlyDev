@@ -11,7 +11,7 @@
 using namespace df;
 class Player : df::Object {
 
-	const int MAX_INDEX = 3;
+	const int MAX_INDEX = 4;
 
 private:
 

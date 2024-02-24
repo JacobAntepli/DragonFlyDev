@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "Sprite.h"
 #include "Vector.h"
+#include "EventCollision.h"
 
 
 using namespace df;
@@ -26,5 +27,5 @@ public:
 
 	//Handles events for enemy
 	int eventHandler(const df::Event* p_e) override;
-}
+};
 
