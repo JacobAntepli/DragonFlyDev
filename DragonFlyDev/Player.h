@@ -11,6 +11,8 @@
 using namespace df;
 class Player : df::Object {
 
+	const int MAX_INDEX = 3;
+
 private:
 
 	//Keyboard events
@@ -23,8 +25,13 @@ private:
 	//Filter collision
 	void filterCollisions();
 
+	//Change index
+	void adjustIndex(int modifier);
+
 	//An array of sprites for basefont 
 	Sprite* baseSprites[25];
+
+
 
 	//Current sprite index 
 	int current_index; 
