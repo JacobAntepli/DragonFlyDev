@@ -15,11 +15,16 @@ private:
 	void filterCollision(const df::EventCollision* p_c);
 
 	//array of all possible sprites
-	Sprite* baseSprites[3];
+	Sprite* baseSprites[25];
 
 	//Current sprite index
 	int spriteIndex;
 
+	//Moves to right side of screen 
+	void moveToStart();
+
+	//Add sprite to array
+	int addSprites();
 
 public:
 	Enemy();

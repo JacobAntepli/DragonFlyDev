@@ -31,8 +31,6 @@ private:
 	//An array of sprites for basefont 
 	Sprite* baseSprites[25];
 
-
-
 	//Current sprite index 
 	int current_index; 
 
