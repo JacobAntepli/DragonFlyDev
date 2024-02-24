@@ -40,8 +40,6 @@ private:
 	int move_slowdown; //Limiting rate of movement 
 	int move_countdown;
 
-
-
 public:
 
 	//Constructer 
