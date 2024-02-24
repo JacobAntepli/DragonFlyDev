@@ -10,7 +10,10 @@
 namespace df {
 
 	//Constructer definition
-	InputManager::InputManager() {
+	InputManager::InputManager() 
+    {
+        //Set type
+        setType("InputManager");
 	}
 
 	//Get the singleton for input manager
@@ -34,7 +37,7 @@ namespace df {
 		sf::RenderWindow* window = DM.getWindow();
 
 		//Prevent keyboard repeat 
-		window->setKeyRepeatEnabled(false);
+		//window->setKeyRepeatEnabled(false);
 
 		//Base class start up
 		Manager::startUp();
@@ -290,15 +293,23 @@ namespace df {
 	
 
 	//Get input keyboard and mouse and pass events to objects 
-    void InputManager::getInput() const
+    void InputManager::getInput() 
     {
         //The event
         sf::Event e;
+        /*
+        EventKeyboard heldEvent;
+        heldEvent.setKeyboardAction(KEY_DOWN);
+        heldEvent.setKey(Keyboard::UNDEFINED_KEY);
+        */
+       
 
         //Get events from window while it's open
         while (DM.getWindow()->pollEvent(e)) {
             //Check type of event
             //KEYBOARD
+            
+
             if (e.type == sf::Event::KeyPressed) {
                 //Create event
                 EventKeyboard keyEvent;
@@ -344,6 +355,8 @@ namespace df {
             }
         }
     }
+
+
 
  
 }//End of namespace

@@ -18,7 +18,11 @@ namespace df {
 		InputManager(InputManager const&);
 		void operator=(InputManager const&);
 
+		
+
 	public:
+
+		
 		
 		//Get the singleton for input manager
 		static InputManager& getInstance();
@@ -31,7 +35,9 @@ namespace df {
 		void shutDown();
 
 		//Get input keyboard and mouse and pass events to objects 
-		void getInput() const;
+		void getInput();
+
+		
 
 	
 

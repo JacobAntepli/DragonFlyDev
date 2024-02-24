@@ -8,6 +8,15 @@
 void loadResources(void) {
 
 	//TODO load in all sprite files
+	char combinedFile[100];
+	char combinedLabel[100];
+	for (int i = 1; i < 8; i++) {
+		sprintf_s(combinedFile, sizeof(combinedFile), "Sprites/Player Sprites/P%d.txt", i);
+		sprintf_s(combinedLabel, sizeof(combinedLabel), "P%d", i);
+		//printf("File: %s, label: %s", combinedFile, combinedLabel);
+		RM.loadSprite(combinedFile, combinedLabel);
+	}
+
 }
 
 
