@@ -2,6 +2,7 @@
 #include "EventOut.h"
 #include "WorldManager.h"
 #include "ResourceManager.h"
+#include "Vector.h"
 
 using namespace df;
 
@@ -9,11 +10,19 @@ Enemy::Enemy()
 {
 	setType("Enemy");
 
+	spawnPoints[0] = Vector(-10, DM.getHorizontal() / 2);
+	spawnPoints[1] = Vector(DM.getVertical() + 10, DM.getHorizontal() / 2);
+	spawnPoints[2] = Vector(DM.getVertical()/2, -10);
+	spawnPoints[3] = Vector(DM.getVertical() / 2, DM.getHorizontal() + 10);
+
 	//Set hardness 
 	setSolidness(df::SOFT);
 
 	//eventually change this to make the range close to the index of the player sprite
 	spriteIndex = (int)rand() % 3;
+
+	//set spawn point to random of four
+	spawnPoint = spawnPoints[(int)rand() % 3];
 
 	//Add sprites to array
 	addSprites();
@@ -61,30 +70,8 @@ void Enemy::filterCollision(const df::EventCollision* p_c)
 
 void Enemy::moveToStart()
 {
-	//Temporary vector
-	df::Vector temp_pos;
-
-	//Get world size 
-	float world_horiz = WM.getBoundary().getHorizontal();
-	float world_vert = WM.getBoundary().getVertical();
-
-	// x is off right side of window
-	temp_pos.setX(world_horiz + rand() % (int)world_horiz + 3.0f);
-
-	// y is in vertical range
-	temp_pos.setY(rand() % (int)(world_vert - 4) + 4.0f);
-
-	
-	// If collision, move right slightly until empty space.
-	df::ObjectList collision_list = WM.getCollisions(this, temp_pos);
-	while (!collision_list.isEmpty()) {
-		temp_pos.setX(temp_pos.getX() + 1);
-		collision_list = WM.getCollisions(this, temp_pos);
-	}
-	
-
 	//Move object 
-	WM.moveObject(this, temp_pos);
+	WM.moveObject(this, spawnPoint);
 
 }
 
