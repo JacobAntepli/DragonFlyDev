@@ -37,7 +37,7 @@ namespace df {
 		sf::RenderWindow* window = DM.getWindow();
 
 		//Prevent keyboard repeat 
-		window->setKeyRepeatEnabled(false);
+		//window->setKeyRepeatEnabled(false);
 
 		//Base class start up
 		Manager::startUp();
@@ -297,11 +297,11 @@ namespace df {
     {
         //The event
         sf::Event e;
-
+        /*
         EventKeyboard heldEvent;
         heldEvent.setKeyboardAction(KEY_DOWN);
         heldEvent.setKey(Keyboard::UNDEFINED_KEY);
-
+        */
        
 
         //Get events from window while it's open

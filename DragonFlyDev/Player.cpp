@@ -103,13 +103,13 @@ void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 		break;
 
 	case df::Keyboard::S:// Move down
-		if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
+		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
 			move(Vector(0, 1));
 		}
 		break;
 
 	case df::Keyboard::D://Move right
-		if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
+		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
 			move(Vector(1, 0));
 		}
 		break;
