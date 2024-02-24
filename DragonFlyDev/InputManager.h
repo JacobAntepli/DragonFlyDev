@@ -37,14 +37,6 @@ namespace df {
 		//Get input keyboard and mouse and pass events to objects 
 		void getInput();
 
-		
-
-	
-
-		
-
-
-
 	};//End of class
 }//End of namespace
 

@@ -15,7 +15,6 @@ Player::Player()
 	//Starting sprite index
 	current_index = 0; 
 
-	
 	//Move slowdown 
 	move_slowdown = 2;
 	move_countdown = 0;
@@ -125,17 +124,45 @@ void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 		}
 		break;
 
-	case df::Keyboard::RIGHTARROW://Move left
+	case df::Keyboard::RIGHTARROW://Incriment up
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
-			current_index++;
-			setSprite(baseSprites[current_index]->getLabel());
+			
 		}
 		break;
+
+
+	case df::Keyboard::LEFTARROW://Incriment down
+		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
+
+		}
+		break;
+
 	}
 }
 
 void Player::filterCollisions()
 {
+}
+
+void Player::adjustIndex(int modifier)
+{
+	//Incriment index by the modifier 
+	current_index += modifier;
+
+	//Check to see if it's the last letter needed 
+	if (current_index == MAX_INDEX) {
+		//Increase  point count
+
+		current_index = 0; 
+	}
+	else {
+		setSprite(baseSprites[current_index]->getLabel());
+	}
+
+
+
+
+
 }
 
 
