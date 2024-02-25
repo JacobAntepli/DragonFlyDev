@@ -11,19 +11,13 @@ Enemy::Enemy()
 {
 	setType("Enemy");
 
-	spawnPoints[0] = Vector(-10, DM.getHorizontal() / 2);
-	spawnPoints[1] = Vector(DM.getVertical() + 10, DM.getHorizontal() / 2);
-	spawnPoints[2] = Vector(DM.getVertical()/2, -10);
-	spawnPoints[3] = Vector(DM.getVertical() / 2, DM.getHorizontal() + 10);
+	configureSpawn();
 
 	//Set hardness 
 	setSolidness(df::SOFT);
 
 	//eventually change this to make the range close to the index of the player sprite
 	spriteIndex = (int)rand() % 3;
-
-	//set spawn point to random of four
-	spawnPoint = spawnPoints[(int)rand() % 3];
 
 	//Add sprites to array
 	addSprites();
@@ -33,9 +27,6 @@ Enemy::Enemy()
 
 	//set velocity
 	setVelocity(df::Vector(-.25, 0));
-
-	//set position
-	moveToStart();
 
 	//Marked
 	marked = false;
@@ -50,7 +41,7 @@ int Enemy::eventHandler(const df::Event* p_e)
 {
 	//checks letter left screen?
 	if (p_e->getType() == df::OUT_EVENT) {
-		//WM.markForDelete(this);
+		out();
 		return 1;
 	}
 	//checks saucer collided with something?
@@ -90,13 +81,6 @@ void Enemy::filterCollision(const df::EventCollision* p_c)
 	}
 }
 
-void Enemy::moveToStart()
-{
-	//Move object 
-	WM.moveObject(this, spawnPoint);
-
-}
-
 int Enemy::addSprites()
 {
 	char combined[10];
@@ -106,4 +90,55 @@ int Enemy::addSprites()
 		baseSprites[i] = RM.getSprite(combined);
 	}
 	return 0;
+}
+
+void Enemy::configureSpawn()
+{
+	//add all spawn points to array of spawns
+	spawnPoints[0] = Vector(DM.getHorizontal() / 2 , -10);						//top
+	spawnPoints[1] = Vector(DM.getHorizontal() / 2, DM.getVertical() + 10);		//bottom
+	spawnPoints[2] = Vector(-10, DM.getVertical() / 2);							//left
+	spawnPoints[3] = Vector(DM.getHorizontal() + 10, DM.getVertical() / 2);		//right
+
+	//set spawn index to number randomly from 0 to 3
+	spawnIndex = (int)rand() % 3;
+
+	spawnPoint = spawnPoints[spawnIndex];
+
+	//set position to corresponding spawn point
+	WM.moveObject(this, spawnPoint);
+
+}
+
+void Enemy::out()
+{
+	switch (spawnIndex)
+	{
+	case (0): //if spawned in at top of screen
+		if (getPosition().getY() > 0)
+		{
+			WM.markForDelete(this);
+		}
+		break;
+	case (1): //if spawned in bottom of screen
+		if (getPosition().getY() < DM.getVertical())
+		{
+			WM.markForDelete(this);
+		}
+		break;
+	case (2): //if spawned in left of screen
+		if (getPosition().getX() > 0)
+		{
+			WM.markForDelete(this);
+		}
+		break;
+	case(3): //if spawned in right of screen
+		if (getPosition().getX() < DM.getHorizontal())
+		{
+			WM.markForDelete(this);
+		}
+		break;
+	default:
+		break;
+	}
 }

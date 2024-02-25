@@ -23,19 +23,24 @@ private:
 	//Current sprite index
 	int spriteIndex;
 
-	//Moves to right side of screen 
-	void moveToStart();
-
 	//Add sprite to array
 	int addSprites();
 
 	//array of all possible spawn points
 	Vector spawnPoints[3];
 
-	//this object's spawn point
+	//this object's spawn position
 	Vector spawnPoint;
 
+	//index for spawn point
+	int spawnIndex;
+
+	//adds spawn points to array, chooses spawn point for this enemy
+	void configureSpawn();
+
 	bool marked;
+
+	void out();
 
 public:
 	Enemy();
