@@ -5,6 +5,9 @@
 #include "WorldManager.h"
 #include "EventStep.h"
 #include "ResourceManager.h"
+#include "GameManager.h"
+#include "Points.h"
+#include "EventView.h"
 
 
 using namespace df;
@@ -77,10 +80,6 @@ int Player::eventHandler(const df::Event* p_e)
 		kbd(p_keyboard_event);
 		return 1;
 	}
-	if (p_e->getType() == df::COLLISION_EVENT) {
-		//const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
-		//filterCollisions(p_collision_event);
-	}
 
 	return 0;
 }
@@ -94,9 +93,9 @@ void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 {
 	switch (p_keyboard_event->getKey()) {
 
-	case df::Keyboard::Q:// quit
+	case df::Keyboard::ESCAPE:// quit
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
-			WM.markForDelete(this);
+			GM.setGameOver(true);
 		}
 		break;
 
@@ -141,34 +140,15 @@ void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 	}
 }
 
-void Player::filterCollisions(const EventCollision* p_c)
-{
-	//Ensure if it's an enemy 
-	if (p_c->getObject1()->getType() == "Enemy") {
-
-		//Get the enemy via a cast
-		checkEnemyIndex((Enemy*)p_c->getObject1());
-		//WM.markForDelete(p_c->getObject1());
-	}
-	else if(p_c->getObject2()->getType() == "Enemy") {
-
-		//Get the enemy via a cast
-		checkEnemyIndex((Enemy*)p_c->getObject2());
-		//WM.markForDelete(p_c->getObject2());
-	}
-}
-
 void Player::checkEnemyIndex(Enemy* enemy)
 {
-	//Adjust player index accordingly 
+	//Adjust player index accordingly based on if it's the next letter in the alphabets
 	if (enemy->getSpriteIndex() == current_index + 1) {
 		adjustIndex(1);
 	}
 	else {
 		adjustIndex(-1);
 	}
-
-	
 }
 
 void Player::adjustIndex(int modifier)
@@ -179,18 +159,27 @@ void Player::adjustIndex(int modifier)
 	//Check to see if it's the last letter needed 
 	if (current_index >= MAX_INDEX || current_index < 0) {
 		//Increase  point count
-
+		//Add 10 points.
+		if (!(current_index < 0)) {
+			df::EventView ev(POINTS_STRING, 10, true);
+			WM.onEvent(&ev);
+		}
 		current_index = 0; 
 		setSprite(baseSprites[current_index]->getLabel());
+
 	}
-	else {
+	else{
+		if (modifier < 0) {
+			df::EventView ev(POINTS_STRING,-1, true);
+			WM.onEvent(&ev);
+		}
+		else {
+			df::EventView ev(POINTS_STRING,1, true);
+			WM.onEvent(&ev);
+		}
+		//Set new sprite based on index
 		setSprite(baseSprites[current_index]->getLabel());
 	}
-
-
-
-
-
 }
 
 

@@ -4,6 +4,7 @@
 #include "Color.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Points.h"
 
 void loadResources(void) {
 
@@ -31,7 +32,11 @@ void loadResources(void) {
 
 void populateWorld(void) {
 
-	new Player();
+	//Create point view object
+	new Points;
+
+
+	new Player;
 
 	//new spawner
 	new Enemy;
@@ -39,6 +44,7 @@ void populateWorld(void) {
 	new Enemy;
 	new Enemy;
 	new Enemy;
+
 
 	//TODO load in all sounds
 
