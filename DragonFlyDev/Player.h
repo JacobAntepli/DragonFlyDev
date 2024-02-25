@@ -24,9 +24,6 @@ private:
 	//Move player in specficed direction
 	void move(Vector direction);
 
-	//Filter collision
-	void filterCollisions(const EventCollision* p_c);
-
 	//Change index
 	void adjustIndex(int modifier);
 
