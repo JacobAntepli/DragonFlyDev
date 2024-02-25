@@ -167,7 +167,7 @@ void Player::adjustIndex(int modifier)
 			WM.onEvent(&ev);
 		}
 		else {
-			df::EventView ev(POINTS_STRING, -1, true);
+			df::EventView ev(POINTS_STRING, -2, true);
 			WM.onEvent(&ev);
 		}
 		current_index = 0; 
@@ -176,7 +176,7 @@ void Player::adjustIndex(int modifier)
 	}
 	else{
 		if (modifier < 0) {
-			df::EventView ev(POINTS_STRING,-1, true);
+			df::EventView ev(POINTS_STRING,-2, true);
 			WM.onEvent(&ev);
 		}
 		else {
