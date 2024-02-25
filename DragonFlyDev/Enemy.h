@@ -26,6 +26,8 @@ private:
 	//Add sprite to array
 	int addSprites();
 
+	bool marked;
+
 public:
 	Enemy();
 	~Enemy();

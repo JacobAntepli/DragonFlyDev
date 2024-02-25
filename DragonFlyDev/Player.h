@@ -30,8 +30,7 @@ private:
 	//Change index
 	void adjustIndex(int modifier);
 
-	//Checks if enemy is correct
-	void checkEnemyIndex(Enemy* enemy);
+	
 
 	//An array of sprites for basefont 
 	Sprite* baseSprites[25];
@@ -60,6 +59,9 @@ public:
 	int eventHandler(const df::Event* p_e) override;
 
 	int getIndex();
+
+	//Checks if enemy is correct
+	void checkEnemyIndex(Enemy* enemy);
 
 };//End of class
 #endif // !__PLAYER_H__
