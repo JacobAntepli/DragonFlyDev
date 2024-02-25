@@ -1,14 +1,12 @@
 #pragma once
-
+//Included resources
 #include "Object.h"
 #include "Sprite.h"
 #include "Vector.h"
 #include "EventCollision.h"
 #include "DisplayManager.h"
 
-
 using namespace df;
-
 
 class Enemy : df::Object {
 
@@ -27,7 +25,7 @@ private:
 	int addSprites();
 
 	//array of all possible spawn points
-	Vector spawnPoints[3];
+	Vector spawnPoints[4];
 
 	//this object's spawn position
 	Vector spawnPoint;
@@ -38,12 +36,21 @@ private:
 	//adds spawn points to array, chooses spawn point for this enemy
 	void configureSpawn();
 
+	//Object affected 
 	bool marked;
 
+	//Handles out events for enemies
 	void out();
+
+	//sets velocity based on spawn point
+	void configureVelocity();
+
+	Object* p_player;
+
 
 public:
 	Enemy();
+	Enemy(Object* player);
 	~Enemy();
 
 	//Handles events for enemy

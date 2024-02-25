@@ -151,6 +151,8 @@ void Player::checkEnemyIndex(Enemy* enemy)
 	}
 }
 
+
+
 void Player::adjustIndex(int modifier)
 {
 	//Incriment index by the modifier 
@@ -162,6 +164,10 @@ void Player::adjustIndex(int modifier)
 		//Add 10 points.
 		if (!(current_index < 0)) {
 			df::EventView ev(POINTS_STRING, 10, true);
+			WM.onEvent(&ev);
+		}
+		else {
+			df::EventView ev(POINTS_STRING, -1, true);
 			WM.onEvent(&ev);
 		}
 		current_index = 0; 

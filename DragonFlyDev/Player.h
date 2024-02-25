@@ -1,6 +1,4 @@
-#ifndef __PLAYER_H__
-#define __PLAYER_H__
-
+#pragma once
 //Included resources
 #include "Object.h"
 #include "Sprite.h"
@@ -13,7 +11,7 @@
 using namespace df;
 class Player : df::Object {
 
-	const int MAX_INDEX = 4;
+	const int MAX_INDEX = 3;
 
 private:
 
@@ -26,8 +24,6 @@ private:
 
 	//Change index
 	void adjustIndex(int modifier);
-
-	
 
 	//An array of sprites for basefont 
 	Sprite* baseSprites[25];
@@ -61,4 +57,4 @@ public:
 	void checkEnemyIndex(Enemy* enemy);
 
 };//End of class
-#endif // !__PLAYER_H__
+

@@ -11,7 +11,7 @@ void loadResources(void) {
 	//TODO load in all sprite files
 	char combinedFile[100];
 	char combinedLabel[100];
-	for (int i = 1; i < 8; i++) {
+	for (int i = 1; i < 5; i++) {
 		sprintf_s(combinedFile, sizeof(combinedFile), "Sprites/Enemy Sprites/E%d.txt", i);
 		sprintf_s(combinedLabel, sizeof(combinedLabel), "E%d", i);
 		//printf("File: %s, label: %s", combinedFile, combinedLabel);
@@ -35,15 +35,23 @@ void populateWorld(void) {
 	//Create point view object
 	new Points;
 
-
-	new Player;
+	Player* p = new Player;
 
 	//new spawner
-	new Enemy;
-	new Enemy;
-	new Enemy;
-	new Enemy;
-	new Enemy;
+	new Enemy((Object*)p);
+	new Enemy((Object*)p);
+	new Enemy((Object*)p);
+	new Enemy((Object*)p);
+	new Enemy((Object*)p);
+	new Enemy((Object*)p);
+	new Enemy((Object*)p);
+	new Enemy((Object*)p);
+	new Enemy((Object*)p);
+	//new Enemy;
+	//new Enemy;
+
+
+	
 
 
 	//TODO load in all sounds

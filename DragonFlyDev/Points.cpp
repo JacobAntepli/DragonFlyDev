@@ -1,5 +1,9 @@
+
 //Included resources
 #include "Points.h"
+#include "EventView.h"
+
+using namespace df;
 
 Points::Points() {
 
@@ -12,9 +16,15 @@ Points::Points() {
 //Checks events for points
 int Points::eventHandler(const df::Event* p_e) {
 
-	// Parent handles event if score update.
-	if (df::ViewObject::eventHandler(p_e)) {
-		return 1;
+
+	//Cast event
+	const EventView* p_ve = static_cast<const EventView*> (p_e);
+
+	if(getValue() + p_ve->getValue() > 0) {
+		// Parent handles event if score update.
+		if (df::ViewObject::eventHandler(p_e)) {
+			return 1;
+		}
 	}
 
 	// If get here, have ignored this event.

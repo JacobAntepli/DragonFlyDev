@@ -26,7 +26,41 @@ Enemy::Enemy()
 	setSprite(baseSprites[spriteIndex]->getLabel());
 
 	//set velocity
-	setVelocity(df::Vector(-.25, 0));
+	configureVelocity();
+
+
+	//Marked
+	marked = false;
+}
+
+Enemy::Enemy(Object* player)
+{
+	setType("Enemy");
+
+	configureSpawn();
+
+	//Set hardness 
+	setSolidness(df::SOFT);
+
+	//eventually change this to make the range close to the index of the player sprite
+	spriteIndex = (int)rand() % 4;
+
+	//Add sprites to array
+	addSprites();
+
+	//Set initial sprite
+	setSprite(baseSprites[spriteIndex]->getLabel());
+
+	//set velocity
+	//configureVelocity();
+	p_player = player;
+	Vector velocity = Vector((p_player->getPosition().getX() - rand() % 5) - getPosition().getX(),
+							 (p_player->getPosition().getY() - rand() % 5) - getPosition().getY());
+	velocity.normalize();
+	velocity.scale(.2);
+	printf("Object made with velocity (%f,%f)\n", velocity.getX(), velocity.getY());
+	setVelocity(velocity);
+	
 
 	//Marked
 	marked = false;
@@ -34,13 +68,14 @@ Enemy::Enemy()
 
 Enemy::~Enemy()
 {
-	
+	new Enemy(p_player);
 }
 
 int Enemy::eventHandler(const df::Event* p_e)
 {
 	//checks letter left screen?
 	if (p_e->getType() == df::OUT_EVENT) {
+		printf("Received out event at position (%.02f,%.02f)\n",getPosition().getX(),getPosition().getY());
 		out();
 		return 1;
 	}
@@ -62,20 +97,19 @@ int Enemy::getSpriteIndex() const
 
 void Enemy::filterCollision(const df::EventCollision* p_c)
 {
-
 	//only respond to collisions with player
 	if (p_c->getObject1()->getType() == "Player" && !marked) {
 		Player* player = (Player*)p_c->getObject1();
 		player->checkEnemyIndex(this);
 		WM.markForDelete(this);
-		new Enemy;
+		new Enemy(p_player);
 		marked = true;
 	}
 	if(p_c->getObject2()->getType() == "Player" && !marked) {
 		Player* player = (Player*)p_c->getObject2();
 		player->checkEnemyIndex(this);
 		WM.markForDelete(this);
-		new Enemy;
+		new Enemy(p_player);
 		marked = true;
 		
 	}
@@ -98,15 +132,17 @@ void Enemy::configureSpawn()
 	spawnPoints[0] = Vector(DM.getHorizontal() / 2 , -10);						//top
 	spawnPoints[1] = Vector(DM.getHorizontal() / 2, DM.getVertical() + 10);		//bottom
 	spawnPoints[2] = Vector(-10, DM.getVertical() / 2);							//left
-	spawnPoints[3] = Vector(DM.getHorizontal() + 10, DM.getVertical() / 2);		//right
+	spawnPoints[3] = Vector(DM.getHorizontal()+10, DM.getVertical()/ 2);		//right
 
 	//set spawn index to number randomly from 0 to 3
-	spawnIndex = (int)rand() % 3;
+	spawnIndex = (int)rand() % 4;
 
 	spawnPoint = spawnPoints[spawnIndex];
 
 	//set position to corresponding spawn point
 	WM.moveObject(this, spawnPoint);
+
+	printf("Spawn position: (%.02f,%.02f) from spawnindex %d\n", getPosition().getX(), getPosition().getY(),spawnIndex);
 
 }
 
@@ -118,25 +154,55 @@ void Enemy::out()
 		if (getPosition().getY() > 0)
 		{
 			WM.markForDelete(this);
+			//Spawn new enemy
+			//new Enemy;
 		}
 		break;
 	case (1): //if spawned in bottom of screen
 		if (getPosition().getY() < DM.getVertical())
 		{
 			WM.markForDelete(this);
+			//Spawn new enemy
+			//new Enemy;
 		}
 		break;
 	case (2): //if spawned in left of screen
 		if (getPosition().getX() > 0)
 		{
 			WM.markForDelete(this);
+			//Spawn new enemy
+			//new Enemy;
 		}
 		break;
 	case(3): //if spawned in right of screen
 		if (getPosition().getX() < DM.getHorizontal())
 		{
 			WM.markForDelete(this);
+			//Spawn new enemy
+			//new Enemy;
 		}
+		break;
+	default:
+		break;
+	}
+
+}
+
+void Enemy::configureVelocity()
+{
+	switch (spawnIndex)
+	{
+	case (0): //if spawned in at top of screen
+		setVelocity(Vector(2 - rand() % 4, 0.2));
+		break;
+	case (1): //if spawned in bottom of screen
+		setVelocity(Vector(2 - rand() % 4, -.2));
+		break;
+	case (2): //if spawned in left of screen
+		setVelocity(Vector(0.8, 1 - rand() % 2));
+		break;
+	case(3): //if spawned in right of screen
+		setVelocity(Vector(0.8, 1 - rand() % 2));
 		break;
 	default:
 		break;
