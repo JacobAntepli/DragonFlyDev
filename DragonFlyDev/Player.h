@@ -6,6 +6,8 @@
 #include "Sprite.h"
 #include "EventKeyboard.h"
 #include "Vector.h"
+#include "EventCollision.h"
+#include "Enemy.h"
 
 
 using namespace df;
@@ -23,10 +25,13 @@ private:
 	void move(Vector direction);
 
 	//Filter collision
-	void filterCollisions();
+	void filterCollisions(const EventCollision* p_c);
 
 	//Change index
 	void adjustIndex(int modifier);
+
+	//Checks if enemy is correct
+	void checkEnemyIndex(Enemy* enemy);
 
 	//An array of sprites for basefont 
 	Sprite* baseSprites[25];
@@ -37,6 +42,8 @@ private:
 	//Movement variables and functions
 	int move_slowdown; //Limiting rate of movement 
 	int move_countdown;
+
+	
 
 public:
 

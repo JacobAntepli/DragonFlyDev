@@ -19,7 +19,7 @@ void loadResources(void) {
 
 	char combinedFileEnemy[100];
 	char combinedLabelEnemy[100];
-	for (int i = 1; i < 4; i++) {
+	for (int i = 1; i < 5; i++) {
 		sprintf_s(combinedFileEnemy, sizeof(combinedFileEnemy), "Sprites/Player Sprites/P%d.txt", i);
 		sprintf_s(combinedLabelEnemy, sizeof(combinedLabelEnemy), "P%d", i);
 		//printf("File: %s, label: %s", combinedFile, combinedLabel);

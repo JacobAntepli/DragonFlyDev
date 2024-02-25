@@ -32,5 +32,8 @@ public:
 
 	//Handles events for enemy
 	int eventHandler(const df::Event* p_e) override;
+
+	//Gets the enemies spriteIndex
+	int getSpriteIndex() const;
 };
 

@@ -30,7 +30,7 @@ Enemy::Enemy()
 
 Enemy::~Enemy()
 {
-	new Enemy;
+	
 }
 
 int Enemy::eventHandler(const df::Event* p_e)
@@ -50,13 +50,20 @@ int Enemy::eventHandler(const df::Event* p_e)
 	return 0; //otherwise ignored
 }
 
+int Enemy::getSpriteIndex() const
+{
+	return spriteIndex;
+}
+
 
 void Enemy::filterCollision(const df::EventCollision* p_c)
 {
 	//only respond to collisions with player
-	if ((p_c->getObject1()->getType() == "Player") &&
-		(p_c->getObject2()->getType() == "Player"))
+	if ((p_c->getObject1()->getType() == "Player") ||
+		(p_c->getObject2()->getType() == "Player")) {
 		WM.markForDelete(this);
+		new Enemy;
+	}
 }
 
 void Enemy::moveToStart()
