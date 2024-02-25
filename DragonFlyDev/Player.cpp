@@ -78,8 +78,8 @@ int Player::eventHandler(const df::Event* p_e)
 		return 1;
 	}
 	if (p_e->getType() == df::COLLISION_EVENT) {
-		const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
-		filterCollisions(p_collision_event);
+		//const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
+		//filterCollisions(p_collision_event);
 	}
 
 	return 0;
@@ -170,9 +170,6 @@ void Player::checkEnemyIndex(Enemy* enemy)
 
 	
 }
-
-
-
 
 void Player::adjustIndex(int modifier)
 {
