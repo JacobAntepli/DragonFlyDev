@@ -4,9 +4,12 @@
 #include "Sprite.h"
 #include "Vector.h"
 #include "EventCollision.h"
+#include "DisplayManager.h"
 
 
 using namespace df;
+
+
 class Enemy : df::Object {
 
 private:
@@ -25,6 +28,12 @@ private:
 
 	//Add sprite to array
 	int addSprites();
+
+	//array of all possible spawn points
+	Vector spawnPoints[3];
+
+	//this object's spawn point
+	Vector spawnPoint;
 
 	bool marked;
 
