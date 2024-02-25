@@ -5,7 +5,7 @@
 #include "WorldManager.h"
 #include "EventStep.h"
 #include "ResourceManager.h"
-#include "Enemy.h"
+
 
 using namespace df;
 
@@ -36,7 +36,7 @@ Player::~Player()
 
 int Player::addSprites()
 {
-	char combined[10];
+	char combined[32];
 
 	for (int i = 0; i < 7; i++) {
 		sprintf_s(combined,sizeof(combined), "P%d", i+1);
@@ -45,7 +45,6 @@ int Player::addSprites()
 	}
 	return 0;
 }
-
 
 
 void Player::move(Vector direction)
@@ -148,24 +147,32 @@ void Player::filterCollisions(const EventCollision* p_c)
 	if (p_c->getObject1()->getType() == "Enemy") {
 
 		//Get the enemy via a cast
-		const Enemy* enemy = dynamic_cast <const Enemy*> (p_c->getObject1());
-
-		if()
-
-
-
-		
-
+		checkEnemyIndex((Enemy*)p_c->getObject1());
+		//WM.markForDelete(p_c->getObject1());
 	}
-	if(p_c->getObject2()->getType() == "Enemy") {
+	else if(p_c->getObject2()->getType() == "Enemy") {
 
 		//Get the enemy via a cast
-		const Enemy* enemy = dynamic_cast <const Enemy*> (p_c->getObject1());
-
-
-
+		checkEnemyIndex((Enemy*)p_c->getObject2());
+		//WM.markForDelete(p_c->getObject2());
 	}
 }
+
+void Player::checkEnemyIndex(Enemy* enemy)
+{
+	//Adjust player index accordingly 
+	if (enemy->getSpriteIndex() == current_index + 1) {
+		adjustIndex(1);
+	}
+	else {
+		adjustIndex(-1);
+	}
+
+	
+}
+
+
+
 
 void Player::adjustIndex(int modifier)
 {
@@ -188,5 +195,6 @@ void Player::adjustIndex(int modifier)
 
 
 }
+
 
 

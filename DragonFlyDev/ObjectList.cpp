@@ -18,8 +18,7 @@ namespace df {
 	//Insert object pointer in list
 	//Return 0 on success, -1 on failure
 	int ObjectList::insert(Object* p_o)
-	{
-		
+	{	
 		//Check if list is full
 		if (!isFull()) {
 			m_p_obj[m_count] = p_o;
@@ -43,7 +42,11 @@ namespace df {
 
 				if (m_p_obj[i] == p_o) {
 					LM.writeLog(1, "Object %d successfull found for removal\n", m_p_obj[i]->getId());
-					m_p_obj[i] = NULL;
+
+					//Nudge the rest over 
+					for (int j = i; j < m_count - 1; j++) {
+						m_p_obj[j] = m_p_obj[j + 1];
+					}
 					m_count--;
 				}
 			}
