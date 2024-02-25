@@ -35,11 +35,16 @@ private:
 	//this object's spawn point
 	Vector spawnPoint;
 
+	bool marked;
+
 public:
 	Enemy();
 	~Enemy();
 
 	//Handles events for enemy
 	int eventHandler(const df::Event* p_e) override;
+
+	//Gets the enemies spriteIndex
+	int getSpriteIndex() const;
 };
 

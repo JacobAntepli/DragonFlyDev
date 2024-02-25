@@ -172,6 +172,7 @@ namespace df {
                 //Bounding box for object 
                 Box temp_box = ut.getWorldBox(it.currentObject());
 
+                
                 if ((ut.boxIntersectsBox(temp_box, m_view) || dynamic_cast <ViewObject*>(it.currentObject())) && (it.currentObject()->getAltitude() == i)) {
                     it.currentObject()->draw();
                 }

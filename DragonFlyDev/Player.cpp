@@ -2,7 +2,6 @@
 
 //Included resources 
 #include "Player.h"
-#include "EventCollision.h"
 #include "WorldManager.h"
 #include "EventStep.h"
 #include "ResourceManager.h"
@@ -37,7 +36,7 @@ Player::~Player()
 
 int Player::addSprites()
 {
-	char combined[10];
+	char combined[32];
 
 	for (int i = 0; i < 7; i++) {
 		sprintf_s(combined,sizeof(combined), "P%d", i+1);
@@ -46,7 +45,6 @@ int Player::addSprites()
 	}
 	return 0;
 }
-
 
 
 void Player::move(Vector direction)
@@ -80,7 +78,8 @@ int Player::eventHandler(const df::Event* p_e)
 		return 1;
 	}
 	if (p_e->getType() == df::COLLISION_EVENT) {
-
+		//const df::EventCollision* p_collision_event = dynamic_cast <const df::EventCollision*> (p_e);
+		//filterCollisions(p_collision_event);
 	}
 
 	return 0;
@@ -142,8 +141,34 @@ void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 	}
 }
 
-void Player::filterCollisions()
+void Player::filterCollisions(const EventCollision* p_c)
 {
+	//Ensure if it's an enemy 
+	if (p_c->getObject1()->getType() == "Enemy") {
+
+		//Get the enemy via a cast
+		checkEnemyIndex((Enemy*)p_c->getObject1());
+		//WM.markForDelete(p_c->getObject1());
+	}
+	else if(p_c->getObject2()->getType() == "Enemy") {
+
+		//Get the enemy via a cast
+		checkEnemyIndex((Enemy*)p_c->getObject2());
+		//WM.markForDelete(p_c->getObject2());
+	}
+}
+
+void Player::checkEnemyIndex(Enemy* enemy)
+{
+	//Adjust player index accordingly 
+	if (enemy->getSpriteIndex() == current_index + 1) {
+		adjustIndex(1);
+	}
+	else {
+		adjustIndex(-1);
+	}
+
+	
 }
 
 void Player::adjustIndex(int modifier)
@@ -167,5 +192,6 @@ void Player::adjustIndex(int modifier)
 
 
 }
+
 
 

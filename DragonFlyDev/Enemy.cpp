@@ -3,6 +3,7 @@
 #include "WorldManager.h"
 #include "ResourceManager.h"
 #include "Vector.h"
+#include "Player.h"
 
 using namespace df;
 
@@ -35,11 +36,14 @@ Enemy::Enemy()
 
 	//set position
 	moveToStart();
+
+	//Marked
+	marked = false;
 }
 
 Enemy::~Enemy()
 {
-	new Enemy;
+	
 }
 
 int Enemy::eventHandler(const df::Event* p_e)
@@ -59,13 +63,31 @@ int Enemy::eventHandler(const df::Event* p_e)
 	return 0; //otherwise ignored
 }
 
+int Enemy::getSpriteIndex() const
+{
+	return spriteIndex;
+}
+
 
 void Enemy::filterCollision(const df::EventCollision* p_c)
 {
+
 	//only respond to collisions with player
-	if ((p_c->getObject1()->getType() == "Player") &&
-		(p_c->getObject2()->getType() == "Player"))
+	if (p_c->getObject1()->getType() == "Player" && !marked) {
+		Player* player = (Player*)p_c->getObject1();
+		player->checkEnemyIndex(this);
 		WM.markForDelete(this);
+		new Enemy;
+		marked = true;
+	}
+	if(p_c->getObject2()->getType() == "Player" && !marked) {
+		Player* player = (Player*)p_c->getObject2();
+		player->checkEnemyIndex(this);
+		WM.markForDelete(this);
+		new Enemy;
+		marked = true;
+		
+	}
 }
 
 void Enemy::moveToStart()
