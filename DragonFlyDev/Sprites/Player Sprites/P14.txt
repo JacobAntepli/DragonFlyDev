@@ -1,11 +1,15 @@
 <HEADER>
-frames 1
+frames 2
 width 9
 height 3
 color magenta
-slowdown -1
+slowdown 1
 </HEADER>
 <BODY>
+A B C D E
+F G H I J
+K L M N  
+end
 A B C D E
 F G H I J
 K L M N  
