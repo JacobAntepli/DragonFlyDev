@@ -1,11 +1,13 @@
 <HEADER>
-frames 1
+frames w
 width 1
 height 1
 color red
-slowdown -1
+slowdown 1
 </HEADER>
 <BODY>
+8
+end
 8
 end
 </BODY>
