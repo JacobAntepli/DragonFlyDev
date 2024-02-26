@@ -37,7 +37,7 @@ namespace df {
 		sf::RenderWindow* window = DM.getWindow();
 
 		//Prevent keyboard repeat 
-		//window->setKeyRepeatEnabled(false);
+		window->setKeyRepeatEnabled(false);
 
 		//Base class start up
 		Manager::startUp();
@@ -297,19 +297,13 @@ namespace df {
     {
         //The event
         sf::Event e;
-        /*
-        EventKeyboard heldEvent;
-        heldEvent.setKeyboardAction(KEY_DOWN);
-        heldEvent.setKey(Keyboard::UNDEFINED_KEY);
-        */
-       
+
 
         //Get events from window while it's open
         while (DM.getWindow()->pollEvent(e)) {
             //Check type of event
             //KEYBOARD
             
-
             if (e.type == sf::Event::KeyPressed) {
                 //Create event
                 EventKeyboard keyEvent;
@@ -318,7 +312,7 @@ namespace df {
                 //Set key
                 keyEvent.setKey(SFMLToDFKey(e.key.code));
                 //Send event to objects
-                WM.onEvent(&keyEvent);
+                WM.onEvent(&keyEvent);      
             }
             if (e.type == sf::Event::KeyReleased) {
                 //Create event
