@@ -35,6 +35,12 @@ private:
 	int move_slowdown; //Limiting rate of movement 
 	int move_countdown;
 
+	//Smooth movementt
+	void smoothMove();
+
+	//Countdown for when the player
+	void step();
+
 	
 
 public:

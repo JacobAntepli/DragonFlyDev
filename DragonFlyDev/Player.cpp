@@ -12,6 +12,8 @@
 
 using namespace df;
 
+
+
 Player::Player()
 {
 	//Starting sprite index
@@ -19,7 +21,7 @@ Player::Player()
 
 	//Move slowdown 
 	move_slowdown = 2;
-	move_countdown = 0;
+	move_countdown = move_slowdown;
 
 	addSprites();
 
@@ -53,11 +55,10 @@ int Player::addSprites()
 void Player::move(Vector direction)
 {
 	//Only move if allowed 
-	/*
+	
 	if (move_countdown > 0) {
 		return;
 	}
-	*/
 	move_countdown = move_slowdown;
 
 	//Get new position
@@ -73,6 +74,15 @@ void Player::move(Vector direction)
 
 int Player::eventHandler(const df::Event* p_e)
 {
+
+	smoothMove();
+
+	//Checks for step events
+	if (p_e->getType() == df::STEP_EVENT) {
+		step();
+		return 1;
+	}
+
 	//Checks for keyboard events
 	if (p_e->getType() == df::KEYBOARD_EVENT) {
 		const df::EventKeyboard* p_keyboard_event =
@@ -89,9 +99,13 @@ int Player::getIndex()
 	return current_index;
 }
 
+
+
+
 void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 {
 	switch (p_keyboard_event->getKey()) {
+
 
 	case df::Keyboard::ESCAPE:// quit
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
@@ -99,21 +113,21 @@ void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 		}
 		break;
 
-
+	/*
 	case df::Keyboard::W:// Move up
-		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 			move(Vector(0, -1));
 		}
 		break;
 
 	case df::Keyboard::S:// Move down
-		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
+		if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
 			move(Vector(0, 1));
 		}
 		break;
 
 	case df::Keyboard::D://Move right
-		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
+		if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
 			move(Vector(1, 0));
 		}
 		break;
@@ -123,6 +137,7 @@ void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 			move(Vector(-1, 0));
 		}
 		break;
+		*/
 
 	case df::Keyboard::RIGHTARROW://Incriment up
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
@@ -150,8 +165,6 @@ void Player::checkEnemyIndex(Enemy* enemy)
 		adjustIndex(-1);
 	}
 }
-
-
 
 void Player::adjustIndex(int modifier)
 {
@@ -186,6 +199,34 @@ void Player::adjustIndex(int modifier)
 		//Set new sprite based on index
 		setSprite(baseSprites[current_index]->getLabel());
 	}
+}
+
+
+void Player::smoothMove()
+{
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		move(Vector(0, -1));
+	}
+
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		move(Vector(0, 1));
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		move(Vector(-1, 0));
+	}
+
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		move(Vector(1, 0));
+	}
+}
+
+void Player::step()
+{
+	// Move countdown.
+	move_countdown--;
+	if (move_countdown < 0)
+		move_countdown = 0;
 }
 
 
