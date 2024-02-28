@@ -27,6 +27,13 @@ void loadResources(void) {
 		RM.loadSprite(combinedFileEnemy, combinedLabelEnemy);
 	}
 
+	RM.loadMusic("Audio/Music/alphabet_soup.mp3", "music");
+
+	RM.loadSound("Audio/Sounds/loseLetter.mp3", "LL");
+	RM.loadSound("Audio/Sounds/collectLetter.mp3", "Collect");
+	RM.loadSound("Audio/Sounds/winRound.mp3", "win");
+
+
 }
 
 
@@ -50,11 +57,6 @@ void populateWorld(void) {
 	//new Enemy;
 	//new Enemy;
 
-
-	
-
-
-	//TODO load in all sounds
 
 }
 
