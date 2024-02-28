@@ -16,7 +16,7 @@ namespace df {
 	private:
 
 		//File that logs will go to 
-		const char* LOGFILE_NAME = "Debug/dragonfly.log";
+		const char* LOGFILE_NAME = "Debug\dragonfly.log";
 
 		//Constructer 
 		LogManager();
