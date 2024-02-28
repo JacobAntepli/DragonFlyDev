@@ -33,6 +33,8 @@ Player::Player()
 
 	//Set initial pos to center of screen
 	setPosition(Vector(WM.getBoundary().getHorizontal()/2, WM.getBoundary().getVertical()/2));
+
+	RM.getMusic("music")->play(true);
 }
 
 Player::~Player()
@@ -113,32 +115,6 @@ void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 		}
 		break;
 
-	/*
-	case df::Keyboard::W:// Move up
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-			move(Vector(0, -1));
-		}
-		break;
-
-	case df::Keyboard::S:// Move down
-		if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
-			move(Vector(0, 1));
-		}
-		break;
-
-	case df::Keyboard::D://Move right
-		if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN) {
-			move(Vector(1, 0));
-		}
-		break;
-
-	case df::Keyboard::A://Move left
-		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
-			move(Vector(-1, 0));
-		}
-		break;
-		*/
-
 	case df::Keyboard::RIGHTARROW://Incriment up
 		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
 			adjustIndex(+1);
@@ -178,10 +154,12 @@ void Player::adjustIndex(int modifier)
 		if (!(current_index < 0)) {
 			df::EventView ev(POINTS_STRING, 10, true);
 			WM.onEvent(&ev);
+			RM.getSound("win")->play();
 		}
 		else {
 			df::EventView ev(POINTS_STRING, -2, true);
 			WM.onEvent(&ev);
+			RM.getSound("LL")->play();
 		}
 		current_index = 0; 
 		setSprite(baseSprites[current_index]->getLabel());
@@ -191,10 +169,12 @@ void Player::adjustIndex(int modifier)
 		if (modifier < 0) {
 			df::EventView ev(POINTS_STRING,-2, true);
 			WM.onEvent(&ev);
+			RM.getSound("LL")->play();
 		}
 		else {
 			df::EventView ev(POINTS_STRING,1, true);
 			WM.onEvent(&ev);
+			RM.getSound("Collect")->play();
 		}
 		//Set new sprite based on index
 		setSprite(baseSprites[current_index]->getLabel());
