@@ -61,7 +61,6 @@ namespace df {
 
 		//Write to logfile only if log_level > LogManager log_level 
 		void writeLog(int log_level, const char* fmt, ...);
-
 		
 		//Get the verbosity (minimum log level) for the manager.
 		int getVerbosity() const;

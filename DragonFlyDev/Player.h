@@ -31,6 +31,15 @@ private:
 	//Current sprite index 
 	int current_index; 
 
+	//Maximum number of lives
+	int max_lives;
+
+	//Current number of lives
+	int cur_lives;
+
+	//Number of rounds won
+	int num_rounds;
+
 	//Movement variables and functions
 	int move_slowdown; //Limiting rate of movement 
 	int move_countdown;
@@ -40,6 +49,8 @@ private:
 
 	//Countdown for when the player
 	void step();
+
+	
 
 	
 
@@ -62,6 +73,9 @@ public:
 
 	//Checks if enemy is correct
 	void checkEnemyIndex(Enemy* enemy);
+
+	//Get number of rounds
+	int getRounds() const;
 
 };//End of class
 

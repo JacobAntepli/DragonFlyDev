@@ -187,8 +187,8 @@ namespace df {
         for (it.first(); !it.isDone(); it.next()) {
             it.currentObject()->eventHandler(p_event);
         }
-    }
 
+    }
     //Return list of what object a given object has collided with
     //Collisions only with solid objects but does not consider if object is solid or not
     ObjectList WorldManager::getCollisions(const Object* p_o, Vector where) const

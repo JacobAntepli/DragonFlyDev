@@ -4,12 +4,14 @@
 #include "ResourceManager.h"
 #include "Vector.h"
 #include "Player.h"
+#include "Rounds.h"
+#include "EventDeath.h"
 
 using namespace df;
-
 Enemy::Enemy()
 {
 	setType("Enemy");
+
 
 	configureSpawn();
 
@@ -35,6 +37,7 @@ Enemy::Enemy()
 
 Enemy::Enemy(Object* player)
 {
+	
 	setType("Enemy");
 
 	configureSpawn();
@@ -42,27 +45,30 @@ Enemy::Enemy(Object* player)
 	//Set hardness 
 	setSolidness(df::SOFT);
 
-
-
 	//set velocity
-	//configureVelocity();
 	p_player = player;
-	Vector velocity = Vector((p_player->getPosition().getX() - rand() % 5) - getPosition().getX(),
-							 (p_player->getPosition().getY() - rand() % 5) - getPosition().getY());
+	Player* play = (Player*)p_player;
+	Vector velocity = Vector((p_player->getPosition().getX() - rand() % 7) - getPosition().getX(),
+							 (p_player->getPosition().getY() - rand() % 7) - getPosition().getY());
 	velocity.normalize();
-	velocity.scale(.2);
+	if (play->getRounds() != 0) {
+		velocity.scale(.2 * (float)(play->getRounds() * .5));
+	}
+	else {
+		velocity.scale(.2 * (float)(play->getRounds()));
+	}
 	printf("Object made with velocity (%f,%f)\n", velocity.getX(), velocity.getY());
 	setVelocity(velocity);
 
 	//eventually change this to make the range close to the index of the player sprite
-	Player* play = (Player*)p_player;
-	if (play->getAlphabetIndex() < 20) {
+	
+	if (play->getAlphabetIndex() < 22) {
 		//spriteIndex = play->getAlphabetIndex() + ((int)rand() % +(play->getAlphabetIndex() + 4));
-		spriteIndex = rand() % ((play->getAlphabetIndex() + 4) - play->getAlphabetIndex()) + play->getAlphabetIndex();
+		spriteIndex = rand() % ((play->getAlphabetIndex() + 3) - play->getAlphabetIndex()+1) + play->getAlphabetIndex()+1;
 	}
 	else {
 		//spriteIndex = 20 + ((int)rand() % +24);
-		spriteIndex = rand() % (26 - 20) + 20;
+		spriteIndex = rand() % (26 - 22) + 22;
 	}
 
 	//Add sprites to array
@@ -71,21 +77,24 @@ Enemy::Enemy(Object* player)
 	//Set initial sprite
 	setSprite(baseSprites[spriteIndex]->getLabel());
 	
-
 	//Marked
 	marked = false;
 }
 
 Enemy::~Enemy()
 {
-	
+	WM.removeObject(this);
 }
 
 int Enemy::eventHandler(const df::Event* p_e)
 {
+	if (p_e->getType() == df::DEATH_EVENT) {
+		WM.markForDelete(this);
+		return 1;
+	}
 	//checks letter left screen?
 	if (p_e->getType() == df::OUT_EVENT) {
-		printf("Received out event at position (%.02f,%.02f)\n",getPosition().getX(),getPosition().getY());
+		//printf("Received out event at position (%.02f,%.02f)\n",getPosition().getX(),getPosition().getY());
 		out();
 		return 1;
 	}
@@ -96,6 +105,8 @@ int Enemy::eventHandler(const df::Event* p_e)
 		filterCollision(p_collision_event); //handled by hit()
 		return 1;
 	}
+
+	
 	return 0; //otherwise ignored
 }
 
@@ -107,6 +118,7 @@ int Enemy::getSpriteIndex() const
 
 void Enemy::filterCollision(const df::EventCollision* p_c)
 {
+
 	//only respond to collisions with player
 	if (p_c->getObject1()->getType() == "Player" && !marked) {
 		Player* player = (Player*)p_c->getObject1();
@@ -115,13 +127,12 @@ void Enemy::filterCollision(const df::EventCollision* p_c)
 		new Enemy(p_player);
 		marked = true;
 	}
-	if(p_c->getObject2()->getType() == "Player" && !marked) {
+	if (p_c->getObject2()->getType() == "Player" && !marked) {
 		Player* player = (Player*)p_c->getObject2();
 		player->checkEnemyIndex(this);
 		WM.markForDelete(this);
 		new Enemy(p_player);
 		marked = true;
-		
 	}
 }
 
@@ -139,10 +150,10 @@ int Enemy::addSprites()
 void Enemy::configureSpawn()
 {
 	//add all spawn points to array of spawns
-	spawnPoints[0] = Vector(DM.getHorizontal() / 2 , -10);						//top
-	spawnPoints[1] = Vector(DM.getHorizontal() / 2, DM.getVertical() + 10);		//bottom
-	spawnPoints[2] = Vector(-10, DM.getVertical() / 2);							//left
-	spawnPoints[3] = Vector(DM.getHorizontal()+10, DM.getVertical()/ 2);		//right
+	spawnPoints[0] = Vector(DM.getHorizontal() / 2 + rand() % 20, -10);						//top
+	spawnPoints[1] = Vector(DM.getHorizontal() / 2, DM.getVertical() + 10 + rand() % 20);		//bottom
+	spawnPoints[2] = Vector(-10, DM.getVertical() / 2 + rand() % 20);							//left
+	spawnPoints[3] = Vector(DM.getHorizontal()+10 , DM.getVertical()/ 2 + rand() % 20);		//right
 
 	//set spawn index to number randomly from 0 to 3
 	spawnIndex = (int)rand() % 4;
@@ -158,42 +169,53 @@ void Enemy::configureSpawn()
 
 void Enemy::out()
 {
-	switch (spawnIndex)
+	if (p_player != NULL)
 	{
-	case (0): //if spawned in at top of screen
-		if (getPosition().getY() > 0)
+		switch (spawnIndex)
 		{
-			WM.markForDelete(this);
-			//Spawn new enemy
-			new Enemy(p_player);
+		case (0): //if spawned in at top of screen
+			if (getPosition().getY() > 0)
+			{
+				WM.markForDelete(this);
+				//Spawn new enemy
+				if (p_player != NULL) {
+					new Enemy(p_player);
+				}
+			}
+			break;
+		case (1): //if spawned in bottom of screen
+			if (getPosition().getY() < DM.getVertical())
+			{
+				WM.markForDelete(this);
+				//Spawn new enemy
+				if (p_player != NULL) {
+					new Enemy(p_player);
+				}
+			}
+			break;
+		case (2): //if spawned in left of screen
+			if (getPosition().getX() > 0)
+			{
+				WM.markForDelete(this);
+				//Spawn new enemy
+				if (p_player != NULL) {
+					new Enemy(p_player);
+				}
+			}
+			break;
+		case(3): //if spawned in right of screen
+			if (getPosition().getX() < DM.getHorizontal())
+			{
+				WM.markForDelete(this);
+				//Spawn new enemy
+				if (p_player != NULL) {
+					new Enemy(p_player);
+				}
+			}
+			break;
+		default:
+			break;
 		}
-		break;
-	case (1): //if spawned in bottom of screen
-		if (getPosition().getY() < DM.getVertical())
-		{
-			WM.markForDelete(this);
-			//Spawn new enemy
-			new Enemy(p_player);
-		}
-		break;
-	case (2): //if spawned in left of screen
-		if (getPosition().getX() > 0)
-		{
-			WM.markForDelete(this);
-			//Spawn new enemy
-			new Enemy(p_player);
-		}
-		break;
-	case(3): //if spawned in right of screen
-		if (getPosition().getX() < DM.getHorizontal())
-		{
-			WM.markForDelete(this);
-			//Spawn new enemy
-			new Enemy(p_player);
-		}
-		break;
-	default:
-		break;
 	}
 
 }

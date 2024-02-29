@@ -102,10 +102,12 @@ namespace df {
 		Vector pos = getPosition();
 		int ret = m_animation.draw(pos);
 		//Draw bounding box
+		/*
 		DM.drawCh(Vector(pos.getX()+m_box.getCorner().getX(), pos.getY() + m_box.getCorner().getY()), '+', YELLOW);
 		DM.drawCh(Vector(pos.getX()-m_box.getCorner().getX(), pos.getY() + m_box.getCorner().getY()), '+', YELLOW);
 		DM.drawCh(Vector(pos.getX() + m_box.getCorner().getX(), pos.getY() - m_box.getCorner().getY()), '+', YELLOW);
 		DM.drawCh(Vector(pos.getX() - m_box.getCorner().getX(), pos.getY() - m_box.getCorner().getY()), '+', YELLOW);
+		*/
 		
 		return ret;
 	}

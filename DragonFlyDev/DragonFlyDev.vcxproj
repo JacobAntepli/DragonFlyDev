@@ -150,6 +150,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="EventCollision.cpp" />
+    <ClCompile Include="EventDeath.cpp" />
     <ClCompile Include="EventMouse.cpp" />
     <ClCompile Include="EventOut.cpp" />
     <ClCompile Include="EventStep.cpp" />
@@ -157,8 +158,10 @@
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameStart.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="EventKeyboard.cpp" />
+    <ClCompile Include="Lives.cpp" />
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectList.cpp" />
@@ -189,14 +192,17 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventCollision.h" />
+    <ClInclude Include="EventDeath.h" />
     <ClInclude Include="EventMouse.h" />
     <ClInclude Include="EventOut.h" />
     <ClInclude Include="EventStep.h" />
     <ClInclude Include="EventView.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameStart.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="EventKeyboard.h" />
+    <ClInclude Include="Lives.h" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Music.h" />

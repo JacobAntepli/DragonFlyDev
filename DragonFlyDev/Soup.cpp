@@ -6,6 +6,8 @@
 #include "Enemy.h"
 #include "Points.h"
 #include "Rounds.h"
+#include "Lives.h"
+#include "GameStart.h"
 
 void loadResources(void) {
 
@@ -28,16 +30,19 @@ void loadResources(void) {
 		RM.loadSprite(combinedFileEnemy, combinedLabelEnemy);
 	}
 
+	RM.loadSprite("Sprites/startup-spr.txt", "start");
+
 	RM.loadMusic("Audio/Music/alphabet_soup.mp3", "music");
 
 	RM.loadSound("Audio/Sounds/loseLetter.mp3", "LL");
 	RM.loadSound("Audio/Sounds/collectLetter.mp3", "Collect");
 	RM.loadSound("Audio/Sounds/winRound.mp3", "win");
 
+	RM.getMusic("music")->play(true);
 
 }
 
-
+/*
 void populateWorld(void) {
 
 	//Create point view object
@@ -45,6 +50,10 @@ void populateWorld(void) {
 
 	//Create rounds view object
 	new Rounds;
+
+	//Create lives view object
+	new Lives;
+
 
 	Player* p = new Player;
 
@@ -63,6 +72,7 @@ void populateWorld(void) {
 
 
 }
+*/
 
 int main(int argc, char* argv[]) {
 
@@ -74,11 +84,16 @@ int main(int argc, char* argv[]) {
 		return 1;
 	}
 
+	//Randomize seed
+	srand(time(nullptr)); 
+
 	//Load game resources
 	loadResources();
 
+	new GameStart;
+
 	//Populate world with objects
-	populateWorld();
+	//populateWorld();
 
 	LM.setFlush(true);
 

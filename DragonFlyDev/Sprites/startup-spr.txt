@@ -1,0 +1,44 @@
+<HEADER>
+frames 2
+width 79
+height 15
+color yellow
+slowdown 15
+</HEADER>
+<BODY>
+  ____ _     ____  __ __  ____ ____    ___ ______       _____ ___  __ __ ____  
+ /    | |   |    \|  |  |/    |    \  /  _|      |     / ___//   \|  |  |    \ 
+|  o  | |   |  o  |  |  |  o  |  o  )/  [_|      |    (   \_|     |  |  |  o  )
+|     | |___|   _/|  _  |     |     |    _|_|  |_|     \__  |  O  |  |  |   _/ 
+|  _  |     |  |  |  |  |  _  |  O  |   [_  |  |       /  \ |     |  :  |  |   
+|  |  |     |  |  |  |  |  |  |     |     | |  |       \    |     |     |  |   
+|__|__|_____|__|  |__|__|__|__|_____|_____| |__|        \___|\___/ \__,_|__|   
+                                                                               
+                                                                               
+                           W A S D to move, ESC to quit                        
+                                                                               
+  Collect all the letters of the alphabet IN ORDER, avoid the wrong letters,   
+                      & complete as many rounds as possible!                   
+                                                                               
+                              PRESS SPACE TO START!                            
+end
+  ____ _     ____  __ __  ____ ____    ___ ______       _____ ___  __ __ ____  
+ /    | |   |    \|  |  |/    |    \  /  _|      |     / ___//   \|  |  |    \ 
+|  o  | |   |  o  |  |  |  o  |  o  )/  [_|      |    (   \_|     |  |  |  o  )
+|     | |___|   _/|  _  |     |     |    _|_|  |_|     \__  |  O  |  |  |   _/ 
+|  _  |     |  |  |  |  |  _  |  O  |   [_  |  |       /  \ |     |  :  |  |   
+|  |  |     |  |  |  |  |  |  |     |     | |  |       \    |     |     |  |   
+|__|__|_____|__|  |__|__|__|__|_____|_____| |__|        \___|\___/ \__,_|__|   
+                                                                               
+                                                                               
+                           W A S D to move, ESC to quit                        
+                                                                               
+  Collect all the letters of the alphabet IN ORDER, avoid the wrong letters,   
+                      & complete as many rounds as possible!                   
+                                                                               
+                              PRESS SPACE TO START!                            
+end
+</BODY>
+<FOOTER>
+version 1
+</FOOTER>
