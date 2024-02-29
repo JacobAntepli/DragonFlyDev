@@ -16,7 +16,7 @@ private:
 	void filterCollision(const df::EventCollision* p_c);
 
 	//array of all possible sprites
-	Sprite* baseSprites[25];
+	Sprite* baseSprites[26];
 
 	//Current sprite index
 	int spriteIndex;

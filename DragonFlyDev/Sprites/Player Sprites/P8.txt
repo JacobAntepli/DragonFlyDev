@@ -1,6 +1,6 @@
 <HEADER>
 frames 2
-width 5
+width 9
 height 2
 color magenta
 slowdown 1
