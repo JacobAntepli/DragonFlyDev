@@ -5,13 +5,14 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Points.h"
+#include "Rounds.h"
 
 void loadResources(void) {
 
 	//TODO load in all sprite files
 	char combinedFile[100];
 	char combinedLabel[100];
-	for (int i = 1; i < 5; i++) {
+	for (int i = 1; i < 27; i++) {
 		sprintf_s(combinedFile, sizeof(combinedFile), "Sprites/Enemy Sprites/E%d.txt", i);
 		sprintf_s(combinedLabel, sizeof(combinedLabel), "E%d", i);
 		//printf("File: %s, label: %s", combinedFile, combinedLabel);
@@ -20,7 +21,7 @@ void loadResources(void) {
 
 	char combinedFileEnemy[100];
 	char combinedLabelEnemy[100];
-	for (int i = 1; i < 5; i++) {
+	for (int i = 1; i < 26; i++) {
 		sprintf_s(combinedFileEnemy, sizeof(combinedFileEnemy), "Sprites/Player Sprites/P%d.txt", i);
 		sprintf_s(combinedLabelEnemy, sizeof(combinedLabelEnemy), "P%d", i);
 		//printf("File: %s, label: %s", combinedFile, combinedLabel);
@@ -41,6 +42,9 @@ void populateWorld(void) {
 
 	//Create point view object
 	new Points;
+
+	//Create rounds view object
+	new Rounds;
 
 	Player* p = new Player;
 

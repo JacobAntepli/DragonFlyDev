@@ -10,7 +10,7 @@ Points::Points() {
 	//Set location, color, and string
 	setLocation(df::TOP_RIGHT);
 	setViewString(POINTS_STRING);
-	setColor(df::YELLOW);
+	setColor(df::GREEN);
 }
 
 //Checks events for points

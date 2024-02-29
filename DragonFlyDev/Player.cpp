@@ -8,6 +8,7 @@
 #include "GameManager.h"
 #include "Points.h"
 #include "EventView.h"
+#include "Rounds.h"
 
 
 using namespace df;
@@ -45,7 +46,7 @@ int Player::addSprites()
 {
 	char combined[32];
 
-	for (int i = 0; i < 7; i++) {
+	for (int i = 0; i < 25; i++) {
 		sprintf_s(combined,sizeof(combined), "P%d", i+1);
 		//printf("%s", combined);
 		baseSprites[i] = RM.getSprite(combined);
@@ -96,12 +97,10 @@ int Player::eventHandler(const df::Event* p_e)
 	return 0;
 }
 
-int Player::getIndex()
+int Player::getAlphabetIndex()
 {
 	return current_index;
 }
-
-
 
 
 void Player::kbd(const df::EventKeyboard* p_keyboard_event)
@@ -154,6 +153,8 @@ void Player::adjustIndex(int modifier)
 		if (!(current_index < 0)) {
 			df::EventView ev(POINTS_STRING, 10, true);
 			WM.onEvent(&ev);
+			df::EventView evr(ROUNDS_STRING, 1, true);
+			WM.onEvent(&evr);
 			RM.getSound("win")->play();
 		}
 		else {
@@ -193,11 +194,11 @@ void Player::smoothMove()
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		move(Vector(-1, 0));
+		move(Vector(-1.5, 0));
 	}
 
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		move(Vector(1, 0));
+		move(Vector(1.5, 0));
 	}
 }
 

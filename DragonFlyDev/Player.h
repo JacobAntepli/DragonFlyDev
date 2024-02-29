@@ -11,7 +11,7 @@
 using namespace df;
 class Player : df::Object {
 
-	const int MAX_INDEX = 3;
+	const int MAX_INDEX = 25;
 
 private:
 
@@ -57,7 +57,8 @@ public:
 	//Handles events for player
 	int eventHandler(const df::Event* p_e) override;
 
-	int getIndex();
+	//Get index of player
+	int getAlphabetIndex();
 
 	//Checks if enemy is correct
 	void checkEnemyIndex(Enemy* enemy);

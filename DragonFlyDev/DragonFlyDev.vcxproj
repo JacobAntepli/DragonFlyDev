@@ -166,6 +166,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Points.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Rounds.cpp" />
     <ClCompile Include="Saucer.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Soup.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Points.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Rounds.h" />
     <ClInclude Include="Saucer.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />

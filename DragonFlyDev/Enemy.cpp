@@ -17,7 +17,7 @@ Enemy::Enemy()
 	setSolidness(df::SOFT);
 
 	//eventually change this to make the range close to the index of the player sprite
-	spriteIndex = (int)rand() % 3;
+	spriteIndex = (int)rand() % 24;
 
 	//Add sprites to array
 	addSprites();
@@ -42,14 +42,7 @@ Enemy::Enemy(Object* player)
 	//Set hardness 
 	setSolidness(df::SOFT);
 
-	//eventually change this to make the range close to the index of the player sprite
-	spriteIndex = (int)rand() % 4;
 
-	//Add sprites to array
-	addSprites();
-
-	//Set initial sprite
-	setSprite(baseSprites[spriteIndex]->getLabel());
 
 	//set velocity
 	//configureVelocity();
@@ -60,6 +53,23 @@ Enemy::Enemy(Object* player)
 	velocity.scale(.2);
 	printf("Object made with velocity (%f,%f)\n", velocity.getX(), velocity.getY());
 	setVelocity(velocity);
+
+	//eventually change this to make the range close to the index of the player sprite
+	Player* play = (Player*)p_player;
+	if (play->getAlphabetIndex() < 20) {
+		//spriteIndex = play->getAlphabetIndex() + ((int)rand() % +(play->getAlphabetIndex() + 4));
+		spriteIndex = rand() % ((play->getAlphabetIndex() + 4) - play->getAlphabetIndex()) + play->getAlphabetIndex();
+	}
+	else {
+		//spriteIndex = 20 + ((int)rand() % +24);
+		spriteIndex = rand() % (26 - 20) + 20;
+	}
+
+	//Add sprites to array
+	addSprites();
+
+	//Set initial sprite
+	setSprite(baseSprites[spriteIndex]->getLabel());
 	
 
 	//Marked
@@ -68,7 +78,7 @@ Enemy::Enemy(Object* player)
 
 Enemy::~Enemy()
 {
-	new Enemy(p_player);
+	
 }
 
 int Enemy::eventHandler(const df::Event* p_e)
@@ -117,8 +127,8 @@ void Enemy::filterCollision(const df::EventCollision* p_c)
 
 int Enemy::addSprites()
 {
-	char combined[10];
-	for (int i = 0; i < 4; i++) {
+	char combined[32];
+	for (int i = 0; i < 26; i++) {
 		sprintf_s(combined, sizeof(combined), "E%d", i + 1);
 		//printf("%s", combined);
 		baseSprites[i] = RM.getSprite(combined);
@@ -155,7 +165,7 @@ void Enemy::out()
 		{
 			WM.markForDelete(this);
 			//Spawn new enemy
-			//new Enemy;
+			new Enemy(p_player);
 		}
 		break;
 	case (1): //if spawned in bottom of screen
@@ -163,7 +173,7 @@ void Enemy::out()
 		{
 			WM.markForDelete(this);
 			//Spawn new enemy
-			//new Enemy;
+			new Enemy(p_player);
 		}
 		break;
 	case (2): //if spawned in left of screen
@@ -171,7 +181,7 @@ void Enemy::out()
 		{
 			WM.markForDelete(this);
 			//Spawn new enemy
-			//new Enemy;
+			new Enemy(p_player);
 		}
 		break;
 	case(3): //if spawned in right of screen
@@ -179,7 +189,7 @@ void Enemy::out()
 		{
 			WM.markForDelete(this);
 			//Spawn new enemy
-			//new Enemy;
+			new Enemy(p_player);
 		}
 		break;
 	default:
