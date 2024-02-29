@@ -4,9 +4,9 @@
 #include "ResourceManager.h"
 #include "Vector.h"
 #include "Player.h"
+#include "Rounds.h"
 
 using namespace df;
-
 Enemy::Enemy()
 {
 	setType("Enemy");
@@ -45,10 +45,9 @@ Enemy::Enemy(Object* player)
 
 
 	//set velocity
-	//configureVelocity();
 	p_player = player;
-	Vector velocity = Vector((p_player->getPosition().getX() - rand() % 5) - getPosition().getX(),
-							 (p_player->getPosition().getY() - rand() % 5) - getPosition().getY());
+	Vector velocity = Vector((p_player->getPosition().getX() - rand() % 7) - getPosition().getX(),
+							 (p_player->getPosition().getY() - rand() % 7) - getPosition().getY());
 	velocity.normalize();
 	velocity.scale(.2);
 	printf("Object made with velocity (%f,%f)\n", velocity.getX(), velocity.getY());

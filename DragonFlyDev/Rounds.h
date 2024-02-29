@@ -6,15 +6,12 @@
 
 #define ROUNDS_STRING "Rounds"
 
-//10 points are earned everytime the alphabet is complete
-//1 point is earned when you get a letter
-//1 point is lossed when you lose a letter (per letter)
-class Rounds : public df::ViewObject {
 
+class Rounds : public df::ViewObject {
 public:
-    //Construcer for points 
+    //Construcer for rounds 
     Rounds();
 
-    //Handles incrimenting or decrimenting points
+    //Handles incrimenting or decrimenting rounds
     int eventHandler(const df::Event* p_e) override;
 };

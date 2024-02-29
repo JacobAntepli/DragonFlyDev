@@ -9,6 +9,7 @@
 #include "Points.h"
 #include "EventView.h"
 #include "Rounds.h"
+#include "Lives.h"
 
 
 using namespace df;
@@ -20,9 +21,17 @@ Player::Player()
 	//Starting sprite index
 	current_index = 0; 
 
+	//Starting number of lives
+	max_lives = 5;
+	cur_lives = max_lives;
+
 	//Move slowdown 
 	move_slowdown = 2;
 	move_countdown = move_slowdown;
+
+	//Set lives string
+	df::EventView evl(LIVES_STRING, max_lives, false);
+	WM.onEvent(&evl);
 
 	addSprites();
 
@@ -144,41 +153,56 @@ void Player::checkEnemyIndex(Enemy* enemy)
 void Player::adjustIndex(int modifier)
 {
 	//Incriment index by the modifier 
-	current_index += modifier;
+	
 
 	//Check to see if it's the last letter needed 
-	if (current_index >= MAX_INDEX || current_index < 0) {
+	if (modifier > 0) {
+		current_index += modifier;
 		//Increase  point count
 		//Add 10 points.
-		if (!(current_index < 0)) {
+		if (current_index >= MAX_INDEX) {
+			
+			//Add to points and rounds
 			df::EventView ev(POINTS_STRING, 10, true);
 			WM.onEvent(&ev);
 			df::EventView evr(ROUNDS_STRING, 1, true);
 			WM.onEvent(&evr);
-			RM.getSound("win")->play();
-		}
-		else {
-			df::EventView ev(POINTS_STRING, -2, true);
-			WM.onEvent(&ev);
-			RM.getSound("LL")->play();
-		}
-		current_index = 0; 
-		setSprite(baseSprites[current_index]->getLabel());
+			
+			//Increase number of lives and heal
+			max_lives++;
+			cur_lives = max_lives;
+			df::EventView evl(LIVES_STRING, max_lives, false);
+			WM.onEvent(&evl);
 
-	}
-	else{
-		if (modifier < 0) {
-			df::EventView ev(POINTS_STRING,-2, true);
-			WM.onEvent(&ev);
-			RM.getSound("LL")->play();
+			RM.getSound("win")->play();
+
+			//Reset index
+			current_index = 0;
 		}
 		else {
-			df::EventView ev(POINTS_STRING,1, true);
+			//Add to points
+			df::EventView ev(POINTS_STRING, 1, true);
 			WM.onEvent(&ev);
 			RM.getSound("Collect")->play();
 		}
-		//Set new sprite based on index
+
 		setSprite(baseSprites[current_index]->getLabel());
+	}
+	else{
+		
+		//Reduce current life count
+		cur_lives -= modifier;
+
+		//Check if dead 
+		if (cur_lives <= 0) {
+			//Go start screen
+			
+		}
+		else {
+			df::EventView ev(LIVES_STRING, -1, true);
+			WM.onEvent(&ev);
+			RM.getSound("LL")->play();
+		}
 	}
 }
 

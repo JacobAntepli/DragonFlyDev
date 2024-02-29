@@ -31,6 +31,12 @@ private:
 	//Current sprite index 
 	int current_index; 
 
+	//Maximum number of lives
+	int max_lives;
+
+	//Current number of lives
+	int cur_lives;
+
 	//Movement variables and functions
 	int move_slowdown; //Limiting rate of movement 
 	int move_countdown;
@@ -40,6 +46,8 @@ private:
 
 	//Countdown for when the player
 	void step();
+
+	
 
 	
 

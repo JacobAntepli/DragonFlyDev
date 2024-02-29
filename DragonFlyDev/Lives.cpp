@@ -1,17 +1,19 @@
-#include "Rounds.h"
+
+
+//included resources
+#include "Lives.h"
 #include "EventView.h"
 
 using namespace df;
-
-Rounds::Rounds()
+Lives::Lives()
 {
 	//Set location, color, and string
-	setLocation(df::TOP_LEFT);
-	setViewString(ROUNDS_STRING);
-	setColor(df::GREEN);
+	setLocation(df::TOP_CENTER);
+	setViewString(LIVES_STRING);
+	setColor(df::RED);
 }
 
-int Rounds::eventHandler(const df::Event* p_e)
+int Lives::eventHandler(const df::Event* p_e)
 {
 	//Cast event
 	const EventView* p_ve = static_cast<const EventView*> (p_e);
@@ -22,5 +24,6 @@ int Rounds::eventHandler(const df::Event* p_e)
 	}
 
 	// If get here, have ignored this event.
+	return 0;
 	return 0;
 }

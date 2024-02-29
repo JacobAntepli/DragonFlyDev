@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "Points.h"
 #include "Rounds.h"
+#include "Lives.h"
 
 void loadResources(void) {
 
@@ -45,6 +46,10 @@ void populateWorld(void) {
 
 	//Create rounds view object
 	new Rounds;
+
+	//Create lives view object
+	new Lives;
+
 
 	Player* p = new Player;
 
