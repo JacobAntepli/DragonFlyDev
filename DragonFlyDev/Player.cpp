@@ -10,16 +10,19 @@
 #include "EventView.h"
 #include "Rounds.h"
 #include "Lives.h"
+#include "EventDeath.h"
+#include "GameStart.h"
 
 
 using namespace df;
-
-
-
 Player::Player()
 {
-	//Starting sprite index
+	//Starting sprite index and rounds
 	current_index = 0; 
+	num_rounds = 1;
+
+	df::EventView evr(ROUNDS_STRING, 1, true);
+	WM.onEvent(&evr);
 
 	//Starting number of lives
 	max_lives = 5;
@@ -28,6 +31,8 @@ Player::Player()
 	//Move slowdown 
 	move_slowdown = 2;
 	move_countdown = move_slowdown;
+
+	
 
 	//Set lives string
 	df::EventView evl(LIVES_STRING, max_lives, false);
@@ -43,8 +48,6 @@ Player::Player()
 
 	//Set initial pos to center of screen
 	setPosition(Vector(WM.getBoundary().getHorizontal()/2, WM.getBoundary().getVertical()/2));
-
-	RM.getMusic("music")->play(true);
 }
 
 Player::~Player()
@@ -103,6 +106,11 @@ int Player::eventHandler(const df::Event* p_e)
 		return 1;
 	}
 
+	if (p_e->getType() == df::DEATH_EVENT) {
+		WM.markForDelete(this);
+		return 1;
+	}
+
 	return 0;
 }
 
@@ -118,8 +126,11 @@ void Player::kbd(const df::EventKeyboard* p_keyboard_event)
 
 
 	case df::Keyboard::ESCAPE:// quit
-		if (p_keyboard_event->getKeyboardAction() == df::KEY_PRESSED) {
-			GM.setGameOver(true);
+		if (p_keyboard_event->getKeyboardAction() == df::KEY_RELEASE) {
+			EventDeath ed;
+			WM.onEvent(&ed);
+			WM.onEvent(&ed);
+			new GameStart;
 		}
 		break;
 
@@ -150,6 +161,11 @@ void Player::checkEnemyIndex(Enemy* enemy)
 	}
 }
 
+int Player::getRounds() const
+{
+	return num_rounds;
+}
+
 void Player::adjustIndex(int modifier)
 {
 	//Incriment index by the modifier 
@@ -167,9 +183,11 @@ void Player::adjustIndex(int modifier)
 			WM.onEvent(&ev);
 			df::EventView evr(ROUNDS_STRING, 1, true);
 			WM.onEvent(&evr);
+
+			num_rounds++;
 			
 			//Increase number of lives and heal
-			max_lives++;
+			max_lives += 2;
 			cur_lives = max_lives;
 			df::EventView evl(LIVES_STRING, max_lives, false);
 			WM.onEvent(&evl);
@@ -191,11 +209,16 @@ void Player::adjustIndex(int modifier)
 	else{
 		
 		//Reduce current life count
-		cur_lives -= modifier;
+		cur_lives += modifier;
 
 		//Check if dead 
 		if (cur_lives <= 0) {
-			//Go start screen
+			//Go start screen, send death event
+			
+			EventDeath ed;
+			WM.onEvent(&ed);
+			new GameStart;
+			WM.onEvent(&ed);
 			
 		}
 		else {

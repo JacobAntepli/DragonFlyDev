@@ -35,10 +35,10 @@ namespace df {
 	#define DM df::DisplayManager::getInstance()
 
 	//Defaults for window 
-	const int WINDOW_HORIZONTAL_PIXELS_DEFAULT = 1024*2;
-	const int WINDOW_VERTICAL_PIXELS_DEFAULT = 768*2;
-	const int WINDOW_HORIZONTAL_CHARS_DEFAULT = 80*2;
-	const int WINDOW_VERTICAL_CHARS_DEFAULT = 24*2;
+	const int WINDOW_HORIZONTAL_PIXELS_DEFAULT = 1024 *1.5;
+	const int WINDOW_VERTICAL_PIXELS_DEFAULT = 768*1.5;
+	const int WINDOW_HORIZONTAL_CHARS_DEFAULT = 80*1.5;
+	const int WINDOW_VERTICAL_CHARS_DEFAULT = 24*1.5;
 	const int WINDOW_STYLE_DEFAULT = sf::Style::Titlebar | sf::Style::Close;
 	const sf::Color WINDOW_BACKGROUND_COLOR_DEFAULT = sf::Color::Black;
 	const string WINDOW_TITLE_DEFAULT = "Dragonfly";
