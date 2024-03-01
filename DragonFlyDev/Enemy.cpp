@@ -30,7 +30,6 @@ Enemy::Enemy()
 	//set velocity
 	configureVelocity();
 
-
 	//Marked
 	marked = false;
 }
@@ -57,7 +56,7 @@ Enemy::Enemy(Object* player)
 	else {
 		velocity.scale(.2 * (float)(play->getRounds()));
 	}
-	printf("Object made with velocity (%f,%f)\n", velocity.getX(), velocity.getY());
+	//printf("Object made with velocity (%f,%f)\n", velocity.getX(), velocity.getY());
 	setVelocity(velocity);
 
 	//eventually change this to make the range close to the index of the player sprite
@@ -163,7 +162,7 @@ void Enemy::configureSpawn()
 	//set position to corresponding spawn point
 	WM.moveObject(this, spawnPoint);
 
-	printf("Spawn position: (%.02f,%.02f) from spawnindex %d\n", getPosition().getX(), getPosition().getY(),spawnIndex);
+	//printf("Spawn position: (%.02f,%.02f) from spawnindex %d\n", getPosition().getX(), getPosition().getY(),spawnIndex);
 
 }
 

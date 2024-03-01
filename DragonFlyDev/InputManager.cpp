@@ -34,10 +34,10 @@ namespace df {
 		}
 		
 		//Get window
-		sf::RenderWindow* window = DM.getWindow();
+		//sf::RenderWindow* window = DM.getWindow();
 
 		//Prevent keyboard repeat 
-		window->setKeyRepeatEnabled(false);
+		DM.getWindow()->setKeyRepeatEnabled(false);
 
 		//Base class start up
 		Manager::startUp();
@@ -51,10 +51,10 @@ namespace df {
 		//Only revert if there is still a window
 		if (DM.isStarted()) {
 			//Get window
-			sf::RenderWindow* window = DM.getWindow();
+			//sf::RenderWindow* window = DM.getWindow();
 
 			//Renable key repeat
-			window->setKeyRepeatEnabled(true);
+			DM.getWindow()->setKeyRepeatEnabled(true);
 		}
 
 		//Base class shut down

@@ -240,16 +240,16 @@ namespace df {
                 for (it.first(); !it.isDone(); it.next()) {
 
                     //Create pointer to current object
-                    Object* p_temp_o = it.currentObject();
+                    it.currentObject();
 
                     //Create collision event
-                    EventCollision ec(p_o, p_temp_o, where);
+                    EventCollision ec(p_o, it.currentObject(), where);
 
                     p_o->eventHandler(&ec);
-                    p_temp_o->eventHandler(&ec);
+                    it.currentObject()->eventHandler(&ec);
 
                     //If both are hard don't move
-                    if (p_o->getSolidness() == HARD && p_temp_o->getSolidness() == HARD) {
+                    if (p_o->getSolidness() == HARD && it.currentObject()->getSolidness() == HARD) {
                         do_move = false;
                     }
                 }//End of for loop
